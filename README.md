@@ -2,117 +2,221 @@
 
 <img src="docs/banner.svg" alt="Designer-Skill" width="720" />
 
+# Designer-Skill MCP
 
-**Production-grade design skill for coding agents, delivered as an MCP server.**
+**Production-grade design guidance for coding agents — delivered as an MCP server.**
 
-[![npm version](https://img.shields.io/npm/v/designer-skill-mcp?style=flat-square&color=0ea5e9)](https://www.npmjs.com/package/designer-skill-mcp)
+[![npm version](https://img.shields.io/npm/v/designer-skill-mcp?style=flat-square\&color=0ea5e9)](https://www.npmjs.com/package/designer-skill-mcp)
 [![license](https://img.shields.io/badge/license-MIT-22c55e?style=flat-square)](designer-skill-mcp/LICENSE)
 [![node](https://img.shields.io/badge/node-%E2%89%A520-6b7280?style=flat-square)](#build--dev)
 [![tiers](https://img.shields.io/badge/tiers-guidance%20%2B%20active-6366f1?style=flat-square)](#two-tier-model)
-[![agents](https://img.shields.io/badge/agents-8-7c3aed?style=flat-square)](#mcp-setup--all-8-clients)
+[![clients](https://img.shields.io/badge/clients-8-7c3aed?style=flat-square)](#mcp-setup--all-clients)
 
-[Architecture](#routing-map) · [Skill Setup](#skill-setup) · [Quick Setup](#quick-setup) · [Full MCP Configs](#mcp-setup--all-8-clients) · [Env Vars](#environment-variables)
-
-```bash
-npm i designer-skill-mcp
-```
+[Overview](#overview) · [Quick Start](#quick-start) · [Routing Map](#routing-map) · [Skill Setup](#skill-setup) · [MCP Setup](#mcp-setup--all-clients) · [Tools](#tools-reference) · [Env Vars](#environment-variables)
 
 </div>
 
 ---
 
-## What this is
+## Overview
 
-**Designer-Skill** is a composite design reference for coding agents — a lightweight router (`Designer-Skill/SKILL.md`) that dispatches to seven specialist reference files covering visual fundamentals, aesthetic systems, motion and interaction, engineering and performance, anti-AI-slop discipline, refactor/redesign loops, and a verb-driven command playbook. Any coding agent that reads these files gains an opinionated, production-grade design vocabulary before touching a single line of UI code.
+**Designer-Skill** is a structured design system for coding agents.
 
-**designer-skill-mcp** is the [Model Context Protocol](https://modelcontextprotocol.io) server that exposes Designer-Skill to any MCP-compatible client — Claude Code, Codex CLI, Cursor, VS Code, Kilo Code, Open Code, Pi, and pythinker. It ships in two tiers: a **Guidance tier** (no API key required) that hands the skill to your agent via tools, resources, and a prompt; and an **Active tier** (requires `ANTHROPIC_API_KEY`) that adds `apply_designer` — a Claude-backed tool that runs the full skill and returns a streamed audit, redesign, or build result.
+It gives agents a production-grade design vocabulary before they write UI code: typography, spacing, layout, visual hierarchy, aesthetic systems, motion, accessibility, performance, anti-AI-slop checks, and redesign/refactor workflows.
+
+The repo contains two connected parts:
+
+| Package              | Purpose                                                                  |
+| -------------------- | ------------------------------------------------------------------------ |
+| `Designer-Skill/`    | The skill source: a router file plus seven specialist design references. |
+| `designer-skill-mcp` | An MCP server that exposes the skill to MCP-compatible coding agents.    |
+
+The MCP server works in two modes:
+
+| Mode              |        API key required? | What it does                                                                                                                                     |
+| ----------------- | -----------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Guidance tier** |                       No | Exposes the skill through MCP tools, resources, and prompts. Your agent uses the references to do the design work.                               |
+| **Active tier**   | Yes, `ANTHROPIC_API_KEY` | Adds `apply_designer`, a Claude-backed tool that runs the full skill directly and streams a complete audit, redesign, critique, or build result. |
+
+Supported clients include Claude Code, Codex CLI, Cursor, VS Code, Kilo Code, Open Code, Pi, and pythinker.
+
+---
+
+## Quick Start
+
+### Use with `npx`
+
+No global install is required:
+
+```bash
+npx -y designer-skill-mcp
+```
+
+### Add to an MCP client
+
+Most MCP clients use this basic shape:
+
+```json
+{
+  "mcpServers": {
+    "designer-skill": {
+      "command": "npx",
+      "args": ["-y", "designer-skill-mcp"]
+    }
+  }
+}
+```
+
+### Enable the active tier
+
+Add `ANTHROPIC_API_KEY` only when you want the server to run `apply_designer` directly:
+
+```json
+{
+  "mcpServers": {
+    "designer-skill": {
+      "command": "npx",
+      "args": ["-y", "designer-skill-mcp"],
+      "env": {
+        "ANTHROPIC_API_KEY": "sk-ant-..."
+      }
+    }
+  }
+}
+```
+
+> Omit the `env` block for guidance-only mode. The server still exposes the skill files, routing tools, checklist, resources, and prompt.
+
+---
+
+## What Designer-Skill Gives an Agent
+
+Designer-Skill helps coding agents avoid generic UI output by forcing a stronger design workflow:
+
+1. **Scope the surface** — landing page, dashboard, form, component, marketing site, internal tool.
+2. **Choose a register** — brand surface or product surface.
+3. **Select one aesthetic system** — avoid mixing incompatible visual languages.
+4. **Apply design fundamentals** — typography, spacing, layout, contrast, hierarchy, depth.
+5. **Harden the implementation** — accessibility, responsive behavior, real data, performance.
+6. **Add motion intentionally** — transitions, springs, gestures, reduced-motion support.
+7. **Run an anti-slop ship gate** — check for generic AI patterns before declaring the work done.
 
 ---
 
 ## Routing Map
 
-### The 7 Reference Files
+Designer-Skill is organized around one router and seven focused reference files.
 
-> These are design surfaces, not client platforms. The 8 supported agent clients are listed separately in [MCP Setup](#mcp-setup).
+| File                                       | Use it for                                                                                                                          |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `Designer-Skill/SKILL.md`                  | Main router, precedence rules, preflight order, routing map, and ship gate.                                                         |
+| `reference/design-principles.md`           | Typography, spacing, rhythm, color, contrast, layout, grid, hierarchy, and depth.                                                   |
+| `reference/aesthetic-systems.md`           | Five opinionated design languages: Minimalist, Brutalist, Soft, High-end-Stitch, and Brand Identity.                                |
+| `reference/motion-and-interaction.md`      | Motion timing, easing, springs, micro-interactions, gestures, scrolling, perceived performance, and reduced motion.                 |
+| `reference/engineering-and-performance.md` | Component architecture, design tokens, CSS variables, responsive behavior, accessibility, Core Web Vitals, and real-data hardening. |
+| `reference/avoid-ai-slop.md`               | Anti-generic checks, category-reflex rules, cross-register ban list, and output-completeness contract.                              |
+| `reference/refactor-and-redesign.md`       | Existing UI audits, diagnosis, redesign loops, and image/reference-to-code workflows.                                               |
+| `reference/command-playbook.md`            | Verb-driven design actions such as build, polish, bolder, quieter, animate, harden, redesign, de-slop, and differentiate.           |
 
-| Open this | When the task is about |
-|---|---|
-| `reference/design-principles.md` | Visual fundamentals — typography, spacing & rhythm, color & contrast, layout & grid, hierarchy, depth. The aesthetic-neutral baseline. |
-| `reference/aesthetic-systems.md` | Choosing or executing a specific look — 5 opinionated design languages (Minimalist, Brutalist, Soft, High-end-Stitch, Brand-identity) with concrete palettes, fonts, and shadow tokens. |
-| `reference/motion-and-interaction.md` | What to animate, how fast, which curve; springs, micro-interactions, gestures, scroll, perceived performance, reduced-motion. |
-| `reference/engineering-and-performance.md` | Component architecture, design tokens/CSS vars, hardware acceleration, responsive/fluid, accessibility, Core Web Vitals, framework-honest output, real-data hardening. |
-| `reference/avoid-ai-slop.md` | Not looking "AI-made" — the cross-register ban-list, category-reflex checks, and the output-completeness contract. |
-| `reference/refactor-and-redesign.md` | Improving existing UI without breaking it — audit, diagnose generic patterns, the redesign loop, image/reference-to-code. |
-| `reference/command-playbook.md` | Which verb/move maps to the user's intent (build, polish, bolder, quieter, animate, harden, redesign, …). |
+---
 
-### Intent → Verb Dispatch
+## Intent Dispatch
 
-The `dispatch_intent` tool maps a natural-language request to the design verb(s) and reference files an agent should load before acting.
+The `dispatch_intent` tool maps natural-language design requests to the right design verbs and reference files.
 
-| Intent phrase | Verb(s) | Files to read |
-|---|---|---|
-| "make it pop" | `bolder` · `colorize` | `aesthetic-systems`, `design-principles` |
-| "it feels off" | `audit` · `diagnose` | `refactor-and-redesign`, `avoid-ai-slop` |
-| "production-ready" | `harden` · `a11y` | `engineering-and-performance` |
-| "add some motion" | `animate` | `motion-and-interaction` |
-| "it looks AI-made" | `de-slop` · `differentiate` | `avoid-ai-slop`, `aesthetic-systems` |
-| "redesign this" | `audit` · `redesign` | `refactor-and-redesign`, `command-playbook` |
+| User intent                 | Design verbs               | Reference files                             |
+| --------------------------- | -------------------------- | ------------------------------------------- |
+| “Make it pop.”              | `bolder`, `colorize`       | `aesthetic-systems`, `design-principles`    |
+| “It feels off.”             | `audit`, `diagnose`        | `refactor-and-redesign`, `avoid-ai-slop`    |
+| “Make it production-ready.” | `harden`, `a11y`           | `engineering-and-performance`               |
+| “Add some motion.”          | `animate`                  | `motion-and-interaction`                    |
+| “It looks AI-made.”         | `de-slop`, `differentiate` | `avoid-ai-slop`, `aesthetic-systems`        |
+| “Redesign this.”            | `audit`, `redesign`        | `refactor-and-redesign`, `command-playbook` |
 
-### Session Preflight Order
+---
 
-Run this sequence before writing any UI code:
+## Recommended Agent Preflight
 
-1. **Scope the surface and register** — landing page, dashboard, component, form? Decide register: **brand** (distinctiveness is the bar) vs **product** (earned familiarity is the bar).
-2. **Commit to one aesthetic system** from `reference/aesthetic-systems.md` — one language per surface, never mix two systems' signatures.
-3. **Run the category-reflex check** in `reference/avoid-ai-slop.md` before committing to a palette or type direction.
-4. **Build on the neutral baseline** (`design-principles.md`) + engineering layer (`engineering-and-performance.md`), add motion last.
-5. **For existing UI**, follow the audit → diagnose → redesign loop in `reference/refactor-and-redesign.md` instead of rebuilding from scratch.
-6. **Run the ship gate** (`anti_slop_checklist` tool or `reference/avoid-ai-slop.md`) before declaring work done.
+Before writing or modifying UI code, the agent should run this sequence:
+
+1. **Identify the surface**
+
+   * Landing page, dashboard, component, form, marketing page, app shell, or internal tool.
+
+2. **Choose the register**
+
+   * **Brand surface:** distinctiveness is the bar.
+   * **Product surface:** clarity, usability, and earned familiarity are the bar.
+
+3. **Commit to one aesthetic system**
+
+   * Use one visual language per surface.
+   * Do not mix multiple systems’ signature patterns.
+
+4. **Run the category-reflex check**
+
+   * Avoid default palettes, default gradients, predictable cards, generic SaaS spacing, and AI-looking decoration.
+
+5. **Build from the neutral baseline**
+
+   * Use `design-principles.md` and `engineering-and-performance.md` first.
+   * Add motion only after the static design works.
+
+6. **For existing UI, audit before rebuilding**
+
+   * Follow the audit → diagnose → redesign loop from `refactor-and-redesign.md`.
+
+7. **Run the ship gate**
+
+   * Use `anti_slop_checklist` or `avoid-ai-slop.md` before calling the design complete.
 
 ---
 
 ## Two-Tier Model
 
-| Guidance tier — no API key needed | Active tier — requires `ANTHROPIC_API_KEY` |
-|---|---|
-| `get_design_system` — returns the SKILL.md router | All guidance tools, plus: |
-| `get_reference` — returns any of the 7 reference files | `apply_designer` — runs Claude loaded with the full skill |
-| `dispatch_intent` — maps intent phrase → verbs + files | Streams a complete audit, redesign, critique, or build result |
-| `anti_slop_checklist` — ship-gate checklist | Model override via `DESIGNER_MCP_MODEL` env var |
-| `designer://skill` and `designer://reference/{name}` resources | No partial output — bound by the output-completeness contract |
-| `design` prompt (bundles task + relevant skill context) | Default model: `claude-opus-4-8` |
-
-> **Zero config to start.** Omit the `env` block from any MCP config below to run guidance-only. Your agent does the design work; the skill files guide it. Add `ANTHROPIC_API_KEY` only when you want Claude to do the work directly via `apply_designer`.
+| Guidance tier — no API key required                          | Active tier — requires `ANTHROPIC_API_KEY`                     |
+| ------------------------------------------------------------ | -------------------------------------------------------------- |
+| `get_design_system` returns the main `SKILL.md` router.      | Includes all guidance-tier tools.                              |
+| `get_reference` returns any of the seven reference files.    | Adds `apply_designer`.                                         |
+| `dispatch_intent` maps a request to design verbs and files.  | Runs Claude with the full Designer-Skill context.              |
+| `anti_slop_checklist` returns the ship-gate checklist.       | Streams a complete audit, critique, redesign, or build result. |
+| `designer://skill` exposes the full skill router.            | Supports model override with `DESIGNER_MCP_MODEL`.             |
+| `designer://reference/{name}` exposes individual references. | Follows the output-completeness contract.                      |
+| `design` prompt bundles task context with the skill.         | Default model: `claude-opus-4-8`.                              |
 
 ---
 
 ## Skill Setup
 
-For agents that support native skill or prompt-file loading (not MCP).
+Use this section for agents that support native skill or prompt-file loading without MCP.
 
 ### Claude Code
 
-Copy or symlink `Designer-Skill/` into your Claude Code skills directory:
+Copy or symlink `Designer-Skill/` into a Claude Code skills directory:
 
 ```bash
-# Option A — copy into project skills
+# Project-level skill
 cp -r Designer-Skill/ .claude/skills/designer-skill/
 
-# Option B — copy into global skills
+# Global skill
 cp -r Designer-Skill/ ~/.claude/skills/designer-skill/
 ```
 
-Claude Code picks up the skill via the `name: Designer-Skill` frontmatter in `SKILL.md`. Invoke it with the Skill tool:
+Claude Code reads the skill through the frontmatter in `SKILL.md`.
 
-```
-Use the Designer-Skill to [your task]
+Invoke it with:
+
+```text
+Use the Designer-Skill to redesign this dashboard.
 ```
 
-No API key required for skill-only use — your Claude Code session supplies the model.
+No API key is required for native skill usage. Your Claude Code session supplies the model.
+
+---
 
 ### Pi (`@earendil-works/pi-coding-agent`)
 
-Register the skill by pointing Pi at the `SKILL.md` entry point. Pi reads the `name` and `description` frontmatter for routing, so no additional config is needed beyond the file path:
+Register the skill by pointing Pi to the `SKILL.md` entry point:
 
 ```json
 {
@@ -124,178 +228,121 @@ Register the skill by pointing Pi at the `SKILL.md` entry point. Pi reads the `n
 }
 ```
 
-Pi will route design-intent prompts to the skill automatically based on the `description` field in the frontmatter.
+Pi can route design-related tasks to the skill using the `name` and `description` frontmatter.
 
 ---
 
-## Quick Setup
+## MCP Setup — All Clients
 
-> **For AI agents reading this repo:** All commands below are copy-paste ready.
-> Package: `designer-skill-mcp` — <https://www.npmjs.com/package/designer-skill-mcp>
-> Repo: <https://github.com/Pythoughts-labs/Designer-Skill>
+Add the `designer-skill` server to your MCP client.
 
-The four configs below cover the most common agent runtimes. [Full reference for all 8 clients ↓](#mcp-setup--all-8-clients)
+Each setup includes:
 
----
-
-### Pythinker
-
-Add to `~/.pythinker/config.yaml`:
-
-**Guidance-only:**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args: ["-y", "designer-skill-mcp"]
-```
-
-<details>
-<summary>Active tier — adds <code>apply_designer</code> (requires <code>ANTHROPIC_API_KEY</code>)</summary>
-
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args: ["-y", "designer-skill-mcp"]
-    env:
-      ANTHROPIC_API_KEY: sk-ant-...
-```
-
-</details>
+* **Guidance-only:** no API key.
+* **Active tier:** adds `ANTHROPIC_API_KEY` to enable `apply_designer`.
 
 ---
 
 ### Claude Code
 
-**Guidance-only:**
+Guidance-only:
+
 ```bash
 claude mcp add designer-skill -- npx -y designer-skill-mcp
 ```
 
-**Active tier:**
+Active tier:
+
 ```bash
-claude mcp add designer-skill -e ANTHROPIC_API_KEY=sk-ant-... -- npx -y designer-skill-mcp
+claude mcp add designer-skill \
+  -e ANTHROPIC_API_KEY=sk-ant-... \
+  -- npx -y designer-skill-mcp
 ```
 
 ---
 
 ### Codex CLI
 
-Add to `~/.codex/config.yaml`:
+Config file:
 
-**Guidance-only:**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args: ["-y", "designer-skill-mcp"]
+```text
+~/.codex/config.yaml
 ```
 
-<details>
-<summary>Active tier — adds <code>apply_designer</code> (requires <code>ANTHROPIC_API_KEY</code>)</summary>
+Guidance-only:
 
 ```yaml
 mcpServers:
   designer-skill:
     command: npx
-    args: ["-y", "designer-skill-mcp"]
+    args:
+      - "-y"
+      - designer-skill-mcp
+```
+
+Active tier:
+
+```yaml
+mcpServers:
+  designer-skill:
+    command: npx
+    args:
+      - "-y"
+      - designer-skill-mcp
     env:
       ANTHROPIC_API_KEY: sk-ant-...
 ```
 
-</details>
+Codex CLI reads the config on each invocation.
 
 ---
 
-### Pi
+### pythinker
 
-Add to Pi's MCP server config:
+Config file:
 
-**Guidance-only:**
-```json
-{
-  "mcpServers": {
-    "designer-skill": {
-      "command": "npx",
-      "args": ["-y", "designer-skill-mcp"]
-    }
-  }
-}
+```text
+~/.pythinker/config.yaml
 ```
 
-<details>
-<summary>Active tier — adds <code>apply_designer</code> (requires <code>ANTHROPIC_API_KEY</code>)</summary>
-
-```json
-{
-  "mcpServers": {
-    "designer-skill": {
-      "command": "npx",
-      "args": ["-y", "designer-skill-mcp"],
-      "env": { "ANTHROPIC_API_KEY": "sk-ant-..." }
-    }
-  }
-}
-```
-
-</details>
-
----
-
-<details>
-<summary><strong>Structured config reference — all 4 agents (AI-readable)</strong></summary>
+Guidance-only:
 
 ```yaml
-# designer-skill-mcp — structured config reference
-# Source: https://github.com/Pythoughts-labs/Designer-Skill
-# Package: https://www.npmjs.com/package/designer-skill-mcp
-# Command (all clients): npx -y designer-skill-mcp
-
-agents:
-  pythinker:
-    config_file: ~/.pythinker/config.yaml
-    format: yaml
-    key: mcpServers
-  claude_code:
-    cli_command: "claude mcp add designer-skill -- npx -y designer-skill-mcp"
-    active_tier: "claude mcp add designer-skill -e ANTHROPIC_API_KEY=<key> -- npx -y designer-skill-mcp"
-  codex_cli:
-    config_file: ~/.codex/config.yaml
-    format: yaml
-    key: mcpServers
-  pi:
-    format: json
-    key: mcpServers
-
-guidance_only:
-  command: npx
-  args: ["-y", "designer-skill-mcp"]
-
-active_tier:
-  command: npx
-  args: ["-y", "designer-skill-mcp"]
-  env:
-    ANTHROPIC_API_KEY: "<your-anthropic-api-key>"
+mcpServers:
+  designer-skill:
+    command: npx
+    args:
+      - "-y"
+      - designer-skill-mcp
 ```
 
-</details>
+Active tier:
+
+```yaml
+mcpServers:
+  designer-skill:
+    command: npx
+    args:
+      - "-y"
+      - designer-skill-mcp
+    env:
+      ANTHROPIC_API_KEY: sk-ant-...
+```
+
+Restart pythinker after saving the config.
 
 ---
 
-## MCP Setup — All 8 Clients
+### Cursor
 
-Add the `designer-skill` server to your agent's MCP config. Each block below shows two variants:
+Project-level config file:
 
-- **Guidance-only** — no `env` block, no API key required.
-- **Active** — adds `ANTHROPIC_API_KEY` to enable `apply_designer`.
+```text
+.cursor/mcp.json
+```
 
-<details>
-<summary><strong>Claude Code</strong> — <code>claude_desktop_config.json</code></summary>
+Guidance-only:
 
-Config file: `~/Library/Application Support/Claude/claude_desktop_config.json`
-
-**Guidance-only:**
 ```json
 {
   "mcpServers": {
@@ -307,7 +354,8 @@ Config file: `~/Library/Application Support/Claude/claude_desktop_config.json`
 }
 ```
 
-**Active (with `apply_designer`):**
+Active tier:
+
 ```json
 {
   "mcpServers": {
@@ -322,114 +370,22 @@ Config file: `~/Library/Application Support/Claude/claude_desktop_config.json`
 }
 ```
 
-Restart Claude Desktop after saving. The server appears in the tools panel as `designer-skill`.
+For global setup, open Cursor Settings → Features → MCP → Add new MCP server.
 
-</details>
+---
 
-<details>
-<summary><strong>Codex CLI</strong> — <code>~/.codex/config.yaml</code></summary>
+### VS Code
 
-Config file: `~/.codex/config.yaml`
+Workspace config file:
 
-**Guidance-only:**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args:
-      - "-y"
-      - designer-skill-mcp
+```text
+.vscode/mcp.json
 ```
 
-**Active (with `apply_designer`):**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args:
-      - "-y"
-      - designer-skill-mcp
-    env:
-      ANTHROPIC_API_KEY: sk-ant-...
-```
+VS Code uses `servers`, not `mcpServers`, and requires `"type": "stdio"`.
 
-No restart required — Codex CLI reads the config on each invocation.
+Guidance-only:
 
-</details>
-
-<details>
-<summary><strong>pythinker</strong> — <code>~/.pythinker/config.yaml</code></summary>
-
-Config file: `~/.pythinker/config.yaml`
-
-**Guidance-only:**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args:
-      - "-y"
-      - designer-skill-mcp
-```
-
-**Active (with `apply_designer`):**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args:
-      - "-y"
-      - designer-skill-mcp
-    env:
-      ANTHROPIC_API_KEY: sk-ant-...
-```
-
-Same YAML structure as Codex CLI. Restart pythinker after saving.
-
-</details>
-
-<details>
-<summary><strong>Cursor</strong> — <code>.cursor/mcp.json</code></summary>
-
-**Project-level** (`.cursor/mcp.json` at repo root):
-
-**Guidance-only:**
-```json
-{
-  "mcpServers": {
-    "designer-skill": {
-      "command": "npx",
-      "args": ["-y", "designer-skill-mcp"]
-    }
-  }
-}
-```
-
-**Active (with `apply_designer`):**
-```json
-{
-  "mcpServers": {
-    "designer-skill": {
-      "command": "npx",
-      "args": ["-y", "designer-skill-mcp"],
-      "env": {
-        "ANTHROPIC_API_KEY": "sk-ant-..."
-      }
-    }
-  }
-}
-```
-
-**Global:** Open Cursor Settings → Features → MCP → **+ Add new MCP server**, then enter the command and args above. The global config is stored at `~/Library/Application Support/Cursor/User/globalStorage/cursor.mcp/mcp.json` on macOS.
-
-</details>
-
-<details>
-<summary><strong>VS Code</strong> — <code>.vscode/mcp.json</code></summary>
-
-Config file: `.vscode/mcp.json` at workspace root. Requires VS Code 1.99+ (built-in MCP agent mode) or the MCP extension.
-
-**Guidance-only:**
 ```json
 {
   "servers": {
@@ -442,7 +398,8 @@ Config file: `.vscode/mcp.json` at workspace root. Requires VS Code 1.99+ (built
 }
 ```
 
-**Active (with `apply_designer`):**
+Active tier:
+
 ```json
 {
   "servers": {
@@ -458,19 +415,26 @@ Config file: `.vscode/mcp.json` at workspace root. Requires VS Code 1.99+ (built
 }
 ```
 
-Note the VS Code-specific format: `servers` (not `mcpServers`) and the required `"type": "stdio"` field. Reload the VS Code window after saving.
+Reload the VS Code window after saving.
 
-</details>
+---
 
-<details>
-<summary><strong>Kilo Code</strong> — MCP Settings panel</summary>
+### Kilo Code
 
-Kilo Code stores MCP servers at:
-`~/Library/Application Support/Code/User/globalStorage/kilocode.kilo-code/settings/mcp_settings.json` (macOS)
+Kilo Code MCP settings are stored at:
 
-The fastest path is via the UI: open the Kilo Code panel → **MCP Servers** → **Edit MCP Settings**, then add:
+```text
+~/Library/Application Support/Code/User/globalStorage/kilocode.kilo-code/settings/mcp_settings.json
+```
 
-**Guidance-only:**
+The recommended path is through the UI:
+
+```text
+Kilo Code panel → MCP Servers → Edit MCP Settings
+```
+
+Guidance-only:
+
 ```json
 {
   "mcpServers": {
@@ -484,7 +448,8 @@ The fastest path is via the UI: open the Kilo Code panel → **MCP Servers** →
 }
 ```
 
-**Active (with `apply_designer`):**
+Active tier:
+
 ```json
 {
   "mcpServers": {
@@ -501,16 +466,28 @@ The fastest path is via the UI: open the Kilo Code panel → **MCP Servers** →
 }
 ```
 
-The server activates immediately — no VS Code restart needed.
+The server should activate immediately after saving.
 
-</details>
+---
 
-<details>
-<summary><strong>Open Code</strong> — <code>opencode.json</code></summary>
+### Open Code
 
-Config file: `opencode.json` at project root, or `~/.config/opencode/config.json` for global config.
+Project config file:
 
-**Guidance-only:**
+```text
+opencode.json
+```
+
+Global config file:
+
+```text
+~/.config/opencode/config.json
+```
+
+Open Code uses `mcp`, not `mcpServers`, and `environment`, not `env`.
+
+Guidance-only:
+
 ```json
 {
   "mcp": {
@@ -522,7 +499,8 @@ Config file: `opencode.json` at project root, or `~/.config/opencode/config.json
 }
 ```
 
-**Active (with `apply_designer`):**
+Active tier:
+
 ```json
 {
   "mcp": {
@@ -537,16 +515,16 @@ Config file: `opencode.json` at project root, or `~/.config/opencode/config.json
 }
 ```
 
-Open Code uses `mcp` (not `mcpServers`) and `environment` (not `env`) for its MCP server definitions. Restart Open Code after saving.
+Restart Open Code after saving.
 
-</details>
+---
 
-<details>
-<summary><strong>Pi</strong> (<code>@earendil-works/pi-coding-agent</code>) — MCP config</summary>
+### Pi
 
-Pi can use the skill natively (see [Skill Setup](#skill-setup)) or via MCP. For MCP, add to Pi's server config:
+Pi can use Designer-Skill natively or through MCP.
 
-**Guidance-only:**
+Guidance-only:
+
 ```json
 {
   "mcpServers": {
@@ -558,7 +536,8 @@ Pi can use the skill natively (see [Skill Setup](#skill-setup)) or via MCP. For 
 }
 ```
 
-**Active (with `apply_designer`):**
+Active tier:
+
 ```json
 {
   "mcpServers": {
@@ -573,56 +552,242 @@ Pi can use the skill natively (see [Skill Setup](#skill-setup)) or via MCP. For 
 }
 ```
 
-See [`~/pi_setup.md`](~/pi_setup.md) for the full Pi config, extensions, and audit log.
+---
 
-</details>
+## AI-Readable Config Reference
+
+```yaml
+# designer-skill-mcp
+# Package: designer-skill-mcp
+# Command: npx -y designer-skill-mcp
+
+guidance_only:
+  command: npx
+  args:
+    - "-y"
+    - designer-skill-mcp
+
+active_tier:
+  command: npx
+  args:
+    - "-y"
+    - designer-skill-mcp
+  env:
+    ANTHROPIC_API_KEY: "<your-anthropic-api-key>"
+
+clients:
+  claude_code:
+    setup: "claude mcp add designer-skill -- npx -y designer-skill-mcp"
+
+  codex_cli:
+    config_file: "~/.codex/config.yaml"
+    root_key: mcpServers
+    format: yaml
+
+  pythinker:
+    config_file: "~/.pythinker/config.yaml"
+    root_key: mcpServers
+    format: yaml
+
+  cursor:
+    config_file: ".cursor/mcp.json"
+    root_key: mcpServers
+    format: json
+
+  vscode:
+    config_file: ".vscode/mcp.json"
+    root_key: servers
+    required_type: stdio
+    format: json
+
+  kilo_code:
+    config_file: "~/Library/Application Support/Code/User/globalStorage/kilocode.kilo-code/settings/mcp_settings.json"
+    root_key: mcpServers
+    format: json
+
+  open_code:
+    config_file: "opencode.json or ~/.config/opencode/config.json"
+    root_key: mcp
+    env_key: environment
+    format: json
+
+  pi:
+    root_key: mcpServers
+    format: json
+```
 
 ---
 
 ## Tools Reference
 
-| Tool | Requires key? | Purpose |
-|---|---|---|
-| `get_design_system` | no | Returns the `SKILL.md` router — call first (preflight order, precedence rule, routing map, ship gate). |
-| `get_reference` | no | Returns one of the 7 reference files by name (e.g. `"aesthetic-systems"`, `"avoid-ai-slop"`). |
-| `dispatch_intent` | no | Maps a natural-language request phrase to design verb(s) and the reference files to read. |
-| `anti_slop_checklist` | no | Returns the ship-gate checklist from `avoid-ai-slop.md` — run before declaring any UI work done. |
-| `apply_designer` | **yes** | Runs Claude loaded with the full Designer-Skill and streams a complete audit, redesign, or build result. |
+| Tool                  | Requires key? | Purpose                                                                                                             |
+| --------------------- | ------------: | ------------------------------------------------------------------------------------------------------------------- |
+| `get_design_system`   |            No | Returns the main `SKILL.md` router. Call this first for routing, preflight order, precedence rules, and ship gate.  |
+| `get_reference`       |            No | Returns one of the seven reference files by name.                                                                   |
+| `dispatch_intent`     |            No | Maps a natural-language design request to design verbs and reference files.                                         |
+| `anti_slop_checklist` |            No | Returns the anti-slop ship-gate checklist.                                                                          |
+| `apply_designer`      |           Yes | Runs Claude with the full Designer-Skill context and streams a complete audit, redesign, critique, or build result. |
 
-**Resources:** `designer://skill` (the full SKILL.md) and `designer://reference/{name}` (any of the 7 reference files).
+---
 
-**Prompt:** `design` — accepts `task` (required) and `aesthetic` (optional) arguments; bundles the relevant skill context with your task into a single ready-to-run prompt.
+## Resources
+
+| Resource                      | Purpose                        |
+| ----------------------------- | ------------------------------ |
+| `designer://skill`            | Full `SKILL.md` router.        |
+| `designer://reference/{name}` | Any individual reference file. |
+
+Available reference names:
+
+```text
+design-principles
+aesthetic-systems
+motion-and-interaction
+engineering-and-performance
+avoid-ai-slop
+refactor-and-redesign
+command-playbook
+```
+
+---
+
+## Prompt
+
+The server exposes a `design` prompt.
+
+Arguments:
+
+| Argument    | Required | Purpose                                              |
+| ----------- | -------: | ---------------------------------------------------- |
+| `task`      |      Yes | The design, redesign, audit, or implementation task. |
+| `aesthetic` |       No | Optional aesthetic direction to bias the response.   |
+
+Example:
+
+```text
+design(
+  task: "Redesign this pricing page to feel more premium and less generic.",
+  aesthetic: "High-end-Stitch"
+)
+```
 
 ---
 
 ## Environment Variables
 
-| Variable | Required | Default | Purpose |
-|---|---|---|---|
-| `ANTHROPIC_API_KEY` | Active tier only | — | Enables the `apply_designer` tool. Omit to run guidance-only. |
-| `DESIGNER_MCP_MODEL` | No | `claude-opus-4-8` | Override the model used by `apply_designer`. |
+| Variable             |         Required | Default           | Purpose                                                         |
+| -------------------- | ---------------: | ----------------- | --------------------------------------------------------------- |
+| `ANTHROPIC_API_KEY`  | Active tier only | —                 | Enables the `apply_designer` tool. Omit for guidance-only mode. |
+| `DESIGNER_MCP_MODEL` |               No | `claude-opus-4-8` | Overrides the model used by `apply_designer`.                   |
 
 ---
 
 ## Build & Dev
 
+Install dependencies:
+
 ```bash
 npm install
-npm run build   # syncs Designer-Skill/ → assets/skill/, compiles TypeScript to dist/
-npm test        # 16 unit tests — no API calls, no key required
 ```
 
-**HTTP mode** (for hosting or remote clients):
+Build the MCP server:
 
 ```bash
-node dist/index.js --http --port 3017             # binds 127.0.0.1 (safe default)
-node dist/index.js --http --port 3017 --host 0.0.0.0  # expose publicly — add your own auth/proxy
+npm run build
 ```
 
-Point HTTP clients at `http://127.0.0.1:3017/mcp` (Streamable HTTP transport). The HTTP server includes an Origin guard against DNS-rebinding; there is no built-in auth layer for public exposure.
+The build syncs:
 
-**Local checkout** (instead of `npx`): replace `"command": "npx", "args": ["-y", "designer-skill-mcp"]` in any config block above with `"command": "node", "args": ["/abs/path/to/designer-skill-mcp/dist/index.js"]`.
+```text
+Designer-Skill/ → assets/skill/
+```
+
+Then compiles TypeScript to:
+
+```text
+dist/
+```
+
+Run tests:
+
+```bash
+npm test
+```
+
+The test suite requires no API calls and no API key.
 
 ---
 
-MIT License · [designer-skill-mcp](designer-skill-mcp/) · [Designer-Skill](Designer-Skill/)
+## HTTP Mode
+
+Run the server over Streamable HTTP transport:
+
+```bash
+node dist/index.js --http --port 3017
+```
+
+By default, the HTTP server binds to:
+
+```text
+127.0.0.1
+```
+
+Expose it publicly only behind your own authentication and proxy layer:
+
+```bash
+node dist/index.js --http --port 3017 --host 0.0.0.0
+```
+
+HTTP endpoint:
+
+```text
+http://127.0.0.1:3017/mcp
+```
+
+The HTTP server includes an Origin guard against DNS rebinding. It does not include a built-in public authentication layer.
+
+---
+
+## Local Checkout Usage
+
+To run from a local checkout instead of `npx`, replace:
+
+```json
+{
+  "command": "npx",
+  "args": ["-y", "designer-skill-mcp"]
+}
+```
+
+with:
+
+```json
+{
+  "command": "node",
+  "args": ["/absolute/path/to/designer-skill-mcp/dist/index.js"]
+}
+```
+
+---
+
+## Security Notes
+
+* Do not commit API keys to your repo.
+* Use guidance-only mode when you only need skill references.
+* Add `ANTHROPIC_API_KEY` only when you need `apply_designer`.
+* Public HTTP exposure should be protected by your own auth, proxy, and network controls.
+* Treat generated design/code output as a draft until reviewed, tested, and checked for accessibility.
+
+---
+
+## License
+
+MIT License.
+
+---
+
+<div align="center">
+
+**designer-skill-mcp** · **Designer-Skill**
+
+</div>
