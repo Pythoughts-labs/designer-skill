@@ -13,6 +13,10 @@
 
 [Architecture](#routing-map) · [Skill Setup](#skill-setup) · [Quick Setup](#quick-setup) · [Full MCP Configs](#mcp-setup--all-8-clients) · [Env Vars](#environment-variables)
 
+```bash
+npm i designer-skill-mcp
+```
+
 </div>
 
 ---
