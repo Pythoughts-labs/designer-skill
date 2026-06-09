@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 360">
+  <rect width="1440" height="360" fill="#0f1117"/>
+  <text
+    x="720" y="148"
+    font-family="ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, monospace"
+    font-size="80" font-weight="600" fill="#e2e8f0"
+    text-anchor="middle" dominant-baseline="middle">designer-skill</text>
+  <text
+    x="720" y="222"
+    font-family="ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, monospace"
+    font-size="52" font-weight="400" fill="#0ea5e9"
+    text-anchor="middle" dominant-baseline="middle">MCP</text>
+  <text
+    x="720" y="290"
+    font-family="ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, monospace"
+    font-size="22" font-weight="400" fill="#6b7280"
+    text-anchor="middle" dominant-baseline="middle">design vocabulary for coding agents</text>
+</svg>

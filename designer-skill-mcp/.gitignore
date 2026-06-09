@@ -1,0 +1,6 @@
+node_modules/
+dist/
+assets/skill/
+*.log
+.env
+.DS_Store
