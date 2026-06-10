@@ -1,4 +1,4 @@
-# designer-skill
+# Designer-Skill
 
 Production-grade design skill for coding agents, plus the `designer-skill-mcp` MCP server that serves it to any MCP client.
 

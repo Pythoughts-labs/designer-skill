@@ -1,6 +1,6 @@
 {
   "name": "designer-skill",
-  "displayName": "designer-skill",
+  "displayName": "Designer Skill",
   "version": "0.2.0",
   "description": "Production-grade design skill for coding agents — design, refactor, and enhance UI with anti-AI-slop discipline, plus the designer-skill MCP server (guidance tools, resources, and an optional Claude-backed apply tool).",
   "author": {

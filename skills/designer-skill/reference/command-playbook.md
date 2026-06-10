@@ -1,6 +1,6 @@
 # Command Playbook
 
-This is the intent-to-action dispatch table for designer-skill. Find the verb whose intent cue matches what the user wants, then read the file(s) in its Read column before you touch anything. The Read column points only to sibling reference files in this skill; open them, do not guess from memory. One verb usually owns the task; if two fit and one intent clearly dominates, pick it and let the other's file be a secondary read — if genuinely ambiguous, ask the user once which they mean. Concrete values in the moves are starting points, not laws.
+This is the intent-to-action dispatch table for Designer-Skill. Find the verb whose intent cue matches what the user wants, then read the file(s) in its Read column before you touch anything. The Read column points only to sibling reference files in this skill; open them, do not guess from memory. One verb usually owns the task; if two fit and one intent clearly dominates, pick it and let the other's file be a secondary read — if genuinely ambiguous, ask the user once which they mean. Concrete values in the moves are starting points, not laws.
 
 ## Dispatch table
 
