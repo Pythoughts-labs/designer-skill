@@ -2,7 +2,6 @@
 
 <img src="docs/banner.svg" alt="Designer-Skill" width="720" />
 
-# Designer-Skill MCP
 
 **Production-grade design guidance for coding agents — delivered as an MCP server.**
 
