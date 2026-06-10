@@ -5,3 +5,4 @@ dist/
 .env
 docs/superpowers/
 main-s/
+AGENTS.md
