@@ -1,0 +1,19 @@
+{
+  "name": "pythoughts-labs",
+  "owner": {
+    "name": "Pythoughts Labs",
+    "url": "https://github.com/Pythoughts-labs"
+  },
+  "metadata": {
+    "description": "Plugins from Pythoughts Labs — design and frontend quality tooling for coding agents."
+  },
+  "plugins": [
+    {
+      "name": "designer-skill",
+      "source": "./",
+      "description": "Production-grade design skill for coding agents — design, refactor, and enhance UI with anti-AI-slop discipline, plus the designer-skill MCP server.",
+      "category": "design",
+      "tags": ["design", "ui", "frontend", "design-system", "mcp", "skill"]
+    }
+  ]
+}

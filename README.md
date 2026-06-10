@@ -11,7 +11,7 @@
 [![tiers](https://img.shields.io/badge/tiers-guidance%20%2B%20active-6366f1?style=flat-square)](#two-tier-model)
 [![agents](https://img.shields.io/badge/agents-8-7c3aed?style=flat-square)](#mcp-setup--all-8-clients)
 
-[Architecture](#routing-map) · [Skill Setup](#skill-setup) · [Quick Setup](#quick-setup) · [Full MCP Configs](#mcp-setup--all-8-clients) · [Env Vars](#environment-variables)
+[Architecture](#routing-map) · [Claude Code Plugin](#claude-code-plugin-recommended) · [Codex Plugin](#codex-plugin) · [Skill Setup](#skill-setup) · [Quick Setup](#quick-setup) · [Full MCP Configs](#mcp-setup--all-8-clients) · [Env Vars](#environment-variables)
 
 ```bash
 npm i designer-skill-mcp
@@ -23,7 +23,7 @@ npm i designer-skill-mcp
 
 ## What this is
 
-**Designer-Skill** is a composite design reference for coding agents — a lightweight router (`Designer-Skill/SKILL.md`) that dispatches to seven specialist reference files covering visual fundamentals, aesthetic systems, motion and interaction, engineering and performance, anti-AI-slop discipline, refactor/redesign loops, and a verb-driven command playbook. Any coding agent that reads these files gains an opinionated, production-grade design vocabulary before touching a single line of UI code.
+**Designer-Skill** is a composite design reference for coding agents — a lightweight router (`skills/designer-skill/SKILL.md`) that dispatches to seven specialist reference files covering visual fundamentals, aesthetic systems, motion and interaction, engineering and performance, anti-AI-slop discipline, refactor/redesign loops, and a verb-driven command playbook. Any coding agent that reads these files gains an opinionated, production-grade design vocabulary before touching a single line of UI code.
 
 **designer-skill-mcp** is the [Model Context Protocol](https://modelcontextprotocol.io) server that exposes Designer-Skill to any MCP-compatible client — Claude Code, Codex CLI, Cursor, VS Code, Kilo Code, Open Code, Pi, and pythinker. It ships in two tiers: a **Guidance tier** (no API key required) that hands the skill to your agent via tools, resources, and a prompt; and an **Active tier** (requires `ANTHROPIC_API_KEY`) that adds `apply_designer` — a Claude-backed tool that runs the full skill and returns a streamed audit, redesign, or build result.
 
@@ -86,23 +86,65 @@ Run this sequence before writing any UI code:
 
 ---
 
+## Claude Code Plugin (recommended)
+
+This repo is a **plugin** and its own **marketplace** — for both Claude Code and Codex. One install gets you both the `designer-skill` skill and the `designer-skill` MCP server:
+
+```
+/plugin marketplace add Pythoughts-labs/designer-skill
+/plugin install designer-skill@pythoughts-labs
+```
+
+What the plugin ships:
+
+- **Skill** — `skills/designer-skill/` (router + 7 reference files), invocable as `designer-skill`.
+- **MCP server** — `designer-skill-mcp` via `npx` (`.mcp.json`), guidance tier with zero config. Add `ANTHROPIC_API_KEY` to your environment to unlock the `apply_designer` active tier.
+
+To verify after install: `/plugin` lists the plugin, `/mcp` shows the `designer-skill` server, and the skill appears in the Skill tool list.
+
+## Codex Plugin
+
+The same repo doubles as a Codex plugin (`.codex-plugin/plugin.json`); Codex reads `.claude-plugin/marketplace.json` as a legacy-compatible marketplace. In the Codex CLI:
+
+```bash
+codex plugin marketplace add Pythoughts-labs/designer-skill
+```
+
+Then open `/plugins` in Codex, select the **pythoughts-labs** marketplace, and install **designer-skill**. Plugin-installed skills are namespaced, so it appears as `designer-skill:designer-skill`.
+
+**Skill-only alternative** — install just the skill into your local Codex setup:
+
+```
+Use $skill-installer to install the designer-skill skill from https://github.com/Pythoughts-labs/designer-skill (skills/designer-skill)
+```
+
+or copy it manually:
+
+```bash
+cp -r skills/designer-skill/ ~/.codex/skills/designer-skill/
+```
+
+Restart Codex after installing; invoke with `$designer-skill` or let it trigger on design tasks.
+
+---
+
 ## Skill Setup
 
 For agents that support native skill or prompt-file loading (not MCP).
 
-### Claude Code
+### Claude Code (manual copy)
 
-Copy or symlink `Designer-Skill/` into your Claude Code skills directory:
+Prefer the [plugin install](#claude-code-plugin-recommended) above. To install just the skill by hand, copy `skills/designer-skill/` into your Claude Code skills directory:
 
 ```bash
 # Option A — copy into project skills
-cp -r Designer-Skill/ .claude/skills/designer-skill/
+cp -r skills/designer-skill/ .claude/skills/designer-skill/
 
 # Option B — copy into global skills
-cp -r Designer-Skill/ ~/.claude/skills/designer-skill/
+cp -r skills/designer-skill/ ~/.claude/skills/designer-skill/
 ```
 
-Claude Code picks up the skill via the `name: Designer-Skill` frontmatter in `SKILL.md`. Invoke it with the Skill tool:
+Claude Code picks up the skill via the `name: designer-skill` frontmatter in `SKILL.md`. Invoke it with the Skill tool:
 
 ```
 Use the Designer-Skill to [your task]
@@ -118,7 +160,7 @@ Register the skill by pointing Pi at the `SKILL.md` entry point. Pi reads the `n
 {
   "skills": [
     {
-      "path": "/path/to/Designer-Skill/SKILL.md"
+      "path": "/path/to/skills/designer-skill/SKILL.md"
     }
   ]
 }
@@ -132,13 +174,15 @@ Pi will route design-intent prompts to the skill automatically based on the `des
 
 > **For AI agents reading this repo:** All commands below are copy-paste ready.
 > Package: `designer-skill-mcp` — <https://www.npmjs.com/package/designer-skill-mcp>
-> Repo: <https://github.com/Pythoughts-labs/Designer-Skill>
+> Repo: <https://github.com/Pythoughts-labs/designer-skill>
 
 The four configs below cover the most common agent runtimes. [Full reference for all 8 clients ↓](#mcp-setup--all-8-clients)
 
 ---
 
 ### Pythinker
+
+> **Pythinker and Codex CLI use the same setup** — an identical `command` / `args` / `env` server definition. Pythinker writes it as YAML (`mcpServers:`), Codex as TOML (`[mcp_servers.*]`). Configure Pythinker once and the Codex config below is the same thing in a different file format.
 
 Add to `~/.pythinker/config.yaml`:
 
@@ -166,6 +210,35 @@ mcpServers:
 
 ---
 
+### Codex CLI
+
+Same server definition as Pythinker above, managed via the `codex` CLI (or as TOML in `~/.codex/config.toml`):
+
+**Guidance-only:**
+```bash
+codex mcp add designer-skill -- npx -y designer-skill-mcp
+```
+
+<details>
+<summary>Active tier — adds <code>apply_designer</code> (requires <code>ANTHROPIC_API_KEY</code>)</summary>
+
+```bash
+codex mcp add designer-skill --env ANTHROPIC_API_KEY=sk-ant-... -- npx -y designer-skill-mcp
+```
+
+Or edit `~/.codex/config.toml` directly:
+
+```toml
+[mcp_servers.designer-skill]
+command = "npx"
+args = ["-y", "designer-skill-mcp"]
+env = { ANTHROPIC_API_KEY = "sk-ant-..." }
+```
+
+</details>
+
+---
+
 ### Claude Code
 
 **Guidance-only:**
@@ -177,34 +250,6 @@ claude mcp add designer-skill -- npx -y designer-skill-mcp
 ```bash
 claude mcp add designer-skill -e ANTHROPIC_API_KEY=sk-ant-... -- npx -y designer-skill-mcp
 ```
-
----
-
-### Codex CLI
-
-Add to `~/.codex/config.yaml`:
-
-**Guidance-only:**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args: ["-y", "designer-skill-mcp"]
-```
-
-<details>
-<summary>Active tier — adds <code>apply_designer</code> (requires <code>ANTHROPIC_API_KEY</code>)</summary>
-
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args: ["-y", "designer-skill-mcp"]
-    env:
-      ANTHROPIC_API_KEY: sk-ant-...
-```
-
-</details>
 
 ---
 
@@ -248,22 +293,25 @@ Add to Pi's MCP server config:
 
 ```yaml
 # designer-skill-mcp — structured config reference
-# Source: https://github.com/Pythoughts-labs/Designer-Skill
+# Source: https://github.com/Pythoughts-labs/designer-skill
 # Package: https://www.npmjs.com/package/designer-skill-mcp
 # Command (all clients): npx -y designer-skill-mcp
 
 agents:
+  # pythinker and codex_cli share the same command/args/env server shape;
+  # only the file format differs (YAML mcpServers vs TOML [mcp_servers.*]).
   pythinker:
     config_file: ~/.pythinker/config.yaml
     format: yaml
     key: mcpServers
+  codex_cli:
+    cli_command: "codex mcp add designer-skill -- npx -y designer-skill-mcp"
+    config_file: ~/.codex/config.toml
+    format: toml
+    key: mcp_servers
   claude_code:
     cli_command: "claude mcp add designer-skill -- npx -y designer-skill-mcp"
     active_tier: "claude mcp add designer-skill -e ANTHROPIC_API_KEY=<key> -- npx -y designer-skill-mcp"
-  codex_cli:
-    config_file: ~/.codex/config.yaml
-    format: yaml
-    key: mcpServers
   pi:
     format: json
     key: mcpServers
@@ -289,6 +337,67 @@ Add the `designer-skill` server to your agent's MCP config. Each block below sho
 
 - **Guidance-only** — no `env` block, no API key required.
 - **Active** — adds `ANTHROPIC_API_KEY` to enable `apply_designer`.
+
+> **Pythinker first, Codex right behind** — both use the same server definition (`command` / `args` / `env`). Pythinker writes it as YAML under `mcpServers:`; Codex writes the identical shape as TOML under `[mcp_servers.*]`. Learn one, you know both.
+
+<details open>
+<summary><strong>Pythinker</strong> — <code>~/.pythinker/config.yaml</code></summary>
+
+Config file: `~/.pythinker/config.yaml`
+
+**Guidance-only:**
+```yaml
+mcpServers:
+  designer-skill:
+    command: npx
+    args:
+      - "-y"
+      - designer-skill-mcp
+```
+
+**Active (with `apply_designer`):**
+```yaml
+mcpServers:
+  designer-skill:
+    command: npx
+    args:
+      - "-y"
+      - designer-skill-mcp
+    env:
+      ANTHROPIC_API_KEY: sk-ant-...
+```
+
+Same server shape as Codex CLI (below) — only the file format differs. Restart pythinker after saving.
+
+</details>
+
+<details>
+<summary><strong>Codex CLI</strong> — <code>~/.codex/config.toml</code></summary>
+
+Config file: `~/.codex/config.toml` (or project-scoped `.codex/config.toml` in trusted projects). The fastest path is the CLI:
+
+```bash
+codex mcp add designer-skill -- npx -y designer-skill-mcp
+```
+
+**Guidance-only:**
+```toml
+[mcp_servers.designer-skill]
+command = "npx"
+args = ["-y", "designer-skill-mcp"]
+```
+
+**Active (with `apply_designer`):**
+```toml
+[mcp_servers.designer-skill]
+command = "npx"
+args = ["-y", "designer-skill-mcp"]
+env = { ANTHROPIC_API_KEY = "sk-ant-..." }
+```
+
+Same server shape as Pythinker (above), in TOML. Restart Codex after editing `config.toml`; verify with `/mcp` inside the Codex TUI.
+
+</details>
 
 <details>
 <summary><strong>Claude Code</strong> — <code>claude_desktop_config.json</code></summary>
@@ -323,68 +432,6 @@ Config file: `~/Library/Application Support/Claude/claude_desktop_config.json`
 ```
 
 Restart Claude Desktop after saving. The server appears in the tools panel as `designer-skill`.
-
-</details>
-
-<details>
-<summary><strong>Codex CLI</strong> — <code>~/.codex/config.yaml</code></summary>
-
-Config file: `~/.codex/config.yaml`
-
-**Guidance-only:**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args:
-      - "-y"
-      - designer-skill-mcp
-```
-
-**Active (with `apply_designer`):**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args:
-      - "-y"
-      - designer-skill-mcp
-    env:
-      ANTHROPIC_API_KEY: sk-ant-...
-```
-
-No restart required — Codex CLI reads the config on each invocation.
-
-</details>
-
-<details>
-<summary><strong>pythinker</strong> — <code>~/.pythinker/config.yaml</code></summary>
-
-Config file: `~/.pythinker/config.yaml`
-
-**Guidance-only:**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args:
-      - "-y"
-      - designer-skill-mcp
-```
-
-**Active (with `apply_designer`):**
-```yaml
-mcpServers:
-  designer-skill:
-    command: npx
-    args:
-      - "-y"
-      - designer-skill-mcp
-    env:
-      ANTHROPIC_API_KEY: sk-ant-...
-```
-
-Same YAML structure as Codex CLI. Restart pythinker after saving.
 
 </details>
 
@@ -608,7 +655,7 @@ See [`~/pi_setup.md`](~/pi_setup.md) for the full Pi config, extensions, and aud
 
 ```bash
 npm install
-npm run build   # syncs Designer-Skill/ → assets/skill/, compiles TypeScript to dist/
+npm run build   # syncs skills/designer-skill/ → assets/skill/, compiles TypeScript to dist/
 npm test        # 16 unit tests — no API calls, no key required
 ```
 
@@ -625,4 +672,4 @@ Point HTTP clients at `http://127.0.0.1:3017/mcp` (Streamable HTTP transport). T
 
 ---
 
-MIT License · [designer-skill-mcp](designer-skill-mcp/) · [Designer-Skill](Designer-Skill/)
+MIT License · [designer-skill-mcp](designer-skill-mcp/) · [Designer-Skill](skills/designer-skill/)

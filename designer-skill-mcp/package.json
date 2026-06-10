@@ -1,6 +1,6 @@
 {
   "name": "designer-skill-mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MCP server that exposes the Designer-Skill (design, refactor, and enhance UI) to any MCP client — guidance tools/resources/prompt plus an optional Claude-backed apply tool.",
   "type": "module",
   "bin": {
@@ -31,6 +31,12 @@
     "designer-skill"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pythoughts-labs/designer-skill.git",
+    "directory": "designer-skill-mcp"
+  },
+  "homepage": "https://github.com/Pythoughts-labs/designer-skill#readme",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.103.0",
     "@modelcontextprotocol/sdk": "^1.12.0",

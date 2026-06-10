@@ -13,6 +13,17 @@ The perf and implementation layer that makes design survive contact with real co
 - **Memoize perpetual motion.** Any infinite/perpetual animation MUST be `React.memo`-wrapped and isolated in its own microscopic Client Component — never trigger re-renders in the parent layout. Wrap dynamic lists in `<AnimatePresence>`.
 - **Never track continuous input in `useState`.** Mouse position, scroll progress, pointer physics, magnetic hover → Motion's `useMotionValue` / `useTransform` / `useScroll`. `useState` re-renders the tree every frame and collapses on mobile. Import from `'motion/react'` (`framer-motion` is a legacy alias).
 - **Extract only at 3+ uses with the same intent.** Two buttons that look alike but serve different purposes stay separate. Premature abstraction is worse than duplication. Components that come out of extraction get a clear props API, sensible defaults, proper variants, and accessibility built in.
+- **Classify design-system deviations before fixing them.** A feature that drifts from the system fails for one of three reasons: a **missing token** (the value should exist in the system but doesn't → add the token), a **one-off implementation** (a shared component exists but wasn't used → swap to it), or a **conceptual misalignment** (the flow/IA/hierarchy doesn't match neighboring features → rework the flow). Fixing the symptom without naming the cause is how drift compounds. When a design-system principle is ambiguous, ask — never guess.
+
+### IA & flow-shape consistency
+
+Match the *shape* of the experience to neighboring features, not just the surface. Visual polish on a misshapen flow is wasted work.
+
+- **Progressive-disclosure parity.** A settings page exposing 40 fields when the rest of the app reveals 5 at a time is drift, even if every field is perfectly styled.
+- **Multi-step actions follow the shape of comparable flows.** Modal vs full page, inline edit vs dedicated route, save-on-blur vs explicit submit, optimistic vs pessimistic update — pick whichever the neighboring flows already use.
+- **Same conceptual weight = same visual weight.** Two features of equal importance shouldn't render at different scales or prominence.
+- **Content arrival, update, and exit match adjacent features** — how things appear, refresh, and disappear should feel like the same product everywhere.
+- **Naming & mental-model consistency.** A "Workspace" here must not be a "Project" three screens away.
 
 ### Z-index & stacking
 
@@ -97,8 +108,16 @@ The perf and implementation layer that makes design survive contact with real co
 - **Full-height: `min-h-[100dvh]`, never `h-screen` / `height: 100vh`.** `100vh` jumps as the iOS Safari address bar shows/hides. Wrap the page in `overflow-x-hidden` to kill stray horizontal scroll from off-screen animation.
 - **Declare an explicit `<768px` collapse for every multi-column layout.** Collapse to single column (`width: 100%`, `padding: 1rem`, `gap: 1.5rem`). Horizontal overflow on mobile is a critical failure. Test at 375, 390, 768, 1024, 1440px.
 - **Handle device safe areas.** `padding: env(safe-area-inset-*)`, with `.footer { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }`. Set `<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">`.
-- **Touch targets ≥ 44×44px** even when the visual element is smaller — expand the hit area: `.icon-button::before { content:''; position:absolute; inset:-10px; }`.
+- **Touch targets ≥ 44×44px** even when the visual element is smaller — expand the hit area: `.icon-button::before { content:''; position:absolute; inset:-10px; }`. **Respect the thumb zone:** on mobile, primary actions live in the bottom half of the screen, within one-handed reach — top corners are the hardest stretch.
 - **Never** hide core functionality on mobile, use device detection over feature detection, or maintain separate mobile/desktop codebases. Test on a real iPhone, a real Android, and a tablet — DevTools emulation misses touch, CPU/memory, latency, and font rendering.
+
+### Other contexts
+
+Responsive doesn't end at viewport widths — some surfaces aren't screens at all.
+
+- **Tablet:** master-detail (list pane + detail pane) is the canonical hybrid layout — neither a stretched phone layout nor a cramped desktop one.
+- **Print:** break pages at logical points; strip nav, footer, and interactive elements; expand hidden content and print full URLs; add page numbers/headers; provide print-friendly chart variants.
+- **Email:** 600px max single column, inline CSS, table-based layout, big button CTAs, no hover reliance — deep-link to the web app for anything complex.
 
 ---
 
@@ -158,9 +177,27 @@ Designs that only work with perfect data aren't production-ready.
 
 - **Long text:** truncate (`overflow:hidden; text-overflow:ellipsis; white-space:nowrap`), line-clamp (`-webkit-line-clamp:3; display:-webkit-box; -webkit-box-orient:vertical`), or wrap (`overflow-wrap:break-word; hyphens:auto`).
 - **i18n:** budget 30–40% extra width (German ~30% longer than English); never fixed-width text containers — `<button className="px-4 py-2">` not `w-24`. RTL via logical properties (`margin-inline-start`, `padding-inline`, `border-inline-end`). Format with `Intl.DateTimeFormat` / `Intl.NumberFormat`; pluralize with an i18n library, never `` `${n} item${n!==1?'s':''}` ``. UTF-8 everywhere.
-- **API status → UI:** 400 validation errors, 401 redirect to login, 403 permission, 404 not-found, 429 rate-limit, 500 generic + support. Preserve user input on form error; offer a retry button on network failure.
-- **Cover every state:** empty (with a next action), loading (say what's loading), large datasets (paginate/virtualize), concurrent (disable button while loading, optimistic update with rollback), permission, browser compat (feature-detect, polyfill).
+
+  | Language | Expansion vs English |
+  |---|---|
+  | German | +30% |
+  | French | +20% |
+  | Finnish | +30–40% |
+  | Chinese | −30% characters, but same width per character |
+- **Write translation-friendly strings.** Keep numbers separate from the sentence ("New messages: 3", not a templated mid-sentence count); ship full sentences as single strings (word order varies by language — never concatenate fragments); no abbreviations ("5 minutes ago", never "5 mins ago").
+- **API status → UI:** 400 validation errors, 401 redirect to login, 403 permission, 404 not-found, 429 rate-limit, 500 generic + support. Preserve user input on form error; offer a retry button on network failure. **Never block the whole interface because one component errored** — isolate the failure, keep the rest usable.
+- **Cover every state:** empty (with a next action), loading (say *what* is loading — "Saving your draft…", never bare "Loading…"; for waits beyond a few seconds, set expectations: "Analyzing your data… usually takes 30–60 seconds"), large datasets (paginate/virtualize), concurrent (disable button while loading, optimistic update with rollback), permission, browser compat (feature-detect, polyfill).
 - **Validate client-side AND server-side** — never trust the client alone; sanitize all input.
+
+**Stress-test battery — run before calling it hardened:**
+
+- Names and titles with 100+ characters; emoji in every text field; RTL scripts (Arabic/Hebrew); CJK text.
+- 1000+ items in every list.
+- Click submit 10× rapidly — the double-submission race test.
+- Refresh mid-workflow — is state preserved?
+- Paste from Excel into every input.
+- Throttle to 3G; force every API error state.
+- Windows high-contrast mode.
 
 ---
 

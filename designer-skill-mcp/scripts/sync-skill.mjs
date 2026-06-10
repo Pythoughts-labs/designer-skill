@@ -1,12 +1,12 @@
-// Copies the canonical Designer-Skill/ folder into assets/skill so the published
-// npm package is self-contained. Designer-Skill/ remains the single source of truth.
+// Copies the canonical skills/designer-skill/ folder into assets/skill so the published
+// npm package is self-contained. skills/designer-skill/ remains the single source of truth.
 import { existsSync, rmSync, mkdirSync, cpSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pkgRoot = resolve(here, "..");
-const src = resolve(pkgRoot, "..", "Designer-Skill");
+const src = resolve(pkgRoot, "..", "skills", "designer-skill");
 const dest = join(pkgRoot, "assets", "skill");
 
 if (!existsSync(join(src, "SKILL.md"))) {

@@ -25,11 +25,11 @@ Two tiers:
 
 ```bash
 npm install
-npm run build        # syncs Designer-Skill → assets/skill, compiles to dist/
+npm run build        # syncs skills/designer-skill → assets/skill, compiles to dist/
 npm test             # in-memory transport + dispatch tests (no API calls)
 ```
 
-The canonical content lives in the sibling `Designer-Skill/` folder; `npm run build` copies it into `assets/skill/` so the published package is self-contained.
+The canonical content lives in the repo's `skills/designer-skill/` folder; `npm run build` copies it into `assets/skill/` so the published package is self-contained.
 
 ## Run
 
