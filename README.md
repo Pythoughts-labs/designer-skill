@@ -19,7 +19,7 @@
 
 ## Overview
 
-**Designer-Skill** is a structured design system for coding agents.
+**designer-skill** is a structured design system for coding agents.
 
 It gives agents a production-grade design vocabulary before they write UI code: typography, spacing, layout, visual hierarchy, aesthetic systems, motion, accessibility, performance, anti-AI-slop checks, and redesign/refactor workflows.
 
@@ -183,7 +183,7 @@ Before writing or modifying UI code, the agent should run this sequence:
 | `designer://reference/{name}` exposes individual references. | Follows the output-completeness contract.                      |
 | `design` prompt bundles task context with the skill.         | Default model: `claude-opus-4-8`.                              |
 
----
+Or edit `~/.codex/config.toml` directly:
 
 ## Skill Setup
 

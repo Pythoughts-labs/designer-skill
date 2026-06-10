@@ -17,8 +17,9 @@ Shared motion *mechanics* (animate only `transform`/`opacity`, `IntersectionObse
 | **Soft** | Premium consumer / health / agency / lifestyle where haptic depth signals expense | OLED black **or** warm cream **or** silver | Glass, diffused ambient shadows, nested squircles |
 | **High-end / Premium (Stitch)** | SaaS/product where calibrated restraint reads "expensive and intentional" | Warm-neutral Zinc/Slate | One sub-80% accent, whisper borders, weight-driven hierarchy |
 | **Brand-identity** | Brand sites, campaigns, logo/identity systems where distinctiveness IS the bar | Whatever the voice demands | Committed color, named reference, font chosen by procedure |
+| **Product register** | App shells, dashboards, settings — inside-the-product surfaces where trust IS the bar | Quiet neutrals, two layers | Second neutral layer, accent = action only, familiar affordances |
 
-> Minimalist, Brutalist, Soft, and Stitch are **product/marketing build systems**. Brand-identity is a fluid *strategy* register — no fixed hexes; it commits per project.
+> Minimalist, Brutalist, Soft, and Stitch are **product/marketing build systems**. Brand-identity and Product are fluid *strategy* registers — no fixed hexes; Brand-identity commits per project, Product overlays whichever build system the app runs on.
 
 ---
 
@@ -119,7 +120,7 @@ Shared motion *mechanics* (animate only `transform`/`opacity`, `IntersectionObse
 
 ## 5. Brand-identity
 
-**Signature traits.** Design IS the product. Distinctiveness is the bar; restraint without intent reads as mediocre. No fixed palette — **commit per project** and name a real reference.
+**Signature traits.** Design IS the product. Distinctiveness is the bar; restraint without intent reads as mediocre. The real bar: a visitor asking **"how was this made?"** — not "which AI made this?". Run the **inverse test** before building: describe what you're about to build the way a competitor would describe theirs; if that sentence fits the category's modal landing page, restart. No fixed palette — **commit per project** and name a real reference.
 
 **Color (commitment axis — name the reference first).**
 | Strategy | Dosage | Reference |
@@ -133,7 +134,9 @@ The `≤10%` rule is **Restrained-only**; Committed/Full/Drenched deliberately e
 
 **Typography (font-selection procedure — every project, never skip).** (1) Write three physical-object brand-voice words ("warm and mechanical and opinionated", not "modern/elegant"). (2) List three reflex fonts; reject any on the reflex-reject list. (3) Browse a real catalog (Google Fonts, Pangram Pangram, Future Fonts, Adobe Fonts, ABC Dinamo, Klim, Velvetyne); find the font for the brand as a physical object; reject the first thing that "looks designy". (4) Cross-check — if the pick lines up with the reflex, start over. **Reflex-reject (greenfield only):** Fraunces · Newsreader · Lora · Crimson · Playfair Display · Cormorant · Syne · IBM Plex (Sans/Mono/Serif) · Space Mono · Space Grotesk · Inter · DM Sans/Serif · Outfit · Plus Jakarta Sans · Instrument Sans/Serif. Modular scale, fluid `clamp()`, **≥1.25 ratio** between steps (flat 1.1× reads uncommitted).
 
-**Spacing & permissions.** Asymmetric compositions, fluid `clamp()` spacing, intentional grid-breaking for emphasis; cards via `repeat(auto-fit, minmax(280px, 1fr))` when cards are right. Take permissions product can't: ambitious first-load motion (reveals + typographic choreography, not fade-on-scroll-everything — some brands skip entrance motion entirely), single-purpose viewports, unexpected color, art direction per section. Imagery is required when the brief implies it — zero images is a bug, not restraint.
+**Spacing & permissions.** Asymmetric compositions, fluid `clamp()` spacing, intentional grid-breaking for emphasis; cards via `repeat(auto-fit, minmax(280px, 1fr))` when cards are right. Take permissions product can't: ambitious first-load motion (reveals + typographic choreography, not fade-on-scroll-everything — some brands skip entrance motion entirely), single-purpose viewports, unexpected color, art direction per section.
+
+**Imagery (required when the brief implies it — zero images is a bug, not restraint).** Four operational rules: (1) **Search for the brand's physical object, not the category** — "handmade pasta on a scratched wooden table" beats "Italian food"; "cypress trees above a limestone hotel facade at dusk" beats "luxury hotel". (2) **One decisive photo beats five mediocre ones** — hero imagery commits to a mood; padding an indecisive hero with more stock never rescues it. (3) **Alt text is part of the voice** — "Coastal fettuccine, hand-cut, served on the terrace", never "pasta dish". (4) **"Imagery" is broader than photos** — product screenshots, custom data-viz, generated SVG, canvas/WebGL all count; the all-typography page is the failure mode, not a style. Unsplash URLs take the shape `https://images.unsplash.com/photo-{id}?auto=format&fit=crop&w=1600&q=80` — verify the IDs actually resolve, or pick fewer photos you're confident in.
 
 **Identity-board modes (for logo/identity decks).** Default `3×3` board on a dark/light canvas, strong gutters, sparse type. Compact palette-mode map:
 
@@ -151,6 +154,20 @@ The `≤10%` rule is **Restrained-only**; Committed/Full/Drenched deliberately e
 Accents must repeat across panels; one accent can carry the system. Logo via one (max two) of: Monogram+Meaning, Product Action, Metaphor Fusion, Negative Space, Construction Geometry.
 
 **Bans — within this register.** Monospace as lazy "technical" shorthand. Large rounded-corner icons above every heading. Single-family pages chosen by reflex (deliberate single family is fine). All-caps body copy. Timid palettes / average layouts (safe = invisible). Defaulting to editorial-magazine (serif + italic + drop caps) on non-magazine briefs. Repeated tiny uppercase tracked kickers above every section.
+
+---
+
+## 6. Product register
+
+**Signature traits.** The tool disappears into the task. Inside the app, trust replaces distinctiveness as the bar; familiarity is a feature, not a failure. Applies on top of whichever build system the product uses.
+
+**Color (accent = action).** Run **two neutral layers**: the content surface plus a second neutral — slightly warmer or cooler — for sidebars, toolbars, and panels, so structure reads without borders doing all the work. The accent means **action and nothing else**: primary actions, current selection, state indicators — never decoration. Restrained is the floor; a single surface may earn Committed (a drenched welcome screen, one category color carrying a report). Standardize a **state-rich semantic vocabulary** across every screen: hover, focus, active, disabled, selected, loading, error, warning, success, info — each state one consistent color treatment, everywhere.
+
+**Permissions.** What's reflex-rejected on brand surfaces is legitimate here: system fonts and `Inter` are honest choices for UI. Standard navigation patterns (top bar + side nav, breadcrumbs, tabs, command palettes) are assets, not laziness. Density is a feature. Consistency beats surprise on every call.
+
+**Bans — within this register.** Display fonts in UI labels, buttons, or data. Reinvented standard affordances — custom scrollbars, weird form controls, non-standard modals. Heavy or full-saturation color on inactive states. Inconsistent component vocabulary — if the save button looks different in two places, one of them is wrong. **Modal as first thought** — modals are usually laziness; exhaust inline and progressive-disclosure alternatives first.
+
+**The product slop test.** Not "would someone say AI made this" — that's the brand test. Here: would a user fluent in Linear, Figma, Notion, Raycast, or Stripe sit down and trust this immediately, or pause at every subtly-off component? The product failure mode is strangeness without purpose, not flatness.
 
 ---
 

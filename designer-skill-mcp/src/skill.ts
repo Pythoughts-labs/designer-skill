@@ -1,6 +1,6 @@
 // Loads the bundled Designer-Skill markdown (SKILL.md + 7 reference files) and
 // caches it. Resolves to the packaged copy (assets/skill) first, falling back to
-// the sibling Designer-Skill/ folder in local development.
+// the sibling skills/designer-skill/ folder in local development.
 import { readFileSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -39,7 +39,7 @@ function resolveSkillDir(): string {
   const pkgRoot = resolve(here, "..");
   const bundled = join(pkgRoot, "assets", "skill");
   if (existsSync(join(bundled, "SKILL.md"))) return bundled;
-  const dev = resolve(pkgRoot, "..", "Designer-Skill");
+  const dev = resolve(pkgRoot, "..", "skills", "designer-skill");
   if (existsSync(join(dev, "SKILL.md"))) return dev;
   throw new Error(
     `Designer-Skill content not found. Looked in:\n  ${bundled}\n  ${dev}\nRun "npm run sync-skill" to bundle it.`,

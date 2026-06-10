@@ -47,6 +47,17 @@ Five sizes cover most needs. Pick **one** ratio and commit; the common failure i
 - **Always:** body ≥16px / 1rem; `rem` not `px` (respects user zoom); never disable zoom (`user-scalable=no`). Use `font-variant-numeric: tabular-nums` for data and numbers that align in columns.
 - **Vertical rhythm:** line-height is the base unit for all vertical spacing. Body at line-height 1.5 on 16px (= 24px) means spacing in multiples of 24px. Paragraph rhythm: space-between **OR** first-line indent, never both.
 
+### Hard floors (checkable, not judgment calls)
+
+Mechanical pass/fail thresholds. Everything above is judgment; these are not.
+
+- **Line-height ≥1.3× on any multi-line text.** 1.5-1.7 stays the body target; below 1.3 fails outright.
+- **Body text never below 12px.** Below 12px is an outright fail; 14px is the minimum for body content, 16px the ideal.
+- **Letter-spacing on body caps at +0.05em.** Wider tracking disrupts character groupings; wide tracking is for short uppercase labels only.
+- **Never skip heading levels.** h1 → h3 with no h2 breaks the screen-reader outline.
+- **No `text-align: justify` without `hyphens: auto`.** Unhyphenated justification creates rivers; default body to left-align.
+- **Line length hard ceiling ~80ch.** 65-75ch stays the ideal; text wrapping beyond ~80ch fails.
+
 ---
 
 ## Spacing and rhythm
@@ -54,7 +65,8 @@ Five sizes cover most needs. Pick **one** ratio and commit; the common failure i
 Space is the most underused design tool. Layout problems are often the root cause of an interface feeling "off" even when color and type are fine.
 
 - **Use a 4pt base scale:** `4, 8, 12, 16, 24, 32, 48, 64, 96px`. Prefer it over 8pt; 8pt is too coarse and you will constantly want 12px between 8 and 16. **Never use values outside the scale** (no random 13px gaps). Pull every gap from the set.
-- **Rhythm comes from variety, never equal spacing:** tight grouping for related elements (**8-12px** between siblings), generous separation between distinct sections (**48-96px**), varied gaps within a section (not every row needs the same gap). Marketing pages double the spacing; dense data dashboards can pack tighter. When in doubt on a marketing page, double the whitespace.
+- **Rhythm comes from variety, never equal spacing:** tight grouping for related elements (**8-12px** between siblings), generous separation between distinct sections (**48-96px**), varied gaps within a section (not every row needs the same gap). Marketing pages double the spacing; dense data dashboards can pack tighter. When in doubt on a marketing page, double the whitespace. **Monotony self-check:** among 10+ gaps on a page, one value covering >60% of them with ≤3 unique values total = no rhythm; rework.
+- **Hard floors — checkable, not judgment calls:** text inside any bordered, outlined, or colored container gets **≥8px padding, ideally 12-16px**. Two failure shapes to catch: the element's own padding too low for its font size, and a near-zero-padding wrapper whose text children land flush against a visible boundary. Body paragraphs sit **≥16px (ideally 24-32px)** from the viewport edge, via a container or `max-width` + auto margins.
 - **Bolder** uses dramatic **100-200px** gaps, not 20-40px. **Quieter** evens out extreme variations into consistent rhythm.
 - Use `gap` for sibling spacing instead of margins (no margin-collapse hacks). Use `clamp()` for fluid spacing that breathes on large screens.
 - **Optical vertical padding:** mathematically equal top/bottom looks bottom-heavy; bottom padding often needs to be slightly larger.
@@ -85,7 +97,7 @@ More color ≠ better. Strategic color beats rainbow vomit. Use OKLCH, not HSL: 
 | Content | AA minimum | AAA target |
 |---------|-----------|------------|
 | Body text | 4.5:1 | 7:1 |
-| Large text (≥18px, or bold ≥14px) | 3:1 | 4.5:1 |
+| Large text (≥18px, or ≥14px at weight ≥700) | 3:1 | 4.5:1 |
 | UI components, icons | 3:1 | 4.5:1 |
 | Placeholder text | 4.5:1 | — |
 
@@ -133,7 +145,28 @@ Direct the eye with the fewest dimensions needed. Space alone is often enough; a
 
 **The squint test:** blur your eyes. If you can still identify the most important element, the second, and clear groupings, the hierarchy works. The most important content should be obvious within 2 seconds. Group by proximity; create clear groupings through spacing and separation. To quiet a loud design, reduce weights (900→600, 700→500), shrink scale jumps, and lean on weight/size/space instead of color and boldness.
 
-**Cognitive load:** humans hold ≤4 items in working memory. Cap simultaneous decision options at 4: nav ≤5 top-level, ≤4 form fields per group, 1 primary + 1-2 secondary actions, ≤4 dashboard metrics, ≤3 pricing tiers. One screen, one focus.
+### Cognitive load
+
+Humans hold ≤4 items in working memory. Cap simultaneous decision options at 4: nav ≤5 top-level, ≤4 form fields per group, 1 primary + 1-2 secondary actions, ≤4 dashboard metrics, ≤3 pricing tiers. One screen, one focus. Option bands: ≤4 is manageable, 5-7 is pushing it, 8+ and users skip, misclick, or abandon.
+
+Three kinds of load, three treatments:
+
+- **Intrinsic** (the task is genuinely complex): structure it with discrete steps, scaffolding, and progressive disclosure.
+- **Extraneous** (the interface adds friction): eliminate ruthlessly: confusing nav, unclear labels, clutter, inconsistent patterns, unnecessary steps.
+- **Germane** (effort that builds the user's mental model): this load is good; support it with consistent patterns and clear feedback.
+
+Eight-point self-check, one point per failure (**0-1 = low load, 2-3 = moderate, 4+ = critical**): single focus per screen / chunks of ≤4 per group / visual grouping matches meaning / clear hierarchy / one decision at a time / ≤4 visible options per decision point / no memory bridges between screens / progressive disclosure for the rest.
+
+| Violation | One-line fix |
+|-----------|--------------|
+| The Wall of Options | Group, default, and progressively disclose; show ≤4 at once |
+| The Memory Bridge | Carry needed info forward; never make users remember it across screens |
+| The Hidden Navigation | Keep primary paths visible; don't bury them behind gestures or unlabeled icons |
+| The Jargon Barrier | Use the user's words, not the system's |
+| The Visual Noise Floor | Strip decoration until every element earns its place |
+| The Inconsistent Pattern | One interaction pattern per job, reused everywhere |
+| The Multi-Task Demand | One task per screen; split parallel demands into steps |
+| The Context Switch | Keep related actions in one place; don't bounce users between areas |
 
 ---
 
@@ -145,6 +178,7 @@ The system should read mostly flat. Depth comes from material contrast and hairl
 - **Shadow scale:** build a consistent `sm → md → lg → xl` and keep shadows subtle. Use elevation to reinforce hierarchy, not as decoration. All shadows imply a **single light source**; audit for inconsistent direction.
 - **Tint shadows to the background hue.** No pure-black low-opacity shadows on colored or light backgrounds; a black shadow on a colored surface looks muddy and bolted-on.
 - **Radius consistency.** Pick one scale and apply it everywhere: all-sharp (0), all-soft (12-16px), or all-pill (full radius on interactive). Mixed systems are allowed only under a documented rule followed everywhere (e.g. buttons full-pill, cards 16px, inputs 8px). Round buttons in a square layout is broken. When nesting, vary radius optically: tighter on inner elements, softer on outer containers.
+- **Default-lean on roundness: cards top out at 12-16px.** Card, section, or input radii of 24, 28, 32, or 40px read as generated UI; full-pill radius stays at tag/button scale. Soft and high-end consumer systems deliberately override this (the precedence rule applies).
 - **Glassmorphism:** go beyond `backdrop-filter: blur`. Add a 1px inner border (`border-white/10`) and a subtle inner shadow (`inset 0 1px 0 rgba(255,255,255,0.1)`) to simulate edge refraction. Provide a solid-fill fallback for `prefers-reduced-transparency`.
 
 ---
@@ -167,6 +201,7 @@ These are **default-lean** verdicts for the aesthetic-neutral baseline — what 
 | Measure capped 65-75ch, generous whitespace | Edge-to-edge text, cramped equal spacing |
 | Asymmetric 70/30 splits, varied layout families | Centered-over-dark hero, 6 zigzag rows, repeated cards |
 | Bento cells = content count, dense interlock | Empty bento cells, nested cards |
+| Cards at 12-16px radius; pill only at tag/button scale | 24-40px radii on cards, sections, inputs |
 | Subtle grain/noise/texture on flat fields | Sterile flat vectors; perfectly even gradients |
 | Sentence-case headers, clean rags | Title Case everywhere, orphaned last-line words |
 
