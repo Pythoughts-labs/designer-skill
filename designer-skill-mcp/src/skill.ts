@@ -1,4 +1,4 @@
-// Loads the bundled Designer-Skill markdown (SKILL.md + 7 reference files) and
+// Loads the bundled designer-skill markdown (SKILL.md + 7 reference files) and
 // caches it. Resolves to the packaged copy (assets/skill) first, falling back to
 // the sibling skills/designer-skill/ folder in local development.
 import { readFileSync, existsSync } from "node:fs";
@@ -42,7 +42,7 @@ function resolveSkillDir(): string {
   const dev = resolve(pkgRoot, "..", "skills", "designer-skill");
   if (existsSync(join(dev, "SKILL.md"))) return dev;
   throw new Error(
-    `Designer-Skill content not found. Looked in:\n  ${bundled}\n  ${dev}\nRun "npm run sync-skill" to bundle it.`,
+    `designer-skill content not found. Looked in:\n  ${bundled}\n  ${dev}\nRun "npm run sync-skill" to bundle it.`,
   );
 }
 
@@ -60,7 +60,7 @@ function load(): SkillCache {
   const refs = new Map<ReferenceName, string>();
   for (const name of REFERENCE_NAMES) {
     const p = join(dir, "reference", `${name}.md`);
-    if (!existsSync(p)) throw new Error(`Missing Designer-Skill reference file: ${p}`);
+    if (!existsSync(p)) throw new Error(`Missing designer-skill reference file: ${p}`);
     refs.set(name, readFileSync(p, "utf8"));
   }
   cache = { router, refs };

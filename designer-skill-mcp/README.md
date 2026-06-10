@@ -1,6 +1,6 @@
 # designer-skill-mcp
 
-An [MCP](https://modelcontextprotocol.io) server that exposes the **Designer-Skill** — a consolidated reference for designing, refactoring, and enhancing UI — to any MCP client (Claude Desktop, Cursor, Cline, Windsurf, …).
+An [MCP](https://modelcontextprotocol.io) server that exposes the **designer-skill** — a consolidated reference for designing, refactoring, and enhancing UI — to any MCP client (Claude Desktop, Cursor, Cline, Windsurf, …).
 
 Two tiers:
 

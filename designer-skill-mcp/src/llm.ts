@@ -1,4 +1,4 @@
-// Active tier: run Claude loaded with the Designer-Skill. Gated behind
+// Active tier: run Claude loaded with the designer-skill. Gated behind
 // ANTHROPIC_API_KEY; the guidance tools work without it.
 import Anthropic from "@anthropic-ai/sdk";
 import { getSkillRouter, getReferenceDoc, type ReferenceName } from "./skill.js";
@@ -33,7 +33,7 @@ function buildSystemPrompt(request: string): string {
     parts.push(`# Reference: ${ref}.md\n\n${getReferenceDoc(ref)}`);
   }
   parts.push(
-    "You are the Designer-Skill agent. Apply the rules above to the user's request. " +
+    "You are the designer-skill agent. Apply the rules above to the user's request. " +
       "Commit to ONE aesthetic system, preserve functionality and DOM/ARIA contracts when refactoring, " +
       "and run the anti-slop checklist before finishing. Output complete, production-ready code or a " +
       "structured review — never placeholders, truncation, or '// rest of code'.",

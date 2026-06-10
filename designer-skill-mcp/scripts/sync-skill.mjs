@@ -14,7 +14,7 @@ if (!existsSync(join(src, "SKILL.md"))) {
     console.log(`[sync-skill] source not found at ${src}; using bundled assets/skill.`);
     process.exit(0);
   }
-  console.error(`[sync-skill] ERROR: no Designer-Skill source at ${src} and no bundled copy at ${dest}.`);
+  console.error(`[sync-skill] ERROR: no designer-skill source at ${src} and no bundled copy at ${dest}.`);
   process.exit(1);
 }
 

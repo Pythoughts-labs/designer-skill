@@ -1,4 +1,4 @@
-// Builds the Designer-Skill MCP server: resources, guidance tools, the active
+// Builds the designer-skill MCP server: resources, guidance tools, the active
 // (Claude-backed) tool, and a `design` prompt. Transport-agnostic.
 import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
@@ -24,7 +24,7 @@ export function createServer(): McpServer {
     "designer-skill",
     "designer://skill",
     {
-      title: "Designer-Skill (router)",
+      title: "designer-skill (router)",
       description: "SKILL.md — the entry point: session preflight, precedence rule, routing map, ship gate.",
       mimeType: "text/markdown",
     },
@@ -46,8 +46,8 @@ export function createServer(): McpServer {
       }),
     }),
     {
-      title: "Designer-Skill reference",
-      description: "One of the seven Designer-Skill reference files.",
+      title: "designer-skill reference",
+      description: "One of the seven designer-skill reference files.",
       mimeType: "text/markdown",
     },
     async (uri, variables) => {
@@ -65,9 +65,9 @@ export function createServer(): McpServer {
   server.registerTool(
     "get_design_system",
     {
-      title: "Get the Designer-Skill router",
+      title: "Get the designer-skill router",
       description:
-        "Call this FIRST. Returns the Designer-Skill SKILL.md: the session preflight, the precedence rule, the routing map to the seven reference files, and the always-run anti-slop ship gate.",
+        "Call this FIRST. Returns the designer-skill SKILL.md: the session preflight, the precedence rule, the routing map to the seven reference files, and the always-run anti-slop ship gate.",
     },
     async () => ({ content: [{ type: "text", text: getSkillRouter() }] }),
   );
@@ -75,8 +75,8 @@ export function createServer(): McpServer {
   server.registerTool(
     "get_reference",
     {
-      title: "Get a Designer-Skill reference file",
-      description: `Returns the full text of one Designer-Skill reference file. Valid names: ${REFERENCE_NAMES.join(", ")}.`,
+      title: "Get a designer-skill reference file",
+      description: `Returns the full text of one designer-skill reference file. Valid names: ${REFERENCE_NAMES.join(", ")}.`,
       inputSchema: { name: z.enum(REFERENCE_NAMES) },
     },
     async ({ name }) => ({ content: [{ type: "text", text: getReferenceDoc(name as ReferenceName) }] }),
@@ -87,7 +87,7 @@ export function createServer(): McpServer {
     {
       title: "Map a UI request to design moves + files to read",
       description:
-        "Given a natural-language UI request (e.g. 'make it pop', 'the spacing feels off', 'make it production-ready'), returns the matching design verb(s) and which Designer-Skill reference files to read. Use it to route a vague request to concrete guidance before acting.",
+        "Given a natural-language UI request (e.g. 'make it pop', 'the spacing feels off', 'make it production-ready'), returns the matching design verb(s) and which designer-skill reference files to read. Use it to route a vague request to concrete guidance before acting.",
       inputSchema: { request: z.string().min(1).describe("What the user wants done to the UI.") },
     },
     async ({ request }) => ({ content: [{ type: "text", text: dispatchIntent(request).text }] }),
@@ -98,7 +98,7 @@ export function createServer(): McpServer {
     {
       title: "Anti-slop ship gate",
       description:
-        "Returns the Designer-Skill anti-AI-slop reference: the tell ban-list, category-reflex checks, the output-completeness contract, and the final checklist. Run before declaring any UI work done.",
+        "Returns the designer-skill anti-AI-slop reference: the tell ban-list, category-reflex checks, the output-completeness contract, and the final checklist. Run before declaring any UI work done.",
     },
     async () => ({ content: [{ type: "text", text: getReferenceDoc("avoid-ai-slop") }] }),
   );
@@ -107,9 +107,9 @@ export function createServer(): McpServer {
   server.registerTool(
     "apply_designer",
     {
-      title: "Apply the Designer-Skill with Claude (needs ANTHROPIC_API_KEY)",
+      title: "Apply the designer-skill with Claude (needs ANTHROPIC_API_KEY)",
       description:
-        "Runs Claude loaded with the Designer-Skill to design, refactor, audit, critique, or enhance UI, and returns the result. Requires ANTHROPIC_API_KEY in the server environment; without it, the four guidance tools still work. Use when you want the server to do the work rather than guide your own agent.",
+        "Runs Claude loaded with the designer-skill to design, refactor, audit, critique, or enhance UI, and returns the result. Requires ANTHROPIC_API_KEY in the server environment; without it, the four guidance tools still work. Use when you want the server to do the work rather than guide your own agent.",
       inputSchema: {
         request: z.string().min(1).describe("The UI task: build / redesign / audit / critique / polish / harden, etc."),
         code: z.string().optional().describe("Existing markup / CSS / component code to work on, if any."),
@@ -137,9 +137,9 @@ export function createServer(): McpServer {
   server.registerPrompt(
     "design",
     {
-      title: "Design with the Designer-Skill",
+      title: "Design with the designer-skill",
       description:
-        "Loads the Designer-Skill (router + the references relevant to your task) as context and asks you to design, refactor, or enhance the given UI.",
+        "Loads the designer-skill (router + the references relevant to your task) as context and asks you to design, refactor, or enhance the given UI.",
       argsSchema: {
         task: z.string().describe("What to design, refactor, or improve."),
         aesthetic: z.string().optional().describe("Optional aesthetic direction."),
@@ -158,7 +158,7 @@ export function createServer(): McpServer {
             content: {
               type: "text",
               text:
-                "Use the Designer-Skill below to design, refactor, and enhance UI. Commit to one aesthetic system, " +
+                "Use the designer-skill below to design, refactor, and enhance UI. Commit to one aesthetic system, " +
                 "preserve functionality on refactors, and run the anti-slop checklist before finishing.\n\n" +
                 `${context}\n\n---\n\nTask: ${ask}`,
             },

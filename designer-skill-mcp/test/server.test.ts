@@ -46,7 +46,7 @@ describe("dispatchIntent", () => {
   });
 });
 
-describe("Designer-Skill MCP server", () => {
+describe("designer-skill MCP server", () => {
   let client: Client;
   beforeAll(async () => {
     client = await connectClient();
@@ -61,7 +61,7 @@ describe("Designer-Skill MCP server", () => {
 
   it("get_design_system returns the router with the precedence rule", async () => {
     const text = textOf(await client.callTool({ name: "get_design_system" }));
-    expect(text).toContain("Designer-Skill");
+    expect(text).toContain("designer-skill");
     expect(text.toLowerCase()).toContain("precedence");
     expect(text).toContain("reference/avoid-ai-slop.md");
   });
@@ -118,7 +118,7 @@ describe("Designer-Skill MCP server", () => {
     const prompt = await client.getPrompt({ name: "design", arguments: { task: "build a pricing page" } });
     const msg = prompt.messages[0];
     const text = typeof msg.content === "object" && "text" in msg.content ? (msg.content.text as string) : "";
-    expect(text).toContain("Designer-Skill");
+    expect(text).toContain("designer-skill");
     expect(text).toContain("Task: build a pricing page");
   });
 });
