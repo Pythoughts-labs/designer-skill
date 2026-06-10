@@ -1,4 +1,4 @@
-# Ship Better UI from Pythinker: A Beginner's Guide to the Designer-Skill MCP
+# Ship Better UI from Pythinker: A Beginner's Guide to the designer-skill MCP
 
 > **Audience:** Pythinker users (any skill level) who want their coding agent to produce UI that doesn't look like every other AI-generated site.
 > **Read time:** ~20 minutes. **Build time:** ~10 minutes.
@@ -9,7 +9,7 @@
 ## Table of contents
 
 1. [Why this guide exists](#why-this-guide-exists)
-2. [What "Designer-Skill" actually is (and what it isn't)](#what-designer-skill-actually-is-and-what-it-isnt)
+2. [What "designer-skill" actually is (and what it isn't)](#what-designer-skill-actually-is-and-what-it-isnt)
 3. [A 60-second primer on MCP](#a-60-second-primer-on-mcp)
 4. [Prerequisites](#prerequisites)
 5. [Method 1 — the one-liner (recommended)](#method-1--the-one-liner-recommended)
@@ -37,19 +37,19 @@ If you've used a coding agent to build a landing page, dashboard, or marketing s
 - Buzzwords like *seamless*, *empower*, *next-generation*.
 - An em-dash (—) in every other sentence.
 
-This is what the Designer-Skill repo calls **AI slop**: the average output that a viewer can spot as "AI-made" in under a second. The average used to be a passing grade. After 2024, it's a death sentence — every SaaS page looks the same because every coding model is reaching for the same training-data defaults.
+This is what the designer-skill repo calls **AI slop**: the average output that a viewer can spot as "AI-made" in under a second. The average used to be a passing grade. After 2024, it's a death sentence — every SaaS page looks the same because every coding model is reaching for the same training-data defaults.
 
-**Designer-Skill** is a composite design reference that fixes exactly that problem. It codifies a production-grade design vocabulary into seven reference files (typography, aesthetics, motion, engineering, anti-slop discipline, refactoring, and a verb-driven command playbook) and exposes them to any MCP-compatible coding agent — including **Pythinker**.
+**designer-skill** is a composite design reference that fixes exactly that problem. It codifies a production-grade design vocabulary into seven reference files (typography, aesthetics, motion, engineering, anti-slop discipline, refactoring, and a verb-driven command playbook) and exposes them to any MCP-compatible coding agent — including **Pythinker**.
 
-This guide is the beginner's walkthrough: how to connect Designer-Skill to your Pythinker CLI, how to invoke it, and how to interpret what comes back.
+This guide is the beginner's walkthrough: how to connect designer-skill to your Pythinker CLI, how to invoke it, and how to interpret what comes back.
 
 > **TL;DR.** Run one command (`pythinker mcp add designer-skill -- npx -y designer-skill-mcp`), restart Pythinker, and your agent now has a router to seven expert design references. You can ask it to design, audit, refactor, polish, or harden any UI with the same vocabulary a senior design engineer would use.
 
 ---
 
-## What "Designer-Skill" actually is (and what it isn't)
+## What "designer-skill" actually is (and what it isn't)
 
-Let's clear up a common misconception: **Designer-Skill is not a "design tool"** in the Figma / Sketch / Penpot sense. It doesn't generate images, draw layouts, or render components on a canvas.
+Let's clear up a common misconception: **designer-skill is not a "design tool"** in the Figma / Sketch / Penpot sense. It doesn't generate images, draw layouts, or render components on a canvas.
 
 It is a **structured markdown reference** — a corpus of opinionated design rules, written in plain prose, that a coding agent reads before it touches your UI code. Think of it as:
 
@@ -85,7 +85,7 @@ Concretely, an MCP server can expose three things to an agent:
 | **Resources** | Read-only content the agent can fetch (markdown, files, schemas) | "Read the docs page" |
 | **Prompts** | Pre-built prompt templates the user can invoke | "Run the code-review command" |
 
-Designer-Skill's MCP server exposes all three:
+designer-skill's MCP server exposes all three:
 
 - **5 tools** (`get_design_system`, `get_reference`, `dispatch_intent`, `anti_slop_checklist`, `apply_designer`)
 - **2 resources** (`designer://skill` and `designer://reference/{name}`)
@@ -174,7 +174,7 @@ Restart Pythinker (or run `/mcp reconnect` inside the TUI) to load the new serve
 
 If you prefer to see what's actually on disk (good for debugging and for storing your config in dotfiles), edit `~/.pythinker/mcp.json` directly.
 
-> **Note:** the Designer-Skill repo's README mentions `~/.pythinker/config.yaml`, but **the current Pythinker CLI v0.38.0 stores MCP servers in a separate file: `~/.pythinker/mcp.json`.** Older v2.x Pythinker builds merged MCP config into `~/.pythinker/config.json` under `tools.mcpServers` — that's a different schema. Use the one your installed version expects. You can confirm with `pythinker mcp list`, which prints the path.
+> **Note:** the designer-skill repo's README mentions `~/.pythinker/config.yaml`, but **the current Pythinker CLI v0.38.0 stores MCP servers in a separate file: `~/.pythinker/mcp.json`.** Older v2.x Pythinker builds merged MCP config into `~/.pythinker/config.json` under `tools.mcpServers` — that's a different schema. Use the one your installed version expects. You can confirm with `pythinker mcp list`, which prints the path.
 
 Open the file:
 
@@ -246,7 +246,7 @@ mkdir -p ~/.local/share/designer-skill-mcp
 cd ~/.local/share/designer-skill-mcp
 npm init -y
 npm install designer-skill-mcp
-npm run build   # syncs the Designer-Skill/ files and compiles TypeScript
+npm run build   # syncs the designer-skill/ files and compiles TypeScript
 ```
 
 Then in `~/.pythinker/mcp.json`:
@@ -262,7 +262,7 @@ Then in `~/.pythinker/mcp.json`:
 }
 ```
 
-> **The `npm run build` step is important.** It copies the canonical `Designer-Skill/` markdown content (the SKILL.md router and the seven reference files) into `assets/skill/` so the published package is self-contained. If you skip it, the server will fail on startup with a `Designer-Skill content not found` error.
+> **The `npm run build` step is important.** It copies the canonical `designer-skill/` markdown content (the SKILL.md router and the seven reference files) into `assets/skill/` so the published package is self-contained. If you skip it, the server will fail on startup with a `designer-skill content not found` error.
 
 You can also clone the [GitHub repo](https://github.com/Pythoughts-labs/designer-skill) and build from source if you want to read the source first.
 
@@ -546,7 +546,7 @@ If it still fails, the issue is in the model, not the skill. Try:
 
 ### "The README in the repo says `~/.pythinker/config.yaml` but my config is in `mcp.json`"
 
-You're not crazy. The Designer-Skill README was written for an older Pythinker v2.x schema where MCP was nested under `tools.mcpServers` in a single `config.json` (and the README mistakenly called it `.yaml`). Current Pythinker v0.38.0+ uses a separate `mcp.json`. Both schemas work, but **use the one `pythinker mcp list` shows you**. The CLI is always the source of truth.
+You're not crazy. The designer-skill README was written for an older Pythinker v2.x schema where MCP was nested under `tools.mcpServers` in a single `config.json` (and the README mistakenly called it `.yaml`). Current Pythinker v0.38.0+ uses a separate `mcp.json`. Both schemas work, but **use the one `pythinker mcp list` shows you**. The CLI is always the source of truth.
 
 ### "How do I disable it temporarily?"
 
@@ -588,12 +588,12 @@ A: The package is published by [`designer-skill-mcp`](https://www.npmjs.com/pack
 
 ## What's next
 
-You now have a working Designer-Skill MCP server feeding Pythinker a production-grade design vocabulary. Some directions to take it from here:
+You now have a working designer-skill MCP server feeding Pythinker a production-grade design vocabulary. Some directions to take it from here:
 
 1. **Use it for a real refactor.** Pick a page that looks "AI-made" and ask Pythinker to redesign it without breaking functionality. The `refactor-and-redesign` reference walks through the audit → diagnose → redesign loop in detail.
 2. **Pick an aesthetic system and commit.** Read `aesthetic-systems.md`. Pick one of the five (Minimalist, Brutalist, Soft, High-end, Brand-identity). Apply it consistently to your whole product.
 3. **Run the ship gate on every PR.** Add a CI step that calls the agent with "audit this diff for AI-slop tells and accessibility issues." The agent will use `anti_slop_checklist` and `engineering-and-performance`.
-4. **Combine with your existing skills.** Designer-Skill complements other Pythinker skills. The `simplify-code` skill cleans up logic; Designer-Skill cleans up presentation. Use both.
+4. **Combine with your existing skills.** designer-skill complements other Pythinker skills. The `simplify-code` skill cleans up logic; designer-skill cleans up presentation. Use both.
 5. **Tune the active tier.** Once you have an `ANTHROPIC_API_KEY` set, experiment with `DESIGNER_MCP_MODEL` to find the cost/quality sweet spot for your workload.
 
 The skill's job is to make "AI-made" a phrase your users never say. Now go ship something that doesn't look like everyone else's site.
@@ -602,9 +602,9 @@ The skill's job is to make "AI-made" a phrase your users never say. Now go ship 
 
 **Resources**
 
-- Designer-Skill repo: <https://github.com/Pythoughts-labs/designer-skill>
+- designer-skill repo: <https://github.com/Pythoughts-labs/designer-skill>
 - npm package: <https://www.npmjs.com/package/designer-skill-mcp>
 - Pythinker docs: <https://pythoughts-labs.github.io/pythinker-code/>
 - MCP spec: <https://modelcontextprotocol.io>
 
-**License:** MIT (Designer-Skill and this guide).
+**License:** MIT (designer-skill and this guide).

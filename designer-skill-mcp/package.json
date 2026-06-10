@@ -1,7 +1,7 @@
 {
   "name": "designer-skill-mcp",
   "version": "0.2.0",
-  "description": "MCP server that exposes the Designer-Skill (design, refactor, and enhance UI) to any MCP client — guidance tools/resources/prompt plus an optional Claude-backed apply tool.",
+  "description": "MCP server that exposes the designer-skill (design, refactor, and enhance UI) to any MCP client — guidance tools/resources/prompt plus an optional Claude-backed apply tool.",
   "type": "module",
   "bin": {
     "designer-skill-mcp": "dist/index.js"
