@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/designer-skill-mcp.webp" alt="designer-skill" width="480" />
+<img src="docs/designer-skill-mcp-logo.webp" alt="designer-skill" width="480" />
 
 
 **Production-grade design skill for coding agents, delivered as an MCP server.**
