@@ -3,7 +3,7 @@ name: designer-skill
 description: Use when building, designing, redesigning, refactoring, polishing, auditing, or enhancing any web or app user interface — landing pages, marketing sites, dashboards, product UI, components, forms, or design systems. Use when an interface looks generic or "AI-made", or needs better typography, color, spacing, layout, hierarchy, motion, accessibility, or performance, or when adapting or hardening UI for production. For any coding agent doing frontend visual work. Not for backend logic, data pipelines, CLI tools, or non-UI code.
 ---
 
-# Designer-Skill
+# designer-skill
 
 A composite design skill: one consolidated, framework-agnostic reference any coding agent can use to **design, refactor, and enhance** UI — spanning visual fundamentals, opinionated aesthetic systems, motion and interaction, engineering and performance, anti-AI-slop discipline, and a verb-driven command playbook.
 

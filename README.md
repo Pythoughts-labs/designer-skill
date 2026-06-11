@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/banner.svg" alt="designer-skill" width="720" />
+<img src="docs/designer-skill-mcp.webp" alt="designer-skill" width="480" />
 
 
 **Production-grade design skill for coding agents, delivered as an MCP server.**
@@ -21,11 +21,7 @@ npm i designer-skill-mcp
 
 ---
 
-## Overview
-
-**designer-skill** is a structured design system for coding agents.
-
-It gives agents a production-grade design vocabulary before they write UI code: typography, spacing, layout, visual hierarchy, aesthetic systems, motion, accessibility, performance, anti-AI-slop checks, and redesign/refactor workflows.
+## What this is
 
 **designer-skill** is a composite design reference for coding agents — a lightweight router (`skills/designer-skill/SKILL.md`) that dispatches to seven specialist reference files covering visual fundamentals, aesthetic systems, motion and interaction, engineering and performance, anti-AI-slop discipline, refactor/redesign loops, and a verb-driven command playbook. Any coding agent that reads these files gains an opinionated, production-grade design vocabulary before touching a single line of UI code.
 
@@ -182,7 +178,7 @@ Pi will route design-intent prompts to the skill automatically based on the `des
 
 The four configs below cover the most common agent runtimes. [Full reference for all 8 clients ↓](#mcp-setup--all-8-clients)
 
-Or edit `~/.codex/config.toml` directly:
+---
 
 ### Pythinker
 
