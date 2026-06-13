@@ -656,7 +656,7 @@ See [`~/pi_setup.md`](~/pi_setup.md) for the full Pi config, extensions, and aud
 ```bash
 npm install
 npm run build   # syncs skills/designer-skill/ → assets/skill/, compiles TypeScript to dist/
-npm test        # 16 unit tests — no API calls, no key required
+npm test        # 20 unit tests — no API calls, no key required
 ```
 
 **HTTP mode** (for hosting or remote clients):

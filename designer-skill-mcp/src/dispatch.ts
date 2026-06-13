@@ -130,6 +130,30 @@ const VERBS: Verb[] = [
     files: ["refactor-and-redesign", "avoid-ai-slop"],
     note: "Improve existing UI without breaking it: audit, diagnose generic patterns, run the redesign loop preserving function.",
   },
+  {
+    verb: "clarify",
+    cues: ["microcopy", "ux copy", "ux writing", "rewrite this error", "error message", "error copy", "button label", "labels are confusing", "confusing copy", "wording", "rewrite the copy"],
+    files: ["command-playbook", "avoid-ai-slop"],
+    note: "Fix UX copy: verb+object button labels, what-happened/why/how-to-fix errors, one term per concept, instructions before the field.",
+  },
+  {
+    verb: "onboard",
+    cues: ["onboard", "onboarding", "first run", "first-run", "first-time", "first time user", "product tour", "activation", "getting started", "welcome screen", "empty states"],
+    files: ["command-playbook", "engineering-and-performance"],
+    note: "Shortest path to first value: 5-part empty-state anatomy, the five empty-state types, skippable 3-7-step tours.",
+  },
+  {
+    verb: "document",
+    cues: ["design.md", "document the design", "write design", "capture the design system", "refresh design.md", "design system doc", "document tokens"],
+    files: ["refactor-and-redesign"],
+    note: "Scan tokens + components and generate or refresh DESIGN.md so later work stays on-brand; never overwrite without asking.",
+  },
+  {
+    verb: "variants",
+    cues: ["variants", "variations", "show me options", "show me 3", "3 versions", "three versions", "different versions", "alternatives", "options for this", "a few directions"],
+    files: ["refactor-and-redesign", "avoid-ai-slop"],
+    note: "Variation within identity, never three different brands: lock the identity, pick default vs departure mode, vary each option on a different axis.",
+  },
 ];
 
 export interface DispatchMatch {

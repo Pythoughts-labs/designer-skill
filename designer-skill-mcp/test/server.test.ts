@@ -35,6 +35,18 @@ describe("dispatchIntent", () => {
   it("routes 'redesign without breaking' to redesign", () => {
     expect(dispatchIntent("redesign this page without breaking it").matched.map((m) => m.verb)).toContain("redesign");
   });
+  it("routes 'rewrite this error message' to clarify", () => {
+    expect(dispatchIntent("rewrite this error message, the wording is off").matched.map((m) => m.verb)).toContain("clarify");
+  });
+  it("routes 'first run / empty states' to onboard", () => {
+    expect(dispatchIntent("design the first run and empty states for activation").matched.map((m) => m.verb)).toContain("onboard");
+  });
+  it("routes 'capture the design system in DESIGN.md' to document", () => {
+    expect(dispatchIntent("capture the design system and write DESIGN.md").matched.map((m) => m.verb)).toContain("document");
+  });
+  it("routes 'show me 3 versions' to variants", () => {
+    expect(dispatchIntent("show me 3 versions of this hero").matched.map((m) => m.verb)).toContain("variants");
+  });
   it("always recommends the anti-slop ship gate", () => {
     expect(dispatchIntent("literally anything").recommendedReads).toContain("avoid-ai-slop");
     expect(dispatchIntent("make it pop").recommendedReads).toContain("avoid-ai-slop");
