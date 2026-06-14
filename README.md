@@ -6,6 +6,7 @@
 **Production-grade design skill for coding agents, delivered as an MCP server.**
 
 [![npm version](https://img.shields.io/npm/v/designer-skill-mcp?style=flat-square&color=0ea5e9)](https://www.npmjs.com/package/designer-skill-mcp)
+[![npm downloads](https://img.shields.io/npm/dm/designer-skill-mcp?style=flat-square&color=0ea5e9)](https://www.npmjs.com/package/designer-skill-mcp)
 [![license](https://img.shields.io/badge/license-MIT-22c55e?style=flat-square)](designer-skill-mcp/LICENSE)
 [![node](https://img.shields.io/badge/node-%E2%89%A520-6b7280?style=flat-square)](#build--dev)
 [![tiers](https://img.shields.io/badge/tiers-guidance%20%2B%20active-6366f1?style=flat-square)](#two-tier-model)
