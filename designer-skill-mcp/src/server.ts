@@ -14,7 +14,7 @@ import { dispatchIntent } from "./dispatch.js";
 import { applyDesigner, MissingApiKeyError } from "./llm.js";
 
 export const SERVER_NAME = "designer-skill-mcp";
-export const SERVER_VERSION = "0.1.0";
+export const SERVER_VERSION = "0.4.0";
 
 export function createServer(): McpServer {
   const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION });
