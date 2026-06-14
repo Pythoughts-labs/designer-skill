@@ -47,6 +47,24 @@ describe("dispatchIntent", () => {
   it("routes 'show me 3 versions' to variants", () => {
     expect(dispatchIntent("show me 3 versions of this hero").matched.map((m) => m.verb)).toContain("variants");
   });
+  it("routes 'form design' to form", () => {
+    expect(dispatchIntent("help me with form design and validation").matched.map((m) => m.verb)).toContain("form");
+  });
+  it("routes 'navigation' to navigate", () => {
+    expect(dispatchIntent("which navigation pattern should I use").matched.map((m) => m.verb)).toContain("navigate");
+  });
+  it("routes 'state machine' to states", () => {
+    expect(dispatchIntent("model all ui states as a state machine").matched.map((m) => m.verb)).toContain("states");
+  });
+  it("routes 'feels flat' to feel", () => {
+    expect(dispatchIntent("the interface feels flat and lifeless").matched.map((m) => m.verb)).toContain("feel");
+  });
+  it("routes 'design system' to system", () => {
+    expect(dispatchIntent("set up the design system and token architecture").matched.map((m) => m.verb)).toContain("system");
+  });
+  it("routes 'visual critique' to score", () => {
+    expect(dispatchIntent("do a visual critique and score the design").matched.map((m) => m.verb)).toContain("score");
+  });
   it("always recommends the anti-slop ship gate", () => {
     expect(dispatchIntent("literally anything").recommendedReads).toContain("avoid-ai-slop");
     expect(dispatchIntent("make it pop").recommendedReads).toContain("avoid-ai-slop");
@@ -111,7 +129,7 @@ describe("designer-skill MCP server", () => {
     }
   });
 
-  it("exposes the skill router resource and all seven reference resources", async () => {
+  it("exposes the skill router resource and all ten reference resources", async () => {
     const uris = (await client.listResources()).resources.map((r) => r.uri);
     expect(uris).toContain("designer://skill");
     for (const name of REFERENCE_NAMES) {

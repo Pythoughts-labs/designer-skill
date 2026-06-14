@@ -1,4 +1,4 @@
-// Loads the bundled designer-skill markdown (SKILL.md + 7 reference files) and
+// Loads the bundled designer-skill markdown (SKILL.md + 10 reference files) and
 // caches it. Resolves to the packaged copy (assets/skill) first, falling back to
 // the sibling skills/designer-skill/ folder in local development.
 import { readFileSync, existsSync } from "node:fs";
@@ -13,6 +13,9 @@ export const REFERENCE_NAMES = [
   "avoid-ai-slop",
   "refactor-and-redesign",
   "command-playbook",
+  "interaction-design",
+  "visual-critique",
+  "design-systems",
 ] as const;
 
 export type ReferenceName = (typeof REFERENCE_NAMES)[number];
@@ -32,6 +35,12 @@ export const REFERENCE_DESCRIPTIONS: Record<ReferenceName, string> = {
     "Improving existing UI without breaking it: audit, diagnose generic patterns, the redesign loop, image/reference-to-code.",
   "command-playbook":
     "Intent-to-verb dispatch table mapping a request to the right design move and reference files.",
+  "interaction-design":
+    "Cognitive laws (Fitts, Hick, Miller, Doherty), state machines, form design, navigation patterns, error UX, feedback, loading, gestures, emotional timing.",
+  "visual-critique":
+    "Seven-dimension critique instrument: visual hierarchy, composition, color, typography, affordance, information density, brand consistency.",
+  "design-systems":
+    "Token architecture (global→semantic→component), motion system, component specs, naming conventions, theming, pattern library, color/type/spacing scales.",
 };
 
 function resolveSkillDir(): string {

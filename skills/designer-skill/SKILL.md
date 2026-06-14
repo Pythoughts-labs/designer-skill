@@ -7,7 +7,7 @@ description: Use when building, designing, redesigning, refactoring, polishing, 
 
 A composite design skill: one consolidated, framework-agnostic reference any coding agent can use to **design, refactor, and enhance** UI — spanning visual fundamentals, opinionated aesthetic systems, motion and interaction, engineering and performance, anti-AI-slop discipline, and a verb-driven command playbook.
 
-This file is the router. It is intentionally short. The substance lives in seven reference files under `reference/`; read this, then open the file(s) the task needs. Do not work from memory — open the owner file and use its concrete values.
+This file is the router. It is intentionally short. The substance lives in ten reference files under `reference/`; read this, then open the file(s) the task needs. Do not work from memory — open the owner file and use its concrete values.
 
 ## How to use it (session preflight)
 
@@ -42,6 +42,9 @@ To map a specific user request ("make it pop", "it feels off", "production-ready
 | `reference/avoid-ai-slop.md` | Not looking "AI-made" — the cross-register ban-list, category-reflex checks, and the output-completeness contract. |
 | `reference/refactor-and-redesign.md` | Improving existing UI without breaking it — audit, diagnose generic patterns, the redesign loop, image/reference-to-code. |
 | `reference/command-playbook.md` | Which verb/move maps to the user's intent (build, polish, bolder, quieter, animate, harden, redesign, …). |
+| `reference/interaction-design.md` | Cognitive laws (Fitts, Hick, Miller, Doherty), state machines, form design, navigation patterns, error UX, feedback loops, loading states, gestures, emotional timing. |
+| `reference/visual-critique.md` | Seven-dimension critique instrument: visual hierarchy, composition, color, typography, affordance, information density, brand consistency. |
+| `reference/design-systems.md` | Token architecture (global→semantic→component), motion system, component specs, naming conventions, theming, pattern library, color/type/spacing scales. |
 
 ## Precedence rule (read before treating any rule as absolute)
 
@@ -57,6 +60,9 @@ Each fact has one home; cross-reference instead of duplicating.
 - Concrete palettes, fonts, shadow tokens, per-system rules → `aesthetic-systems.md`
 - Easing curves, durations, spring config → `motion-and-interaction.md`
 - GPU/hardware-accel, `will-change`, tokens, responsive, a11y engineering, CWV → `engineering-and-performance.md`
+- Cognitive laws, state machines, form/nav patterns, error UX, loading states, emotional timing → `interaction-design.md`
+- Dimensional critique scoring (7 dimensions) → `visual-critique.md`
+- Token architecture, component specs, naming conventions, theming, color/type/spacing scales → `design-systems.md`
 
 ## The always-run ship gate
 

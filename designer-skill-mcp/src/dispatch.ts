@@ -154,6 +154,42 @@ const VERBS: Verb[] = [
     files: ["refactor-and-redesign", "avoid-ai-slop"],
     note: "Variation within identity, never three different brands: lock the identity, pick default vs departure mode, vary each option on a different axis.",
   },
+  {
+    verb: "form",
+    cues: ["form", "form design", "input fields", "form validation", "multi-step form", "form layout", "form ux", "checkout form", "sign up form", "registration form"],
+    files: ["interaction-design", "engineering-and-performance"],
+    note: "Single-column layout, top-aligned labels, blur validation, inline errors below the field, multi-step when >7 fields with named step indicator.",
+  },
+  {
+    verb: "navigate",
+    cues: ["navigation", "nav menu", "sidebar nav", "tab bar", "breadcrumb", "menu structure", "top nav", "bottom nav", "nav pattern", "drawer navigation"],
+    files: ["interaction-design", "design-principles"],
+    note: "Match pattern to IA depth and platform (tab bar mobile / sidebar desktop / top nav simple / breadcrumbs deep); active states beyond color alone; never hamburger for primary nav on desktop.",
+  },
+  {
+    verb: "states",
+    cues: ["state machine", "ui states", "all states", "impossible state", "model behavior", "loading state", "error state", "empty state", "define all states", "every state"],
+    files: ["interaction-design", "engineering-and-performance"],
+    note: "Map the UI as finite states (idle/loading/success/error/empty); every state has one visual representation and at least one exit; no impossible combinations.",
+  },
+  {
+    verb: "feel",
+    cues: ["feels flat", "feels lifeless", "no personality", "feels cold", "humanize", "feels robotic", "feels dead", "feels clinical", "emotionally", "too sterile"],
+    files: ["interaction-design", "motion-and-interaction"],
+    note: "Name the felt state → find the physical analogue → extract the behavioral property → apply to easing, delay, copy tone, or duration.",
+  },
+  {
+    verb: "system",
+    cues: ["design system", "token system", "naming convention", "theming", "design tokens", "dark mode system", "component library", "token architecture", "color scale", "spacing scale"],
+    files: ["design-systems", "engineering-and-performance"],
+    note: "Two-layer token architecture: global (raw values) → semantic (role-named); component specs with all states; naming {category}-{property}-{concept}; themes override semantic tokens.",
+  },
+  {
+    verb: "score",
+    cues: ["score the design", "visual critique", "dimensional critique", "critique dimensions", "rate the design", "critique the ui", "seven dimensions", "critique framework"],
+    files: ["visual-critique", "avoid-ai-slop"],
+    note: "7-dimension critique: hierarchy, composition, color, typography, affordance, information density, brand consistency — rate each pass/minor/major; lead with AI-slop verdict.",
+  },
 ];
 
 export interface DispatchMatch {
