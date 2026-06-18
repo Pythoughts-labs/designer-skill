@@ -15,7 +15,8 @@ function createNotifier() {
 
 export function formatUpdateStatus(update: UpdateInfo | undefined): string {
   if (!update || update.latest === update.current) {
-    return `${pkg.version} (latest)`;
+    const current = update?.current ?? pkg.version;
+    return `${current} (latest)`;
   }
   return `${update.current} → ${update.latest} available (${update.type})\nRun: ${UPGRADE_COMMAND}`;
 }
