@@ -2,7 +2,7 @@
   "mcpServers": {
     "designer-skill": {
       "command": "npx",
-      "args": ["-y", "designer-skill-mcp"]
+      "args": ["-y", "designer-skill-mcp@latest"]
     }
   }
 }

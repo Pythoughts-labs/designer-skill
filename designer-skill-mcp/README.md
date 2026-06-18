@@ -9,10 +9,18 @@ Add one line to your agent config. No API key. Your agent gets design tools, ref
   "mcpServers": {
     "designer-skill": {
       "command": "npx",
-      "args": ["-y", "designer-skill-mcp"]
+      "args": ["-y", "designer-skill-mcp@latest"]
     }
   }
 }
+```
+
+**Registry** (after npm publish, from `designer-skill-mcp/`):
+
+```bash
+brew install mcp-publisher
+mcp-publisher login github
+mcp-publisher publish
 ```
 
 ## Tools
@@ -66,6 +74,8 @@ Opt out: `NO_UPDATE_NOTIFIER=1`, `--no-update-notifier`, or configstore (`~/.con
 /plugin marketplace update pythoughts-labs
 /plugin update designer-skill@pythoughts-labs
 ```
+
+Cursor: reinstall or update the plugin from marketplace; MCP args live in repo `mcp.json`.
 
 Canonical skill content: `skills/designer-skill/` (synced to `assets/skill/` on build).
 

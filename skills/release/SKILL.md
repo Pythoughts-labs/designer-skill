@@ -25,8 +25,10 @@ Ship **designer-skill-mcp** in one ordered sequence: version bump → build/test
 | `designer-skill-mcp/package.json` | `"version"` |
 | `designer-skill-mcp/package-lock.json` | top-level `"version"` |
 | `designer-skill-mcp/src/server.ts` | `SERVER_VERSION` |
+| `designer-skill-mcp/server.json` | `"version"` + `packages[0].version` |
 | `.claude-plugin/plugin.json` | `"version"` |
 | `.codex-plugin/plugin.json` | `"version"` |
+| `.cursor-plugin/plugin.json` | `"version"` |
 
 Tag format: `v{semver}` (e.g. `v0.9.0`).
 
@@ -48,7 +50,8 @@ The script runs this sequence:
 5. Annotated tag `v<semver>`
 6. `git push origin HEAD` + `git push origin v<semver>`
 7. `npm publish --access public` from `designer-skill-mcp/`
-8. `gh release create v<semver>`
+8. `mcp-publisher publish` from `designer-skill-mcp/` (if logged in)
+9. `gh release create v<semver>`
 
 ## Manual sequence (when not using the script)
 
@@ -59,12 +62,14 @@ npm version 0.9.0 --no-git-tag-version --allow-same-version
 npm run build && npm test
 cd ..
 git add designer-skill-mcp/package.json designer-skill-mcp/package-lock.json \
-  designer-skill-mcp/src/server.ts .claude-plugin/plugin.json .codex-plugin/plugin.json
+  designer-skill-mcp/server.json designer-skill-mcp/src/server.ts \
+  .claude-plugin/plugin.json .codex-plugin/plugin.json .cursor-plugin/plugin.json
 git commit -m "Release designer-skill-mcp v0.9.0."
 git tag -a v0.9.0 -m "designer-skill-mcp v0.9.0"
 git push origin HEAD && git push origin v0.9.0
 cd designer-skill-mcp && npm publish --access public
-cd .. && gh release create v0.9.0 --title "designer-skill-mcp v0.9.0" --notes "Release notes."
+(cd designer-skill-mcp && mcp-publisher publish) 2>/dev/null || true
+gh release create v0.9.0 --title "designer-skill-mcp v0.9.0" --notes "Release notes."
 ```
 
 ## Verify

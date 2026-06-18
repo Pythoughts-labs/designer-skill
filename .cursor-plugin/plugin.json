@@ -2,7 +2,7 @@
   "name": "designer-skill",
   "displayName": "designer-skill",
   "version": "0.9.1",
-  "description": "Plug-and-play MCP that gives your agent UI superpowers. One install: design skill + MCP server, zero config.",
+  "description": "Plug-and-play MCP: UI superpowers, design references, anti-slop ship gate.",
   "author": {
     "name": "Pythoughts Labs",
     "url": "https://github.com/Pythoughts-labs"

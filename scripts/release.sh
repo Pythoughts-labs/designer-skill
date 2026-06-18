@@ -25,6 +25,8 @@ const fs = require("fs");
 const paths = [
   ["${ROOT}/.claude-plugin/plugin.json", (s) => JSON.stringify({ ...JSON.parse(s), version: "${VERSION}" }, null, 2) + "\n"],
   ["${ROOT}/.codex-plugin/plugin.json", (s) => JSON.stringify({ ...JSON.parse(s), version: "${VERSION}" }, null, 2) + "\n"],
+  ["${ROOT}/.cursor-plugin/plugin.json", (s) => JSON.stringify({ ...JSON.parse(s), version: "${VERSION}" }, null, 2) + "\n"],
+  ["${PKG_DIR}/server.json", (s) => JSON.stringify({ ...JSON.parse(s), version: "${VERSION}", packages: [{ ...JSON.parse(s).packages[0], version: "${VERSION}" }] }, null, 2) + "\n"],
 ];
 for (const [file, transform] of paths) {
   fs.writeFileSync(file, transform(fs.readFileSync(file, "utf8")));
@@ -40,8 +42,10 @@ cd "$ROOT"
 git add \
   designer-skill-mcp/package.json \
   designer-skill-mcp/package-lock.json \
+  designer-skill-mcp/server.json \
   .claude-plugin/plugin.json \
-  .codex-plugin/plugin.json
+  .codex-plugin/plugin.json \
+  .cursor-plugin/plugin.json
 
 if ! git diff --cached --quiet; then
   git commit -m "$(cat <<EOF
@@ -69,6 +73,13 @@ git push origin "$TAG"
 echo "==> Publish to npm"
 cd "$PKG_DIR"
 npm publish --access public
+
+echo "==> Publish to MCP Registry (optional; requires mcp-publisher login)"
+if command -v mcp-publisher >/dev/null 2>&1; then
+  mcp-publisher publish || echo "warn: mcp-publisher publish failed (run manually after login)"
+else
+  echo "skip: mcp-publisher not installed (brew install mcp-publisher)"
+fi
 
 echo "==> Create GitHub release"
 cd "$ROOT"

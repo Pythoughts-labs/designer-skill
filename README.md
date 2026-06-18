@@ -110,6 +110,7 @@ Add the server. Ask in plain language. The agent handles the rest.
 
 [![claude](https://img.shields.io/badge/Claude_Code-plugin-7c3aed?style=flat-square)](#setup)
 [![codex](https://img.shields.io/badge/Codex-plugin-10b981?style=flat-square)](#setup)
+[![cursor](https://img.shields.io/badge/Cursor-plugin-18181b?style=flat-square)](#setup)
 
 </div>
 
@@ -128,20 +129,24 @@ codex plugin marketplace add Pythoughts-labs/designer-skill
 
 Then install **designer-skill** from the **pythoughts-labs** marketplace in `/plugins`. The skill appears as `designer-skill:designer-skill`.
 
+**Cursor:** install from the marketplace (or open this repo). Plugin ships `mcp.json`, skills, and `/designer-setup` · `/designer-status` commands.
+
 ### Plug in (any client)
 
-Same one-liner everywhere. No API key. No config files to write by hand:
+Same one-liner everywhere. No API key. Repo-root `mcp.json` is the canonical MCP config (plugins reference it too):
 
 ```json
 {
   "mcpServers": {
     "designer-skill": {
       "command": "npx",
-      "args": ["-y", "designer-skill-mcp"]
+      "args": ["-y", "designer-skill-mcp@latest"]
     }
   }
 }
 ```
+
+**Updates:** `@latest` for newest npm; pin `@0.9.1` for teams. Plugin skill content updates separately (`/plugin update …`). Registry: `io.github.pythoughts-labs/designer-skill-mcp` (publish via `mcp-publisher` after npm release).
 
 <div align="center">
 
@@ -167,7 +172,7 @@ Same one-liner everywhere. No API key. No config files to write by hand:
 <tr><td bgcolor="#f0f9ff"><b>Pythinker</b></td><td bgcolor="#f8fafc"><code>pythinker mcp add --transport stdio designer-skill -- npx -y designer-skill-mcp</code> · <a href="docs/blog/integrating-designer-skill-with-pythinker.md">guide</a></td></tr>
 <tr><td bgcolor="#ecfdf5"><b>Codex CLI</b></td><td bgcolor="#f8fafc"><code>codex mcp add designer-skill -- npx -y designer-skill-mcp</code></td></tr>
 <tr><td bgcolor="#faf5ff"><b>Claude Code</b></td><td bgcolor="#f8fafc"><code>claude mcp add designer-skill -- npx -y designer-skill-mcp</code></td></tr>
-<tr><td bgcolor="#f1f5f9"><b>Cursor</b></td><td bgcolor="#f8fafc"><code>.cursor/mcp.json</code> or Settings → MCP</td></tr>
+<tr><td bgcolor="#f1f5f9"><b>Cursor</b></td><td bgcolor="#f8fafc">Cursor plugin or copy <code>mcp.json</code> → <code>.cursor/mcp.json</code></td></tr>
 <tr><td bgcolor="#eff6ff"><b>VS Code</b></td><td bgcolor="#f8fafc"><code>.vscode/mcp.json</code> (<code>"servers"</code> + <code>"type": "stdio"</code>)</td></tr>
 <tr><td bgcolor="#fdf4ff"><b>Kilo Code</b></td><td bgcolor="#f8fafc">MCP Settings → <code>mcp_settings.json</code></td></tr>
 <tr><td bgcolor="#fff1f2"><b>Open Code</b></td><td bgcolor="#f8fafc"><code>opencode.json</code> (key <code>"mcp"</code>)</td></tr>
@@ -181,7 +186,7 @@ Same one-liner everywhere. No API key. No config files to write by hand:
 **Pythinker** (`~/.pythinker/mcp.json`)
 
 ```json
-{ "mcpServers": { "designer-skill": { "command": "npx", "args": ["-y", "designer-skill-mcp"] } } }
+{ "mcpServers": { "designer-skill": { "command": "npx", "args": ["-y", "designer-skill-mcp@latest"] } } }
 ```
 
 Verify: `pythinker mcp test designer-skill` · TUI: `/mcp` lists the server, `/tools` shows `mcp_designer-skill_*`.
@@ -197,10 +202,10 @@ args = ["-y", "designer-skill-mcp"]
 **Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`)
 
 ```json
-{ "mcpServers": { "designer-skill": { "command": "npx", "args": ["-y", "designer-skill-mcp"] } } }
+{ "mcpServers": { "designer-skill": { "command": "npx", "args": ["-y", "designer-skill-mcp@latest"] } } }
 ```
 
-**Cursor** (`.cursor/mcp.json` at repo root, same JSON shape as Pythinker)
+**Cursor** (`.cursor/mcp.json` — same shape as repo-root `mcp.json`)
 
 **VS Code** (`.vscode/mcp.json`, requires 1.99+ or MCP extension)
 
