@@ -15,9 +15,10 @@ import { listCommands, formatCommandHelp, getCommandReads } from "./commands.js"
 import { loadProjectContext, formatProjectContext } from "./context.js";
 import { detectAntipatterns, formatDetectionResults } from "./detect.js";
 import { getPaletteSeed } from "./palette.js";
+import { pkg } from "./pkg.js";
 
 export const SERVER_NAME = "designer-skill-mcp";
-export const SERVER_VERSION = "0.9.0";
+export const SERVER_VERSION = pkg.version;
 
 export function createServer(): McpServer {
   const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION });

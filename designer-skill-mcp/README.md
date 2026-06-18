@@ -43,6 +43,30 @@ node dist/index.js
 # or: npx -y designer-skill-mcp
 ```
 
+## Version and updates
+
+The server does **not** auto-install updates. On startup it may show a weekly stderr notice when a newer npm release exists.
+
+```bash
+designer-skill-mcp --version        # print installed version
+designer-skill-mcp --check-update   # query npm and print upgrade status
+```
+
+Upgrade:
+
+```bash
+npx -y designer-skill-mcp@latest
+```
+
+Opt out: `NO_UPDATE_NOTIFIER=1`, `--no-update-notifier`, or configstore (`~/.config/configstore/update-notifier-designer-skill-mcp.json`).
+
+**Plugin installs** (Claude Code / Codex / Cursor) are separate from npm — bump the plugin version on release, then:
+
+```bash
+/plugin marketplace update pythoughts-labs
+/plugin update designer-skill@pythoughts-labs
+```
+
 Canonical skill content: `skills/designer-skill/` (synced to `assets/skill/` on build).
 
 ## License

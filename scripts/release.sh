@@ -19,11 +19,10 @@ echo "==> Bump package to ${VERSION}"
 cd "$PKG_DIR"
 npm version "$VERSION" --no-git-tag-version --allow-same-version
 
-echo "==> Sync SERVER_VERSION and plugin manifests"
+echo "==> Sync plugin manifests"
 node <<NODE
 const fs = require("fs");
 const paths = [
-  ["${PKG_DIR}/src/server.ts", (s) => s.replace(/export const SERVER_VERSION = "[^"]+"/, 'export const SERVER_VERSION = "${VERSION}"')],
   ["${ROOT}/.claude-plugin/plugin.json", (s) => JSON.stringify({ ...JSON.parse(s), version: "${VERSION}" }, null, 2) + "\n"],
   ["${ROOT}/.codex-plugin/plugin.json", (s) => JSON.stringify({ ...JSON.parse(s), version: "${VERSION}" }, null, 2) + "\n"],
 ];
@@ -41,7 +40,6 @@ cd "$ROOT"
 git add \
   designer-skill-mcp/package.json \
   designer-skill-mcp/package-lock.json \
-  designer-skill-mcp/src/server.ts \
   .claude-plugin/plugin.json \
   .codex-plugin/plugin.json
 
