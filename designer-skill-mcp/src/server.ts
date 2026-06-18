@@ -17,7 +17,7 @@ import { detectAntipatterns, formatDetectionResults } from "./detect.js";
 import { getPaletteSeed } from "./palette.js";
 
 export const SERVER_NAME = "designer-skill-mcp";
-export const SERVER_VERSION = "0.8.0";
+export const SERVER_VERSION = "0.9.0";
 
 export function createServer(): McpServer {
   const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION });
