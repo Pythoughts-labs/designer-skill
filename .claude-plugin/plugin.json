@@ -2,7 +2,7 @@
   "name": "designer-skill",
   "displayName": "designer-skill",
   "version": "0.9.0",
-  "description": "Production-grade design skill for coding agents — design, refactor, and enhance UI with anti-AI-slop discipline, plus the designer-skill MCP server.",
+  "description": "Plug-and-play MCP that gives your agent UI superpowers. One install: design skill + MCP server, zero config.",
   "author": {
     "name": "Pythoughts Labs",
     "url": "https://github.com/Pythoughts-labs"

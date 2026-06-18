@@ -1,48 +1,8 @@
 # designer-skill-mcp
 
-An [MCP](https://modelcontextprotocol.io) server that exposes **designer-skill** — a consolidated reference for designing, refactoring, and enhancing UI.
+Plug-and-play [MCP](https://modelcontextprotocol.io) server that gives your coding agent **UI superpowers**.
 
-The server hands skill content to your coding agent via tools, resources, and a `design` prompt. Includes a deterministic anti-pattern detector (44 rules).
-
-## What it exposes
-
-| Tool | Purpose |
-|---|---|
-| `get_design_system` | The `SKILL.md` router — call first (preflight, precedence rule, routing map, ship gate). |
-| `load_project_context` | Read PRODUCT.md / DESIGN.md from the project; gates on missing PRODUCT.md → init. |
-| `get_reference` | One of the thirteen reference files by name. |
-| `list_commands` | All design verbs (init, craft, live, audit, polish, …) with descriptions. |
-| `get_command` | Full guidance + reference files for a specific verb. |
-| `dispatch_intent` | Maps a request ("make it pop", "it feels off") → design verb(s) + files to read. |
-| `detect_antipatterns` | Deterministic scan of a file/dir for UI anti-patterns (44 rules). |
-| `get_palette_seed` | OKLCH brand-seed color for greenfield palette composition. |
-| `anti_slop_checklist` | The anti-AI-slop ship gate to run before declaring work done. |
-
-**Resources:** `designer://skill`, `designer://reference/{name}`
-
-**Prompts:** `design` (args: `task`, optional `aesthetic`)
-
-## Install & build
-
-```bash
-npm install
-npm run build
-npm test
-```
-
-Canonical content: `skills/designer-skill/` (synced to `assets/skill/` on build). Detector engine: `assets/engine/`.
-
-## Run
-
-```bash
-node dist/index.js
-# or: npx -y designer-skill-mcp
-
-# HTTP
-node dist/index.js --http --port 3017
-```
-
-## Client configuration
+Add one line to your agent config. No API key. Your agent gets design tools, reference docs, and a ship gate.
 
 ```json
 {
@@ -54,6 +14,36 @@ node dist/index.js --http --port 3017
   }
 }
 ```
+
+## Tools
+
+| Tool | Purpose |
+|---|---|
+| `get_design_system` | SKILL.md router (call first) |
+| `load_project_context` | Read PRODUCT.md / DESIGN.md from the project |
+| `get_reference` | One of thirteen reference files by name |
+| `list_commands` | All design verbs with descriptions |
+| `get_command` | Full guidance + references for a specific verb |
+| `dispatch_intent` | Map a request ("make it pop", "it feels off") to design verb(s) + files |
+| `detect_antipatterns` | Deterministic scan (44 rules), no LLM, no API key |
+| `get_palette_seed` | OKLCH brand-seed for greenfield palette work |
+| `anti_slop_checklist` | Ship gate before finishing any UI work |
+
+**Resources:** `designer://skill` · `designer://reference/{name}`
+
+**Prompt:** `design` (args: `task`, optional `aesthetic`)
+
+## Dev
+
+```bash
+npm install
+npm run build
+npm test
+node dist/index.js
+# or: npx -y designer-skill-mcp
+```
+
+Canonical skill content: `skills/designer-skill/` (synced to `assets/skill/` on build).
 
 ## License
 

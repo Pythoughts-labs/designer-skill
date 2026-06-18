@@ -2,10 +2,11 @@
 
 <img src="docs/designer-skill-mcp-logo.webp" alt="designer-skill" width="400" />
 
-**Production-grade design skill for coding agents, delivered as an MCP server.**
+**Plug-and-play MCP. UI superpowers for your agent.**
 
 <br />
 
+[![plug_and_play](https://img.shields.io/badge/plug_&_play-zero_config-10b981?style=for-the-badge)](#setup)
 [![npm](https://img.shields.io/npm/v/designer-skill-mcp?style=for-the-badge&logo=npm&logoColor=white&color=0ea5e9)](https://www.npmjs.com/package/designer-skill-mcp)
 [![downloads](https://img.shields.io/npm/dt/designer-skill-mcp?style=for-the-badge&logo=npm&logoColor=white&color=c9a84c&label=DOWNLOADS)](https://www.npmjs.com/package/designer-skill-mcp)
 [![license](https://img.shields.io/badge/license-MIT-10b981?style=for-the-badge)](LICENSE)
@@ -35,14 +36,22 @@ npm i designer-skill-mcp
 
 </div>
 
-**designer-skill** is a composite design reference for coding agents: a lightweight router (`skills/designer-skill/SKILL.md`) that dispatches to thirteen specialist files covering visual fundamentals, aesthetic systems, motion, engineering, anti-AI-slop discipline, refactor loops, interaction design, visual critique, design systems, project init, craft flow, live mode, and a verb-driven command playbook.
+**designer-skill-mcp** is a small [MCP](https://modelcontextprotocol.io) server you add in one line. Your agent gets design tools, reference docs, and a ship gate so UI work stops looking generic.
 
-**designer-skill-mcp** is the [Model Context Protocol](https://modelcontextprotocol.io) server that exposes the skill to any MCP-compatible client. Your agent reads the reference files via tools and resources, then does the design work.
+**What your agent gains:**
+
+| Superpower | What it does |
+|---|---|
+| **Route** | `dispatch_intent` maps "make it pop" or "it feels off" to the right move |
+| **Know** | 13 reference files: type, color, motion, a11y, anti-slop, redesign loops |
+| **Check** | 44-rule detector + `anti_slop_checklist` before shipping |
+
+Add the server. Ask in plain language. The agent handles the rest.
 
 <div align="center">
 
-[![skill](https://img.shields.io/badge/skills/designer--skill-router_+_13_refs-7c3aed?style=flat-square)](skills/designer-skill/)
-[![mcp](https://img.shields.io/badge/designer--skill--mcp-tools_+_detector-0ea5e9?style=flat-square)](designer-skill-mcp/)
+[![skill](https://img.shields.io/badge/design_skill-13_refs-7c3aed?style=flat-square)](skills/designer-skill/)
+[![mcp](https://img.shields.io/badge/MCP-10_tools-0ea5e9?style=flat-square)](designer-skill-mcp/)
 
 </div>
 
@@ -78,9 +87,9 @@ codex plugin marketplace add Pythoughts-labs/designer-skill
 
 Then install **designer-skill** from the **pythoughts-labs** marketplace in `/plugins`. The skill appears as `designer-skill:designer-skill`.
 
-### MCP server
+### Plug in (any client)
 
-Every client runs the same server:
+Same one-liner everywhere. No API key. No config files to write by hand:
 
 ```json
 {

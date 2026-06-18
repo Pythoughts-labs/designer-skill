@@ -1,13 +1,13 @@
 ---
 name: designer-skill
-description: Use when building, designing, redesigning, refactoring, polishing, auditing, or enhancing any web or app user interface — landing pages, marketing sites, dashboards, product UI, components, forms, or design systems. Use when an interface looks generic or "AI-made", or needs better typography, color, spacing, layout, hierarchy, motion, accessibility, or performance, or when adapting or hardening UI for production. For any coding agent doing frontend visual work. Not for backend logic, data pipelines, CLI tools, or non-UI code.
+description: Plug-and-play MCP for UI superpowers. Use when building, designing, redesigning, refactoring, polishing, auditing, or enhancing any web or app user interface — landing pages, marketing sites, dashboards, product UI, components, forms, or design systems. Use when an interface looks generic or "AI-made", or needs better typography, color, spacing, layout, hierarchy, motion, accessibility, or performance. For any coding agent doing frontend visual work. Not for backend logic, data pipelines, CLI tools, or non-UI code.
 ---
 
 # designer-skill
 
-A composite design skill: one consolidated, framework-agnostic reference any coding agent can use to **design, refactor, and enhance** UI — spanning visual fundamentals, opinionated aesthetic systems, motion and interaction, engineering and performance, anti-AI-slop discipline, and a verb-driven command playbook.
+A small plug-and-play MCP that gives your agent UI superpowers: design, refactor, and ship interfaces that don't look AI-made.
 
-This file is the router. It is intentionally short. The substance lives in thirteen reference files under `reference/`; read this, then open the file(s) the task needs. Do not work from memory — open the owner file and use its concrete values.
+This file is the router. The substance lives in thirteen reference files under `reference/`; read this, then open the file(s) the task needs. Do not work from memory — open the owner file and use its concrete values.
 
 ## MCP bootstrap (run on skill load)
 
