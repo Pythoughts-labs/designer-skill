@@ -1,9 +1,5 @@
 <div align="center">
 
-<img src="docs/banner.svg" alt="designer-skill MCP - UI superpowers for your agent" width="100%" />
-
-<br />
-
 <img src="docs/designer-skill-mcp-logo.webp" alt="designer-skill" width="280" />
 
 <br />
