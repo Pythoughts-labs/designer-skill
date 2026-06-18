@@ -6,36 +6,37 @@ This is the intent-to-action dispatch table for designer-skill. Find the verb wh
 
 | Verb | When to invoke (intent cue) | What it does (concrete moves) | Read |
 |---|---|---|---|
-| build / craft | "build / make / create" a feature, page, or component end-to-end | Detect framework/library/icons first (ask once on greenfield), set baseline (type, spacing, contrast), commit to one aesthetic language, wire motion + tokens, ship production code with real content and all states; gate stages and run the visual iteration loop (see Build gates below) | design-principles.md, aesthetic-systems.md, engineering-and-performance.md, avoid-ai-slop.md |
-| shape | "plan / spec / think through" a feature before code | Run a discovery interview (see Shape protocol below), pick color strategy + a one-sentence physical scene + 2-3 named anchor references, produce a brief, present it, and stop; write no code | design-principles.md, aesthetic-systems.md |
-| audit | "check / review the implementation, a11y, perf, responsive" | Score accessibility, performance, theming, responsive, anti-patterns 0-4; tag findings P0-P3 with fix + suggested verb; for a11y, split automated-detectable findings from manual-review ones and never certify full WCAG conformance from automated checks alone; fix nothing | engineering-and-performance.md, avoid-ai-slop.md, refactor-and-redesign.md |
-| critique | "is this good? / design review / does this feel AI?" | Design-director read: hierarchy, IA, cognitive load, heuristics, emotional journey; lead with the AI-slop verdict; list 3-5 priority issues; full instrument in the Scored review protocol below | design-principles.md, avoid-ai-slop.md |
-| polish | "final pass / tighten before shipping" | Align to the design system, snap spacing to scale, complete every interaction state (hover/focus/active/disabled/loading/error), fix optical alignment, 150-300ms transitions | design-principles.md, engineering-and-performance.md |
-| bolder | "too safe / bland / make it pop" | Amplify hierarchy: 3-5x scale jumps, weight 900 vs 200, one color owns ~60%, break the grid; reject gradient-text/glass/neon first | aesthetic-systems.md, avoid-ai-slop.md |
-| quieter | "too loud / busy / aggressive" | Reduce intensity: desaturate to 70-85%, neutrals carry weight with accent ~10%, flatten cards, shorten motion to 10-20px; keep the POV | design-principles.md, aesthetic-systems.md |
-| overdrive | "extraordinary / push past limits / wow" | Highest-ambition effects (View Transitions, scroll-driven, WebGL, virtual scroll). Propose 2-3 directions, get user pick, then build with graceful fallback at 60fps | motion-and-interaction.md, engineering-and-performance.md |
-| animate | "add motion / it feels static / smooth this" | Add purposeful motion: 100/300/500ms by tier, ease-out-quart, sibling stagger (not section fade), reduced-motion alternative required | motion-and-interaction.md |
+| build | "build / make / create" a feature, page, or component end-to-end | Detect framework/library/icons first (ask once on greenfield), set baseline (type, spacing, contrast), commit to one aesthetic language, wire motion + tokens, ship production code with real content and all states; gate stages and run the visual iteration loop (see Build gates below) | design-principles.md, aesthetic-systems.md, engineering-and-performance.md, avoid-ai-slop.md, craft-flow.md |
+| plan | "plan / spec / think through" a feature before code | Run a discovery interview (see Plan protocol below), pick color strategy + a one-sentence physical scene + 2-3 named anchor references, produce a brief, present it, and stop; write no code | design-principles.md, aesthetic-systems.md |
+| check | "check / review the implementation, a11y, perf, responsive" | Score accessibility, performance, theming, responsive, anti-patterns 0-4; tag findings P0-P3 with fix + suggested verb; for a11y, split automated-detectable findings from manual-review ones and never certify full WCAG conformance from automated checks alone; fix nothing | engineering-and-performance.md, avoid-ai-slop.md, refactor-and-redesign.md |
+| review | "is this good? / design review / does this feel AI?" | Design-director read: hierarchy, IA, cognitive load, heuristics, emotional journey; lead with the AI-slop verdict; list 3-5 priority issues; full instrument in the Scored review protocol below | design-principles.md, avoid-ai-slop.md, visual-critique.md |
+| finish | "final pass / tighten before shipping" | Align to the design system, snap spacing to scale, complete every interaction state (hover/focus/active/disabled/loading/error), fix optical alignment, 150-300ms transitions | design-principles.md, engineering-and-performance.md |
+| amplify | "too safe / bland / make it pop" | Amplify hierarchy: 3-5x scale jumps, weight 900 vs 200, one color owns ~60%, break the grid; reject gradient-text/glass/neon first | aesthetic-systems.md, avoid-ai-slop.md |
+| calm | "too loud / busy / aggressive" | Reduce intensity: desaturate to 70-85%, neutrals carry weight with accent ~10%, flatten cards, shorten motion to 10-20px; keep the POV | design-principles.md, aesthetic-systems.md |
+| push | "extraordinary / push past limits / wow" | Highest-ambition effects (View Transitions, scroll-driven, WebGL, virtual scroll). Propose 2-3 directions, get user pick, then build with graceful fallback at 60fps | motion-and-interaction.md, engineering-and-performance.md |
+| motion | "add motion / it feels static / smooth this" | Add purposeful motion: 100/300/500ms by tier, ease-out-quart, sibling stagger (not section fade), reduced-motion alternative required | motion-and-interaction.md |
 | delight | "personality / memorable / charm" | Earn specific moments (success, empty, error recovery) with custom copy + micro-interactions under ~1s; never on every interaction, never generic AI filler | motion-and-interaction.md, avoid-ai-slop.md |
 | layout | "fix spacing / hierarchy / it feels off" | 4pt scale (4/8/12/16/24/32/48/64/96), tight grouping vs 48-96px section gaps, flex for 1D + grid for 2D, break card-grid monotony, pass the squint test | design-principles.md |
-| typeset | "typography / fonts / hierarchy" | Replace invisible defaults, 5-size scale at >=1.25 ratio, weight + size + space hierarchy, 65-75ch measure, font-display: swap, cap 3 families | design-principles.md |
-| colorize | "flat / grayscale / add color" | Pick a color strategy first, OKLCH ramp, 60-30-10 weight, tinted neutrals toward the brand hue, semantic meaning consistent, body text >=4.5:1 | design-principles.md, aesthetic-systems.md |
-| harden | "production-ready / edge cases / real data" | Survive long/empty/CJK/RTL/emoji text, all API error states with recovery, 30-40% i18n space budget, no fixed text widths, server-side validation | engineering-and-performance.md |
-| optimize | "slow / janky / perf" | Measure first, fix the actual bottleneck: LCP<2.5s, INP<200ms, CLS<0.1; image formats + lazy load, code split, transform/opacity over layout props | engineering-and-performance.md |
-| distill | "too complex / cluttered / strip it back" | Remove elements that don't earn their place: one primary goal, progressive disclosure, 1-2 colors + neutrals, flatten nesting, halve the copy | design-principles.md |
-| extract | "make reusable / tokens / design system" | Pull patterns used 3+ times with the same intent into tokens + components with a clear props API, migrate call sites, delete the old; avoid premature abstraction | engineering-and-performance.md |
+| type | "typography / fonts / hierarchy" | Replace invisible defaults, 5-size scale at >=1.25 ratio, weight + size + space hierarchy, 65-75ch measure, font-display: swap, cap 3 families | design-principles.md |
+| color | "flat / grayscale / add color" | Pick a color strategy first, OKLCH ramp, 60-30-10 weight, tinted neutrals toward the brand hue, semantic meaning consistent, body text >=4.5:1 | design-principles.md, aesthetic-systems.md |
+| ship | "production-ready / edge cases / real data" | Survive long/empty/CJK/RTL/emoji text, all API error states with recovery, 30-40% i18n space budget, no fixed text widths, server-side validation | engineering-and-performance.md |
+| speed | "slow / janky / perf" | Measure first, fix the actual bottleneck: LCP<2.5s, INP<200ms, CLS<0.1; image formats + lazy load, code split, transform/opacity over layout props | engineering-and-performance.md |
+| simplify | "too complex / cluttered / strip it back" | Remove elements that don't earn their place: one primary goal, progressive disclosure, 1-2 colors + neutrals, flatten nesting, halve the copy | design-principles.md |
+| tokens | "make reusable / tokens / design system" | Pull patterns used 3+ times with the same intent into tokens + components with a clear props API, migrate call sites, delete the old; avoid premature abstraction | engineering-and-performance.md, design-systems.md |
 | brand | "brand identity / distinctive look / not generic" | Choose an aesthetic language and a named reference, run the font-selection procedure (reject training-data defaults + saturated lanes), commit a palette strategy | aesthetic-systems.md, avoid-ai-slop.md |
-| adapt | "mobile / tablet / different device or context" | Rethink the experience for the target (not scale pixels): single-column reflow, 44x44px touch targets, detect pointer/hover, content-driven breakpoints, safe-area insets | engineering-and-performance.md, refactor-and-redesign.md |
-| redesign | "improve / fix this existing UI without breaking it" | Audit current state, diagnose generic AI patterns and drift, run the redesign loop preserving function; image-to-code when matching a visual target | refactor-and-redesign.md, avoid-ai-slop.md |
-| clarify | "rewrite this error / these labels are confusing / fix the microcopy" | Verb+object button labels, what-happened/why/how-to-fix error copy, one term per concept, instructions before the field; run the Clarify kit below — this file owns UX copy | avoid-ai-slop.md |
+| responsive | "mobile / tablet / different device or context" | Rethink the experience for the target (not scale pixels): single-column reflow, 44x44px touch targets, detect pointer/hover, content-driven breakpoints, safe-area insets | engineering-and-performance.md, refactor-and-redesign.md |
+| refresh | "improve / fix this existing UI without breaking it" | Audit current state, diagnose generic AI patterns and drift, run the redesign loop preserving function; image-to-code when matching a visual target | refactor-and-redesign.md, avoid-ai-slop.md |
+| copy | "rewrite this error / these labels are confusing / fix the microcopy" | Verb+object button labels, what-happened/why/how-to-fix error copy, one term per concept, instructions before the field; run the Copy kit below — this file owns UX copy | avoid-ai-slop.md, command-playbook.md |
 | onboard | "first run / empty states / activation / product tour" | Shortest path to first value: 5-part empty-state anatomy, the five empty-state types, skippable 3-7-step tours; run the Onboard kit below | engineering-and-performance.md |
-| document | "capture the design system / write or refresh DESIGN.md" | Scan tokens + components and generate or refresh DESIGN.md so later work stays on-brand; never overwrite without asking | refactor-and-redesign.md |
-| variants | "show me options / 3 versions of this hero" | Variation within identity, never three different brands: extract the identity lock, pick default vs departure mode, vary each option on a different axis | refactor-and-redesign.md, avoid-ai-slop.md |
+| spec | "capture the design system / write or refresh DESIGN.md" | Scan tokens + components and generate or refresh DESIGN.md so later work stays on-brand; never overwrite without asking | refactor-and-redesign.md |
+| options | "show me options / 3 versions of this hero" | Variation within identity, never three different brands: extract the identity lock, pick default vs departure mode, vary each option on a different axis | refactor-and-redesign.md, avoid-ai-slop.md |
 | form | "form design / form validation / input fields / multi-step form" | Single-column layout, top-aligned labels (never placeholder-only), blur validation (not every keystroke), error message directly below the failing field, multi-step when >7 fields — name each step in the indicator; mark optional not required | interaction-design.md, engineering-and-performance.md |
-| navigate | "navigation / nav / sidebar / tab bar / breadcrumb / menu structure" | Match pattern to IA depth and platform: tab bar (mobile, 3-5 destinations), sidebar (desktop, many/nested), top nav (simple sites), breadcrumbs (deep hierarchies); active states distinguishable beyond color alone; never hamburger for primary nav on desktop | interaction-design.md, design-principles.md |
+| nav | "navigation / nav / sidebar / tab bar / breadcrumb / menu structure" | Match pattern to IA depth and platform: tab bar (mobile, 3-5 destinations), sidebar (desktop, many/nested), top nav (simple sites), breadcrumbs (deep hierarchies); active states distinguishable beyond color alone; never hamburger for primary nav on desktop | interaction-design.md, design-principles.md |
 | states | "state machine / all states / every state / impossible state / model behavior" | Map the UI as finite states (idle/loading/success/error/empty); every state has one visual representation and at least one exit; eliminate impossible combinations (never loading + error simultaneously) | interaction-design.md, engineering-and-performance.md |
-| feel | "feels flat / no personality / feels cold / humanize / feels dead / too sterile" | Name the felt state → find a physical analogue → extract a behavioral property → apply to easing, delay, copy tone, or duration; run the Copy voice by state table; motion-as-signal: ease-out lands softly, spring bounces, stiff spring = confident | interaction-design.md, motion-and-interaction.md |
+| tone | "feels flat / no personality / feels cold / humanize / feels dead / too sterile" | Name the felt state → find a physical analogue → extract a behavioral property → apply to easing, delay, copy tone, or duration; run the Copy voice by state table; motion-as-signal: ease-out lands softly, spring bounces, stiff spring = confident | interaction-design.md, motion-and-interaction.md |
 | system | "design system / token architecture / theming / component library / dark mode system / naming convention" | Two-layer tokens: global primitives → semantic aliases; component specs cover all 8 states; naming {category}-{property}-{concept}-{variant}-{state}; themes override semantic tokens; dark mode reduces brightness, uses surface-elevation not shadows | design-systems.md, engineering-and-performance.md |
-| score | "score the design / visual critique / dimensional critique / rate the design / critique the ui" | 7-dimension critique: visual hierarchy, composition, color, typography, affordance, information density, brand consistency — rate each pass / minor issue / major issue; lead with AI-slop verdict; report: verdict → 2-3 working things → 3-5 priority issues (observation/problem/fix) → provocative close | visual-critique.md, avoid-ai-slop.md |
+| setup | "bootstrap project / write PRODUCT.md / first time" | One-time project setup: discovery interview, PRODUCT.md, optional DESIGN.md, preview-mode config, recommend next commands | project-init.md |
+| preview | "browser variants / iterate in the browser / live mode" | Select elements in the running app, generate HTML+CSS variants hot-swapped via HMR | live-mode.md |
 
 ## Register modifiers
 
@@ -43,27 +44,27 @@ The toning verbs mean different things per register (the register decision lives
 
 | Verb | Brand register | Product register |
 |---|---|---|
-| bolder | Extreme scale, unexpected color, typographic risk | Stronger hierarchy, clearer weight contrast, one sharper accent, more committed density — amplify clarity, not drama; theatrics erode trust |
-| quieter | Restrain the palette, add air, keep the point of view intact | Fewer background accents, flatter cards — the tool disappears into the task |
+| amplify | Extreme scale, unexpected color, typographic risk | Stronger hierarchy, clearer weight contrast, one sharper accent, more committed density — amplify clarity, not drama; theatrics erode trust |
+| calm | Restrain the palette, add air, keep the point of view intact | Fewer background accents, flatter cards — the tool disappears into the task |
 | delight | Distributed across copy voice, transitions, discoverable details | Moments only: completion, first-time actions, error recovery, milestones |
-| animate | One well-rehearsed entrance beats scattered micro-interactions | 150-250ms, state-conveying only, no page-load choreography |
-| colorize | The palette IS the voice; dosage follows the color strategy | Semantic-first; almost always a Restrained strategy |
+| motion | One well-rehearsed entrance beats scattered micro-interactions | 150-250ms, state-conveying only, no page-load choreography |
+| color | The palette IS the voice; dosage follows the color strategy | Semantic-first; almost always a Restrained strategy |
 | layout | Asymmetry, fluid clamp, deliberate grid-breaking | Predictable grids, structural responsiveness — consistency is itself an affordance |
-| typeset | Run the font procedure; fluid clamp, scale ratio >=1.25 | One family, fixed rem sizes, scale ratio 1.125-1.2 |
+| type | Run the font procedure; fluid clamp, scale ratio >=1.25 | One family, fixed rem sizes, scale ratio 1.125-1.2 |
 
 ## The intensity dial
 
 The toning verbs sit on one axis:
 
-`quieter ← distill ← (polish / baseline) → bolder → overdrive`
+`calm ← simplify ← (finish / baseline) → amplify → push`
 
-Move **right** when the design is timid, low-contrast, generic, or forgettable: `bolder` for stronger hierarchy and committed color, `overdrive` when the brief wants a technically extraordinary moment (propose 2-3 directions and get user confirmation before building). Move **left** when the design is loud, noisy, or cluttered: `quieter` *reduces intensity* (desaturate, flatten, calm the motion) while keeping every element; `distill` goes further and *removes elements* down to the essence. `polish` is the neutral center: it refines what's there without shifting the volume in either direction.
+Move **right** when the design is timid, low-contrast, generic, or forgettable: `amplify` for stronger hierarchy and committed color, `push` when the brief wants a technically extraordinary moment (propose 2-3 directions and get user confirmation before building). Move **left** when the design is loud, noisy, or cluttered: `calm` *reduces intensity* (desaturate, flatten, calm the motion) while keeping every element; `simplify` goes further and *removes elements* down to the essence. `finish` is the neutral center: it refines what's there without shifting the volume in either direction.
 
-Verbs also chain in a fixed pipeline: **evaluate (audit / critique) → fixing verbs → polish → ship gate**. Evaluation verbs fix nothing — they end by mapping each finding to the verb that fixes it, and suggest a re-run after fixes to watch the score move. Fixing verbs hand off to `polish` for the final pass; `polish` is always last and never runs before the thing is functionally complete.
+Verbs also chain in a fixed pipeline: **evaluate (check / review) → fixing verbs → finish → ship gate**. Evaluation verbs fix nothing — they end by mapping each finding to the verb that fixes it, and suggest a re-run after fixes to watch the score move. Fixing verbs hand off to `finish` for the final pass; `finish` is always last and never runs before the thing is functionally complete.
 
-## Shape protocol
+## Plan protocol
 
-`shape` is a discovery interview, not a form. The discipline:
+`plan` is a discovery interview, not a form. The discipline:
 
 - **2-3 questions per round, then wait for answers.** Run at least one real answer round before drafting unless the repo or docs directly answer; round 1 covers purpose / audience / content / visual direction, round 2 only if material gaps remain. Never synthesize a full brief from a sparse prompt and ask for blanket confirmation.
 - **Assert, then confirm — don't menu.** When context makes one option obvious, "This reads as Restrained — confirm?" beats a four-option list.
@@ -76,11 +77,11 @@ Verbs also chain in a fixed pipeline: **evaluate (audit / critique) → fixing v
 
 ## Build gates & the visual iteration loop
 
-For build / craft — and any verb shipping substantial new UI:
+For build — and any verb shipping substantial new UI:
 
 **Step 0 — project foundation.** Detect the framework, component library, and icon set before anything else. On greenfield, ask the framework question once (a content-led brand site, an in-app product surface, and a one-shot demo each suggest different answers) — never pick silently.
 
-**Gates.** Each stage ends with the user: brief → direction → palette → mock. Shape confirmation is not code-green; compressing gates because the brief felt complete is the dominant failure mode.
+**Gates.** Each stage ends with the user: brief → direction → palette → mock. Plan confirmation is not code-green; compressing gates because the brief felt complete is the dominant failure mode.
 
 **The visual iteration loop.** Once code renders, look at what you built like a designer:
 
@@ -92,9 +93,9 @@ For build / craft — and any verb shipping substantial new UI:
 
 Exit bar: would this hold up in a high-end studio review? When presenting, show the primary state, summarize viewports checked and post-inspection fixes, walk the key states, explain decisions against the brief, disclose accepted deviations honestly, and ask what's working and what isn't.
 
-## Clarify kit (UX copy)
+## Copy kit (UX copy)
 
-This file owns UX copy; `clarify`'s moves in full.
+This file owns UX copy; `copy`'s moves in full.
 
 **Button labels — verb + object, never vague:**
 
@@ -151,7 +152,7 @@ This file owns onboarding; `onboard`'s goal is **time-to-value** — get the use
 
 ## Appendix: scored review protocol
 
-The full instrument behind `critique` — this file owns the UX-review layer; the visual/technical audit table lives in refactor-and-redesign.md.
+The full instrument behind `review` — this file owns the UX-review layer; the visual/technical check table lives in refactor-and-redesign.md.
 
 **Nielsen's 10 heuristics, scored 0-4 each (/40):** visibility of system status, match with the real world, user control & freedom, consistency & standards, error prevention, recognition over recall, flexibility & efficiency, aesthetic & minimalist design, error recovery, help & documentation. Anchors: 0 = absent or actively violated, 1 = major gaps, 2 = inconsistent, 3 = solid with minor gaps, 4 = genuinely excellent. Bands: 36-40 excellent (ship), 28-35 good, 20-27 acceptable, 12-19 poor (overhaul), 0-11 critical (redesign). Honesty calibration: a 4 means genuinely excellent — most real interfaces score 20-32.
 

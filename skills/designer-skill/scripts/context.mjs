@@ -241,8 +241,8 @@ async function cli() {
     // — cheap models miss the empty case more often than the explicit one.
     const parts = [
       'NO_PRODUCT_MD: This project has no PRODUCT.md yet. ' +
-      'Stop the current task, call get_command({ verb: "init" }) or get_reference({ name: "project-init" }), ' +
-      'and follow the init flow to write PRODUCT.md before resuming.',
+      'Stop the current task, call get_command({ verb: "setup" }) or get_reference({ name: "project-init" }), ' +
+      'and follow the setup flow to write PRODUCT.md before resuming.',
     ];
     if (updateDirective) parts.push(updateDirective);
     process.stdout.write(parts.join('\n\n---\n\n') + '\n');

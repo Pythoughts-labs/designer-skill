@@ -21,58 +21,64 @@ function textOf(result: { content: Array<{ type: string; text?: string }> }): st
 }
 
 describe("dispatchIntent", () => {
-  it("routes 'make it pop' to bolder", () => {
-    expect(dispatchIntent("the hero is bland, make it pop").matched.map((m) => m.verb)).toContain("bolder");
+  it("routes 'make it pop' to amplify", () => {
+    expect(dispatchIntent("the hero is bland, make it pop").matched.map((m) => m.verb)).toContain("amplify");
   });
-  it("routes 'production-ready' to harden", () => {
+  it("routes 'production-ready' to ship", () => {
     expect(
       dispatchIntent("make this production-ready with real data and error states").matched.map((m) => m.verb),
-    ).toContain("harden");
+    ).toContain("ship");
   });
   it("routes 'spacing feels off' to layout", () => {
     expect(dispatchIntent("the spacing feels off on this card").matched.map((m) => m.verb)).toContain("layout");
   });
-  it("routes 'redesign without breaking' to redesign", () => {
-    expect(dispatchIntent("redesign this page without breaking it").matched.map((m) => m.verb)).toContain("redesign");
+  it("routes 'redesign without breaking' to refresh", () => {
+    expect(dispatchIntent("redesign this page without breaking it").matched.map((m) => m.verb)).toContain("refresh");
   });
-  it("routes 'rewrite this error message' to clarify", () => {
-    expect(dispatchIntent("rewrite this error message, the wording is off").matched.map((m) => m.verb)).toContain("clarify");
+  it("routes 'rewrite this error message' to copy", () => {
+    expect(dispatchIntent("rewrite this error message, the wording is off").matched.map((m) => m.verb)).toContain("copy");
   });
   it("routes 'first run / empty states' to onboard", () => {
     expect(dispatchIntent("design the first run and empty states for activation").matched.map((m) => m.verb)).toContain("onboard");
   });
-  it("routes 'capture the design system in DESIGN.md' to document", () => {
-    expect(dispatchIntent("capture the design system and write DESIGN.md").matched.map((m) => m.verb)).toContain("document");
+  it("routes 'capture the design system in DESIGN.md' to spec", () => {
+    expect(dispatchIntent("capture the design system and write DESIGN.md").matched.map((m) => m.verb)).toContain("spec");
   });
-  it("routes 'show me 3 versions' to variants", () => {
-    expect(dispatchIntent("show me 3 versions of this hero").matched.map((m) => m.verb)).toContain("variants");
+  it("routes 'show me 3 versions' to options", () => {
+    expect(dispatchIntent("show me 3 versions of this hero").matched.map((m) => m.verb)).toContain("options");
   });
   it("routes 'form design' to form", () => {
     expect(dispatchIntent("help me with form design and validation").matched.map((m) => m.verb)).toContain("form");
   });
-  it("routes 'navigation' to navigate", () => {
-    expect(dispatchIntent("which navigation pattern should I use").matched.map((m) => m.verb)).toContain("navigate");
+  it("routes 'navigation' to nav", () => {
+    expect(dispatchIntent("which navigation pattern should I use").matched.map((m) => m.verb)).toContain("nav");
   });
   it("routes 'state machine' to states", () => {
     expect(dispatchIntent("model all ui states as a state machine").matched.map((m) => m.verb)).toContain("states");
   });
-  it("routes 'feels flat' to feel", () => {
-    expect(dispatchIntent("the interface feels flat and lifeless").matched.map((m) => m.verb)).toContain("feel");
+  it("routes 'feels flat' to tone", () => {
+    expect(dispatchIntent("the interface feels flat and lifeless").matched.map((m) => m.verb)).toContain("tone");
   });
   it("routes 'design system' to system", () => {
     expect(dispatchIntent("set up the design system and token architecture").matched.map((m) => m.verb)).toContain("system");
   });
-  it("routes 'visual critique' to score", () => {
-    expect(dispatchIntent("do a visual critique and score the design").matched.map((m) => m.verb)).toContain("score");
+  it("routes 'visual critique' to review", () => {
+    expect(dispatchIntent("do a visual critique and score the design").matched.map((m) => m.verb)).toContain("review");
   });
-  it("routes 'setup project' to init", () => {
-    expect(dispatchIntent("setup project and write PRODUCT.md").matched.map((m) => m.verb)).toContain("init");
+  it("routes 'setup project' to setup", () => {
+    expect(dispatchIntent("setup project and write PRODUCT.md").matched.map((m) => m.verb)).toContain("setup");
   });
-  it("routes 'craft end to end' to craft", () => {
-    expect(dispatchIntent("craft this landing page end to end").matched.map((m) => m.verb)).toContain("craft");
+  it("routes 'craft end to end' to build", () => {
+    expect(dispatchIntent("craft this landing page end to end").matched.map((m) => m.verb)).toContain("build");
   });
-  it("routes 'live mode' to live", () => {
-    expect(dispatchIntent("iterate in live mode on the hero").matched.map((m) => m.verb)).toContain("live");
+  it("routes 'live mode' to preview", () => {
+    expect(dispatchIntent("iterate in live mode on the hero").matched.map((m) => m.verb)).toContain("preview");
+  });
+  it("resolves legacy aliases via get_command", async () => {
+    const client = await connectClient();
+    const text = textOf(await client.callTool({ name: "get_command", arguments: { verb: "init" } }));
+    expect(text).toContain("setup");
+    expect(text).toContain("alias");
   });
   it("always recommends the anti-slop ship gate", () => {
     expect(dispatchIntent("literally anything").recommendedReads).toContain("avoid-ai-slop");
@@ -127,7 +133,7 @@ describe("designer-skill MCP server", () => {
 
   it("dispatch_intent returns routed guidance text", async () => {
     const text = textOf(await client.callTool({ name: "dispatch_intent", arguments: { request: "make it pop" } }));
-    expect(text).toContain("bolder");
+    expect(text).toContain("amplify");
     expect(text).toContain("avoid-ai-slop.md");
   });
 
@@ -144,15 +150,15 @@ describe("designer-skill MCP server", () => {
     }
   });
 
-  it("list_commands returns init, craft, and live", async () => {
+  it("list_commands returns setup, build, and preview", async () => {
     const text = textOf(await client.callTool({ name: "list_commands" }));
-    expect(text).toContain("init");
-    expect(text).toContain("craft");
-    expect(text).toContain("live");
+    expect(text).toContain("setup");
+    expect(text).toContain("build");
+    expect(text).toContain("preview");
   });
 
-  it("get_command returns init guidance and project-init reference", async () => {
-    const text = textOf(await client.callTool({ name: "get_command", arguments: { verb: "init" } }));
+  it("get_command returns setup guidance and project-init reference", async () => {
+    const text = textOf(await client.callTool({ name: "get_command", arguments: { verb: "setup" } }));
     expect(text).toContain("project-init");
     expect(text).toContain("PRODUCT.md");
   });

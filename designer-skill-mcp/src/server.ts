@@ -112,7 +112,7 @@ export function createServer(): McpServer {
     {
       title: "List all designer-skill design commands",
       description:
-        "Returns all design verbs (init, craft, live, audit, polish, bolder, …) with descriptions and argument hints. Use to discover the command vocabulary before calling get_command.",
+        "Returns all design verbs (setup, build, preview, check, finish, amplify, …) with descriptions and argument hints. Use to discover the command vocabulary before calling get_command.",
     },
     async () => {
       const cmds = listCommands();
@@ -126,8 +126,8 @@ export function createServer(): McpServer {
     {
       title: "Get guidance for a specific design command",
       description:
-        "Returns the description, argument hint, and reference files to read for a design verb (e.g. init, craft, audit, polish). Call list_commands first if unsure which verb applies.",
-      inputSchema: { verb: z.string().min(1).describe("Design command verb, e.g. init, craft, audit, polish.") },
+        "Returns the description, argument hint, and reference files to read for a design verb (e.g. setup, build, check, finish). Legacy names (init, craft, audit, …) resolve via aliases. Call list_commands first if unsure which verb applies.",
+      inputSchema: { verb: z.string().min(1).describe("Design command verb, e.g. setup, build, check, finish.") },
     },
     async ({ verb }) => {
       const help = formatCommandHelp(verb);
@@ -142,7 +142,7 @@ export function createServer(): McpServer {
     {
       title: "Load PRODUCT.md and DESIGN.md from the project",
       description:
-        "Reads PRODUCT.md (and DESIGN.md when present) from the project root or .agents/context/ or docs/. Returns NO_PRODUCT_MD when missing — then run get_command({ verb: \"init\" }) before any UI work.",
+        "Reads PRODUCT.md (and DESIGN.md when present) from the project root or .agents/context/ or docs/. Returns NO_PRODUCT_MD when missing — then run get_command({ verb: \"setup\" }) before any UI work.",
       inputSchema: {
         cwd: z.string().optional().describe("Project root directory. Defaults to the MCP server's working directory."),
       },
@@ -172,7 +172,7 @@ export function createServer(): McpServer {
     {
       title: "Scan files for UI anti-patterns (deterministic)",
       description:
-        "Runs 44 deterministic detector rules against a file or directory. No LLM, no API key. Respects .designer-skill/config.json ignore rules. Use during audit/critique before declaring work done.",
+        "Runs 44 deterministic detector rules against a file or directory. No LLM, no API key. Respects .designer-skill/config.json ignore rules. Use during check/review before declaring work done.",
       inputSchema: {
         target: z.string().min(1).describe("File or directory path to scan (relative to cwd or absolute)."),
         cwd: z.string().optional().describe("Project root for config resolution. Defaults to process.cwd()."),

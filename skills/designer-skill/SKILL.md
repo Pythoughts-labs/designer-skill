@@ -13,11 +13,11 @@ This file is the router. The substance lives in thirteen reference files under `
 
 When the **designer-skill** MCP server is connected, use it to fetch the latest, task-relevant design guidance before writing any UI code. Do not rely on memory or a stale copy of this skill — always pull fresh content from MCP.
 
-1. **Load project context** — call `load_project_context` to read PRODUCT.md / DESIGN.md. If it returns `NO_PRODUCT_MD`, call `get_command({ verb: "init" })` and follow the init flow before any other UI work.
+1. **Load project context** — call `load_project_context` to read PRODUCT.md / DESIGN.md. If it returns `NO_PRODUCT_MD`, call `get_command({ verb: "setup" })` and follow the setup flow before any other UI work.
 2. **Load the router** — call `get_design_system` or fetch the `designer://skill` resource.
 3. **Route the user's request** — call `dispatch_intent` with the user's request (or your best paraphrase) to get the matching design verb(s) and which reference files to read. For a known verb, `get_command` returns the full command guidance plus its reference files.
 4. **Fetch the references** — for every file `dispatch_intent` or `get_command` recommends (and any others the preflight below requires), call `get_reference` or fetch `designer://reference/{name}`. Load 2–4 files in parallel when possible. Use the returned text as the authoritative source — not your training-data recall of these files.
-5. **Deterministic checks (audit/critique)** — when reviewing existing UI, call `detect_antipatterns` on the target file or directory for 44 rule-based findings (no LLM). Combine with the anti-slop checklist.
+5. **Deterministic checks (check/review)** — when reviewing existing UI, call `detect_antipatterns` on the target file or directory for 44 rule-based findings (no LLM). Combine with the anti-slop checklist.
 6. **Greenfield palette** — when no committed brand colors exist, call `get_palette_seed` for an OKLCH anchor before composing the palette.
 7. **Find contemporary UI references (when the task is visually-led or net-new)** — if the user is building, redesigning, or seeking inspiration for a surface (landing page, dashboard, pricing, onboarding, component library, etc.), use available web-search MCP tools (e.g. Tavily) to find recent, high-quality real-world UI examples relevant to the surface type, register (brand vs product), industry, and aesthetic direction. Extract structure, hierarchy, spacing rhythm, and interaction patterns — do not copy layouts wholesale. Filter findings through this skill's anti-slop discipline and one-aesthetic-system rule.
 8. **Ship gate at the end** — call `anti_slop_checklist` before declaring any UI work done.
@@ -37,7 +37,7 @@ After MCP bootstrap (when available), run this order before writing UI code:
 6. **For existing UI**, follow the audit → diagnose → redesign loop in `reference/refactor-and-redesign.md` instead of building from scratch — preserve functionality, change presentation surgically.
 7. **Verify before done** (see the ship gate below).
 
-To map a specific user request ("make it pop", "it feels off", "production-ready") to the right move, read `reference/command-playbook.md` — the intent→verb dispatch table. If the request clearly matches one verb ("fix the spacing" → layout, "rewrite this error" → clarify), load that verb's guidance and proceed as if it were invoked; if two verbs plausibly fit, ask once which one; with no clear match, run the general preflight above.
+To map a specific user request ("make it pop", "it feels off", "production-ready") to the right move, read `reference/command-playbook.md` — the intent→verb dispatch table. If the request clearly matches one verb ("fix the spacing" → layout, "rewrite this error" → copy), load that verb's guidance and proceed as if it were invoked; if two verbs plausibly fit, ask once which one; with no clear match, run the general preflight above.
 
 ## Project context files
 
@@ -56,7 +56,7 @@ To map a specific user request ("make it pop", "it feels off", "production-ready
 | `reference/engineering-and-performance.md` | Component architecture, design tokens/CSS vars, hardware acceleration, responsive/fluid, accessibility, Core Web Vitals, framework-honest output, real-data hardening. |
 | `reference/avoid-ai-slop.md` | Not looking "AI-made" — the cross-register ban-list, category-reflex checks, and the output-completeness contract. |
 | `reference/refactor-and-redesign.md` | Improving existing UI without breaking it — audit, diagnose generic patterns, the redesign loop, image/reference-to-code. |
-| `reference/command-playbook.md` | Which verb/move maps to the user's intent (build, polish, bolder, quieter, animate, harden, redesign, …). |
+| `reference/command-playbook.md` | Which verb/move maps to the user's intent (build, finish, amplify, calm, motion, ship, refresh, …). |
 | `reference/interaction-design.md` | Cognitive laws (Fitts, Hick, Miller, Doherty), state machines, form design, navigation patterns, error UX, feedback loops, loading states, gestures, emotional timing. |
 | `reference/visual-critique.md` | Seven-dimension critique instrument: visual hierarchy, composition, color, typography, affordance, information density, brand consistency. |
 | `reference/design-systems.md` | Token architecture (global→semantic→component), motion system, component specs, naming conventions, theming, pattern library, color/type/spacing scales. |

@@ -83,8 +83,8 @@ export function formatProjectContext(ctx: ProjectContext): string {
   if (!ctx.hasProduct) {
     return (
       "NO_PRODUCT_MD: This project has no PRODUCT.md yet. " +
-      "Stop the current UI task, call get_command({ verb: \"init\" }) or get_reference({ name: \"project-init\" }), " +
-      "and follow the init flow to write PRODUCT.md before resuming."
+      "Stop the current UI task, call get_command({ verb: \"setup\" }) or get_reference({ name: \"project-init\" }), " +
+      "and follow the setup flow to write PRODUCT.md before resuming."
     );
   }
   const parts = [`# PRODUCT.md\n\n${ctx.product!.trim()}`];

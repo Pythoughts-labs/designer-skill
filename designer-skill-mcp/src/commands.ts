@@ -9,41 +9,68 @@ export interface CommandMeta {
   argumentHint: string;
 }
 
+/** Legacy verb names → canonical command. */
+export const COMMAND_ALIASES: Record<string, string> = {
+  init: "setup",
+  craft: "build",
+  shape: "plan",
+  live: "preview",
+  document: "spec",
+  audit: "check",
+  critique: "review",
+  score: "review",
+  typeset: "type",
+  colorize: "color",
+  animate: "motion",
+  adapt: "responsive",
+  distill: "simplify",
+  clarify: "copy",
+  harden: "ship",
+  optimize: "speed",
+  extract: "tokens",
+  redesign: "refresh",
+  variants: "options",
+  polish: "finish",
+  bolder: "amplify",
+  quieter: "calm",
+  overdrive: "push",
+  navigate: "nav",
+  feel: "tone",
+};
+
 /** Maps a design verb to the reference file(s) an agent should read. */
 export const COMMAND_READS: Record<string, ReferenceName[]> = {
-  init: ["project-init"],
-  craft: ["craft-flow", "design-principles", "aesthetic-systems", "engineering-and-performance", "avoid-ai-slop"],
-  live: ["live-mode"],
-  shape: ["design-principles", "aesthetic-systems"],
-  build: ["design-principles", "aesthetic-systems", "engineering-and-performance", "avoid-ai-slop"],
-  audit: ["engineering-and-performance", "avoid-ai-slop", "refactor-and-redesign"],
-  critique: ["design-principles", "avoid-ai-slop", "visual-critique"],
-  polish: ["design-principles", "engineering-and-performance"],
-  bolder: ["aesthetic-systems", "avoid-ai-slop"],
-  quieter: ["design-principles", "aesthetic-systems"],
-  overdrive: ["motion-and-interaction", "engineering-and-performance"],
-  animate: ["motion-and-interaction"],
+  setup: ["project-init"],
+  plan: ["design-principles", "aesthetic-systems"],
+  build: ["craft-flow", "design-principles", "aesthetic-systems", "engineering-and-performance", "avoid-ai-slop"],
+  preview: ["live-mode"],
+  spec: ["refactor-and-redesign"],
+  check: ["engineering-and-performance", "avoid-ai-slop", "refactor-and-redesign"],
+  review: ["design-principles", "avoid-ai-slop", "visual-critique"],
+  finish: ["design-principles", "engineering-and-performance"],
+  amplify: ["aesthetic-systems", "avoid-ai-slop"],
+  calm: ["design-principles", "aesthetic-systems"],
+  push: ["motion-and-interaction", "engineering-and-performance"],
+  motion: ["motion-and-interaction"],
   delight: ["motion-and-interaction", "avoid-ai-slop"],
   layout: ["design-principles"],
-  typeset: ["design-principles"],
-  colorize: ["design-principles", "aesthetic-systems"],
-  harden: ["engineering-and-performance"],
-  optimize: ["engineering-and-performance"],
-  distill: ["design-principles"],
-  extract: ["engineering-and-performance", "design-systems"],
+  type: ["design-principles"],
+  color: ["design-principles", "aesthetic-systems"],
+  ship: ["engineering-and-performance"],
+  speed: ["engineering-and-performance"],
+  simplify: ["design-principles"],
+  tokens: ["engineering-and-performance", "design-systems"],
   brand: ["aesthetic-systems", "avoid-ai-slop"],
-  adapt: ["engineering-and-performance", "refactor-and-redesign"],
-  redesign: ["refactor-and-redesign", "avoid-ai-slop"],
-  clarify: ["command-playbook", "avoid-ai-slop"],
+  responsive: ["engineering-and-performance", "refactor-and-redesign"],
+  refresh: ["refactor-and-redesign", "avoid-ai-slop"],
+  copy: ["command-playbook", "avoid-ai-slop"],
   onboard: ["command-playbook", "engineering-and-performance"],
-  document: ["refactor-and-redesign"],
-  variants: ["refactor-and-redesign", "avoid-ai-slop"],
+  options: ["refactor-and-redesign", "avoid-ai-slop"],
   form: ["interaction-design", "engineering-and-performance"],
-  navigate: ["interaction-design", "design-principles"],
+  nav: ["interaction-design", "design-principles"],
   states: ["interaction-design", "engineering-and-performance"],
-  feel: ["interaction-design", "motion-and-interaction"],
+  tone: ["interaction-design", "motion-and-interaction"],
   system: ["design-systems", "engineering-and-performance"],
-  score: ["visual-critique", "avoid-ai-slop"],
 };
 
 function resolveScriptsDir(): string {
@@ -68,6 +95,12 @@ export function getCommandMetadata(): Record<string, CommandMeta> {
   return metadataCache;
 }
 
+export function resolveCommandVerb(verb: string): { canonical: string; alias?: string } {
+  const key = verb.toLowerCase();
+  const canonical = COMMAND_ALIASES[key] ?? key;
+  return { canonical, alias: canonical !== key ? key : undefined };
+}
+
 export function listCommands(): { verb: string; description: string; argumentHint: string }[] {
   const meta = getCommandMetadata();
   return Object.entries(meta).map(([verb, m]) => ({
@@ -78,21 +111,23 @@ export function listCommands(): { verb: string; description: string; argumentHin
 }
 
 export function getCommandReads(verb: string): ReferenceName[] {
-  const reads = COMMAND_READS[verb.toLowerCase()];
+  const { canonical } = resolveCommandVerb(verb);
+  const reads = COMMAND_READS[canonical];
   if (!reads) return ["command-playbook", "design-principles"];
   return reads;
 }
 
 export function formatCommandHelp(verb: string): string {
-  const key = verb.toLowerCase();
-  const meta = getCommandMetadata()[key];
+  const { canonical, alias } = resolveCommandVerb(verb);
+  const meta = getCommandMetadata()[canonical];
   if (!meta) {
     return `Unknown command "${verb}". Call list_commands for all verbs, or dispatch_intent with a natural-language request.`;
   }
-  const reads = getCommandReads(key);
+  const reads = getCommandReads(canonical);
   const lines = [
-    `# designer-skill command: ${key}`,
+    `# designer-skill command: ${canonical}`,
     "",
+    alias ? `> \`${alias}\` is an alias for \`${canonical}\`.` : "",
     meta.description,
     meta.argumentHint ? `\nArgument hint: \`${meta.argumentHint}\`` : "",
     "",

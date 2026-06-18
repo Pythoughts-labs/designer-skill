@@ -5,7 +5,7 @@ Interactive browser variant mode for **designer-skill**: select elements in the 
 ## MCP entry point
 
 1. `load_project_context` — confirm PRODUCT.md (and DESIGN.md when present).
-2. `get_command({ verb: "live" })` — load this file as the authoritative contract.
+2. `get_command({ verb: "preview" })` — load this file as the authoritative contract.
 3. `dispatch_intent` — when the user describes live iteration in natural language.
 
 Live helper scripts (`scripts/live*.mjs`) ship in a future release. Until then, use **browser MCP tools** for navigation, snapshots, and visual verification after applying variants in source.
@@ -48,7 +48,7 @@ No recap, no tutorial output, no pasting full PRODUCT/DESIGN bodies into chat.
 
 Infer **brand** vs **product** register from PRODUCT.md (SKILL.md preflight). **DESIGN.md wins visual decisions; PRODUCT.md wins strategic/voice decisions.** When DESIGN.md is missing, extract identity from CSS variables, computed styles, and sibling components — identity preservation is the default.
 
-For freeform generation (no named sub-command), follow SKILL.md design laws plus the register tone. Named actions map to `get_command` verbs (`layout`, `colorize`, `bolder`, etc.).
+For freeform generation (no named sub-command), follow SKILL.md design laws plus the register tone. Named actions map to `get_command` verbs (`layout`, `color`, `amplify`, etc.).
 
 ## Source markers (designer-skill namespace)
 

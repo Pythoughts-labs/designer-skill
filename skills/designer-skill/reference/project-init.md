@@ -14,14 +14,14 @@ Check what already exists. PRODUCT.md and DESIGN.md live at the project root, or
 
 Decision tree:
 - **Neither file exists (empty project or no context yet)**: do Steps 2-4 (write PRODUCT.md), then decide on DESIGN.md based on whether there's code to analyze.
-- **PRODUCT.md exists, DESIGN.md missing**: skip to Step 5 and offer `get_command({ verb: "document" })` for DESIGN.md.
+- **PRODUCT.md exists, DESIGN.md missing**: skip to Step 5 and offer `get_command({ verb: "spec" })` for DESIGN.md.
 - **PRODUCT.md exists but has no `## Register` section (legacy)**: add it. Infer a hypothesis from the codebase (see Step 2), confirm with the user, write the field.
 - **Both exist**: Ask the user which file to refresh. Skip the one they don't want changed.
 - **Just DESIGN.md exists (unusual)**: do Steps 2-4 to produce PRODUCT.md.
 
 Never silently overwrite an existing file. Always confirm first.
 
-If init was invoked as a setup blocker by another command (e.g. the user asked to polish UI with no PRODUCT.md), pause that command here. Complete init, then resume the original task.
+If setup was invoked as a setup blocker by another command (e.g. the user asked to finish UI with no PRODUCT.md), pause that command here. Complete setup, then resume the original task.
 
 ## Step 2: Explore the codebase
 
@@ -126,14 +126,14 @@ Write to `PROJECT_ROOT/PRODUCT.md`. If `.designer-skill.md` existed, the loader 
 
 ## Step 5: Decide on DESIGN.md
 
-Offer `get_command({ verb: "document" })` either way. Two paths:
+Offer `get_command({ verb: "spec" })` either way. Two paths:
 
 - **Code exists** (CSS tokens, components, a running site): "I can generate a DESIGN.md that captures your visual system (colors, typography, components) so variants stay on-brand. Want to do that now?"
 - **Pre-implementation** (empty project): "I can seed a starter DESIGN.md from five quick questions about color strategy, type direction, motion energy, and references. You can re-run once there's code, to capture the real tokens. Want to do that now?"
 
-If the user agrees, follow the **document** verb guidance in `refactor-and-redesign.md` §7.
+If the user agrees, follow the **spec** verb guidance in `refactor-and-redesign.md` §7.
 
-If the user prefers to skip, mention they can run `get_command({ verb: "document" })` any time later.
+If the user prefers to skip, mention they can run `get_command({ verb: "spec" })` any time later.
 
 ## Step 6: Configure live mode (when code exists)
 
@@ -161,12 +161,12 @@ Summarize tersely:
 
 Then recommend the **best next steps** (2–4, not a menu dump), using MCP verbs:
 
-- **Build something new**: `get_command({ verb: "craft" })` or `get_command({ verb: "shape" })` for empty/early projects.
-- **Improve what's there**: `critique`, `audit`, or `polish` on the specific surface; map weaknesses to verbs (`layout`, `colorize`, `harden`, `clarify`).
-- **Iterate visually**: `get_command({ verb: "live" })` when live config exists.
+- **Build something new**: `get_command({ verb: "build" })` or `get_command({ verb: "plan" })` for empty/early projects.
+- **Improve what's there**: `review`, `check`, or `finish` on the specific surface; map weaknesses to verbs (`layout`, `color`, `ship`, `copy`).
+- **Iterate visually**: `get_command({ verb: "preview" })` when preview config exists.
 
 Full vocabulary: `list_commands`.
 
-If init blocked another task, resume it now. Your own writes are the freshest source; no reload needed.
+If setup blocked another task, resume it now. Your own writes are the freshest source; no reload needed.
 
 Optionally ask whether to append a short **Design Context** pointer to the project's agent config file (e.g. `AGENTS.md` or `CLAUDE.md`).

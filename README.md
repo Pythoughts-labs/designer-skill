@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/designer-skill-mcp-logo.webp" alt="designer-skill" width="280" />
+<img src="docs/designer-skill-mcp-logo.webp" alt="designer-skill-mcp" width="580" />
 
 <br />
 
@@ -325,7 +325,7 @@ Use designer-skill to redesign this pricing page without breaking functionality.
 <tr><td bgcolor="#ecfdf5"><code>engineering-and-performance.md</code></td><td bgcolor="#f8fafc">Tokens, a11y, responsive, Core Web Vitals, real-data hardening</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
 <tr><td bgcolor="#f0f9ff"><code>avoid-ai-slop.md</code></td><td bgcolor="#f8fafc">Ban-list, category-reflex checks, output-completeness contract</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
 <tr><td bgcolor="#fdf4ff"><code>refactor-and-redesign.md</code></td><td bgcolor="#f8fafc">Audit → diagnose → redesign without breaking behavior</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
-<tr><td bgcolor="#f1f5f9"><code>command-playbook.md</code></td><td bgcolor="#f8fafc">Intent → verb dispatch (build, polish, bolder, harden, …)</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
+<tr><td bgcolor="#f1f5f9"><code>command-playbook.md</code></td><td bgcolor="#f8fafc">Intent → verb dispatch (build, finish, amplify, ship, …)</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
 <tr><td bgcolor="#fffbeb"><code>interaction-design.md</code></td><td bgcolor="#f8fafc">Fitts/Hick/Miller, forms, navigation, errors, loading states</td><td align="center" bgcolor="#fdf2f8"><b>extended</b></td></tr>
 <tr><td bgcolor="#fff1f2"><code>visual-critique.md</code></td><td bgcolor="#f8fafc">Seven-dimension critique instrument</td><td align="center" bgcolor="#fdf2f8"><b>extended</b></td></tr>
 <tr><td bgcolor="#eff6ff"><code>design-systems.md</code></td><td bgcolor="#f8fafc">Token architecture, component specs, theming</td><td align="center" bgcolor="#fdf2f8"><b>extended</b></td></tr>
@@ -353,12 +353,12 @@ Use designer-skill to redesign this pricing page without breaking functionality.
 </tr>
 </thead>
 <tbody>
-<tr><td bgcolor="#faf5ff">"make it pop"</td><td bgcolor="#f8fafc"><code>bolder</code> · <code>colorize</code></td><td bgcolor="#f8fafc"><code>aesthetic-systems</code>, <code>design-principles</code></td></tr>
-<tr><td bgcolor="#fdf4ff">"it feels off"</td><td bgcolor="#f8fafc"><code>audit</code> · <code>diagnose</code></td><td bgcolor="#f8fafc"><code>refactor-and-redesign</code>, <code>avoid-ai-slop</code></td></tr>
-<tr><td bgcolor="#ecfdf5">"production-ready"</td><td bgcolor="#f8fafc"><code>harden</code> · <code>a11y</code></td><td bgcolor="#f8fafc"><code>engineering-and-performance</code></td></tr>
-<tr><td bgcolor="#eff6ff">"add some motion"</td><td bgcolor="#f8fafc"><code>animate</code></td><td bgcolor="#f8fafc"><code>motion-and-interaction</code></td></tr>
-<tr><td bgcolor="#fff7ed">"it looks AI-made"</td><td bgcolor="#f8fafc"><code>de-slop</code> · <code>differentiate</code></td><td bgcolor="#f8fafc"><code>avoid-ai-slop</code>, <code>aesthetic-systems</code></td></tr>
-<tr><td bgcolor="#fff1f2">"redesign this"</td><td bgcolor="#f8fafc"><code>audit</code> · <code>redesign</code></td><td bgcolor="#f8fafc"><code>refactor-and-redesign</code>, <code>command-playbook</code></td></tr>
+<tr><td bgcolor="#faf5ff">"make it pop"</td><td bgcolor="#f8fafc"><code>amplify</code> · <code>color</code></td><td bgcolor="#f8fafc"><code>aesthetic-systems</code>, <code>design-principles</code></td></tr>
+<tr><td bgcolor="#fdf4ff">"it feels off"</td><td bgcolor="#f8fafc"><code>check</code> · <code>layout</code></td><td bgcolor="#f8fafc"><code>refactor-and-redesign</code>, <code>avoid-ai-slop</code></td></tr>
+<tr><td bgcolor="#ecfdf5">"production-ready"</td><td bgcolor="#f8fafc"><code>ship</code> · <code>check</code></td><td bgcolor="#f8fafc"><code>engineering-and-performance</code></td></tr>
+<tr><td bgcolor="#eff6ff">"add some motion"</td><td bgcolor="#f8fafc"><code>motion</code></td><td bgcolor="#f8fafc"><code>motion-and-interaction</code></td></tr>
+<tr><td bgcolor="#fff7ed">"it looks AI-made"</td><td bgcolor="#f8fafc"><code>review</code> · <code>brand</code></td><td bgcolor="#f8fafc"><code>avoid-ai-slop</code>, <code>aesthetic-systems</code></td></tr>
+<tr><td bgcolor="#fff1f2">"redesign this"</td><td bgcolor="#f8fafc"><code>check</code> · <code>refresh</code></td><td bgcolor="#f8fafc"><code>refactor-and-redesign</code>, <code>command-playbook</code></td></tr>
 </tbody>
 </table>
 
