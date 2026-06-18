@@ -3,6 +3,7 @@ node_modules/
 dist/
 *.log
 .env
+.cursor/
 docs/superpowers/
 main-s/
 AGENTS.md

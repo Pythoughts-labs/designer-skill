@@ -65,6 +65,15 @@ describe("dispatchIntent", () => {
   it("routes 'visual critique' to score", () => {
     expect(dispatchIntent("do a visual critique and score the design").matched.map((m) => m.verb)).toContain("score");
   });
+  it("routes 'setup project' to init", () => {
+    expect(dispatchIntent("setup project and write PRODUCT.md").matched.map((m) => m.verb)).toContain("init");
+  });
+  it("routes 'craft end to end' to craft", () => {
+    expect(dispatchIntent("craft this landing page end to end").matched.map((m) => m.verb)).toContain("craft");
+  });
+  it("routes 'live mode' to live", () => {
+    expect(dispatchIntent("iterate in live mode on the hero").matched.map((m) => m.verb)).toContain("live");
+  });
   it("always recommends the anti-slop ship gate", () => {
     expect(dispatchIntent("literally anything").recommendedReads).toContain("avoid-ai-slop");
     expect(dispatchIntent("make it pop").recommendedReads).toContain("avoid-ai-slop");
@@ -82,10 +91,20 @@ describe("designer-skill MCP server", () => {
     client = await connectClient();
   });
 
-  it("advertises the five tools", async () => {
+  it("advertises the nine tools", async () => {
     const names = (await client.listTools()).tools.map((t) => t.name).sort();
     expect(names).toEqual(
-      ["anti_slop_checklist", "apply_designer", "dispatch_intent", "get_design_system", "get_reference"].sort(),
+      [
+        "anti_slop_checklist",
+        "detect_antipatterns",
+        "dispatch_intent",
+        "get_command",
+        "get_design_system",
+        "get_palette_seed",
+        "get_reference",
+        "list_commands",
+        "load_project_context",
+      ].sort(),
     );
   });
 
@@ -117,24 +136,40 @@ describe("designer-skill MCP server", () => {
     expect(text).toContain("Avoiding AI Slop");
   });
 
-  it("apply_designer errors clearly when no API key is set", async () => {
-    const prev = process.env.ANTHROPIC_API_KEY;
-    delete process.env.ANTHROPIC_API_KEY;
-    try {
-      const res = await client.callTool({ name: "apply_designer", arguments: { request: "build a pricing page" } });
-      expect(res.isError).toBe(true);
-      expect(textOf(res as { content: Array<{ type: string; text?: string }> })).toContain("ANTHROPIC_API_KEY");
-    } finally {
-      if (prev !== undefined) process.env.ANTHROPIC_API_KEY = prev;
-    }
-  });
-
-  it("exposes the skill router resource and all ten reference resources", async () => {
+  it("exposes the skill router resource and all thirteen reference resources", async () => {
     const uris = (await client.listResources()).resources.map((r) => r.uri);
     expect(uris).toContain("designer://skill");
     for (const name of REFERENCE_NAMES) {
       expect(uris).toContain(`designer://reference/${name}`);
     }
+  });
+
+  it("list_commands returns init, craft, and live", async () => {
+    const text = textOf(await client.callTool({ name: "list_commands" }));
+    expect(text).toContain("init");
+    expect(text).toContain("craft");
+    expect(text).toContain("live");
+  });
+
+  it("get_command returns init guidance and project-init reference", async () => {
+    const text = textOf(await client.callTool({ name: "get_command", arguments: { verb: "init" } }));
+    expect(text).toContain("project-init");
+    expect(text).toContain("PRODUCT.md");
+  });
+
+  it("load_project_context reports missing PRODUCT.md", async () => {
+    const text = textOf(await client.callTool({ name: "load_project_context", arguments: {} }));
+    expect(text).toContain("NO_PRODUCT_MD");
+  });
+
+  it("get_palette_seed returns OKLCH seed data", async () => {
+    const text = textOf(await client.callTool({ name: "get_palette_seed", arguments: { from: "test-brand" } }));
+    expect(text.toLowerCase()).toContain("oklch");
+  });
+
+  it("get_reference returns project-init flow", async () => {
+    const text = textOf(await client.callTool({ name: "get_reference", arguments: { name: "project-init" } }));
+    expect(text).toContain("PRODUCT.md");
   });
 
   it("reads a reference resource by URI", async () => {

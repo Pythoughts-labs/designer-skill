@@ -16,6 +16,9 @@ export const REFERENCE_NAMES = [
   "interaction-design",
   "visual-critique",
   "design-systems",
+  "project-init",
+  "craft-flow",
+  "live-mode",
 ] as const;
 
 export type ReferenceName = (typeof REFERENCE_NAMES)[number];
@@ -41,6 +44,12 @@ export const REFERENCE_DESCRIPTIONS: Record<ReferenceName, string> = {
     "Seven-dimension critique instrument: visual hierarchy, composition, color, typography, affordance, information density, brand consistency.",
   "design-systems":
     "Token architecture (global→semantic→component), motion system, component specs, naming conventions, theming, pattern library, color/type/spacing scales.",
+  "project-init":
+    "One-time project setup: discovery interview, PRODUCT.md, optional DESIGN.md, live-mode pre-config, and next-command routing.",
+  "craft-flow":
+    "Full shape-then-build pipeline with user gates, framework detection, visual iteration loop, and production-grade output.",
+  "live-mode":
+    "Interactive browser variant mode: element selection, hot-swapped HTML+CSS variants via HMR, poll/steer/accept contract.",
 };
 
 function resolveSkillDir(): string {

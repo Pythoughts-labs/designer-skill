@@ -7,11 +7,26 @@ description: Use when building, designing, redesigning, refactoring, polishing, 
 
 A composite design skill: one consolidated, framework-agnostic reference any coding agent can use to **design, refactor, and enhance** UI — spanning visual fundamentals, opinionated aesthetic systems, motion and interaction, engineering and performance, anti-AI-slop discipline, and a verb-driven command playbook.
 
-This file is the router. It is intentionally short. The substance lives in ten reference files under `reference/`; read this, then open the file(s) the task needs. Do not work from memory — open the owner file and use its concrete values.
+This file is the router. It is intentionally short. The substance lives in thirteen reference files under `reference/`; read this, then open the file(s) the task needs. Do not work from memory — open the owner file and use its concrete values.
+
+## MCP bootstrap (run on skill load)
+
+When the **designer-skill** MCP server is connected, use it to fetch the latest, task-relevant design guidance before writing any UI code. Do not rely on memory or a stale copy of this skill — always pull fresh content from MCP.
+
+1. **Load project context** — call `load_project_context` to read PRODUCT.md / DESIGN.md. If it returns `NO_PRODUCT_MD`, call `get_command({ verb: "init" })` and follow the init flow before any other UI work.
+2. **Load the router** — call `get_design_system` or fetch the `designer://skill` resource.
+3. **Route the user's request** — call `dispatch_intent` with the user's request (or your best paraphrase) to get the matching design verb(s) and which reference files to read. For a known verb, `get_command` returns the full command guidance plus its reference files.
+4. **Fetch the references** — for every file `dispatch_intent` or `get_command` recommends (and any others the preflight below requires), call `get_reference` or fetch `designer://reference/{name}`. Load 2–4 files in parallel when possible. Use the returned text as the authoritative source — not your training-data recall of these files.
+5. **Deterministic checks (audit/critique)** — when reviewing existing UI, call `detect_antipatterns` on the target file or directory for 44 rule-based findings (no LLM). Combine with the anti-slop checklist.
+6. **Greenfield palette** — when no committed brand colors exist, call `get_palette_seed` for an OKLCH anchor before composing the palette.
+7. **Find contemporary UI references (when the task is visually-led or net-new)** — if the user is building, redesigning, or seeking inspiration for a surface (landing page, dashboard, pricing, onboarding, component library, etc.), use available web-search MCP tools (e.g. Tavily) to find recent, high-quality real-world UI examples relevant to the surface type, register (brand vs product), industry, and aesthetic direction. Extract structure, hierarchy, spacing rhythm, and interaction patterns — do not copy layouts wholesale. Filter findings through this skill's anti-slop discipline and one-aesthetic-system rule.
+8. **Ship gate at the end** — call `anti_slop_checklist` before declaring any UI work done.
+
+If MCP is unavailable, read the local `reference/` files directly using the routing map below. Run `node scripts/context.mjs` once per session for PRODUCT.md / DESIGN.md.
 
 ## How to use it (session preflight)
 
-Run this order before writing UI code:
+After MCP bootstrap (when available), run this order before writing UI code:
 
 0. **Check for project context files.** If `PRODUCT.md` / `DESIGN.md` exist at the project root, they are authoritative: `DESIGN.md` wins visual decisions, `PRODUCT.md` wins strategic/voice decisions, and `PRODUCT.md` anti-references beat the user's one-off prompt (they are the brand's standing position; the prompt is one moment). On greenfield work, offer to create them.
 1. **Scope the surface and register.** What is it — landing page, marketing site, dashboard, product UI, component, form? Decide the register: **brand** (design *is* the product: marketing, landing, campaign, portfolio — distinctiveness is the bar) vs **product** (design *serves* the product: app, admin, dashboard, tool — earned familiarity is the bar). Infer from concrete signals — brand: routes like `/`, `/about`, `/pricing`, `/blog/*`, hero sections, big typography, scroll-driven sections; product: `/app/*`, `/dashboard`, `/settings`, auth routes, forms, data tables, app-shell components. Pick by first match: task cue → the surface in focus → the persisted register; the project default can be overridden per task (a product can still have a brand-register landing page). Write one sentence of physical scene (who uses this, where, under what light, in what mood) and let it force light-vs-dark and tone.
@@ -45,6 +60,9 @@ To map a specific user request ("make it pop", "it feels off", "production-ready
 | `reference/interaction-design.md` | Cognitive laws (Fitts, Hick, Miller, Doherty), state machines, form design, navigation patterns, error UX, feedback loops, loading states, gestures, emotional timing. |
 | `reference/visual-critique.md` | Seven-dimension critique instrument: visual hierarchy, composition, color, typography, affordance, information density, brand consistency. |
 | `reference/design-systems.md` | Token architecture (global→semantic→component), motion system, component specs, naming conventions, theming, pattern library, color/type/spacing scales. |
+| `reference/project-init.md` | One-time project setup: discovery interview, PRODUCT.md, optional DESIGN.md, live-mode pre-config, next-command routing. |
+| `reference/craft-flow.md` | Full shape-then-build pipeline with user gates, framework detection, visual iteration loop. |
+| `reference/live-mode.md` | Interactive browser variant mode: element selection, HMR hot-swap, poll/steer/accept contract. |
 
 ## Precedence rule (read before treating any rule as absolute)
 

@@ -1,7 +1,7 @@
 {
   "name": "designer-skill-mcp",
-  "version": "0.4.0",
-  "description": "MCP server that exposes the designer-skill (design, refactor, and enhance UI) to any MCP client — guidance tools/resources/prompt plus an optional Claude-backed apply tool.",
+  "version": "0.8.0",
+  "description": "MCP server that exposes designer-skill — guidance tools, resources, and prompts for designing, refactoring, and enhancing UI.",
   "type": "module",
   "bin": {
     "designer-skill-mcp": "dist/index.js"
@@ -9,6 +9,7 @@
   "files": [
     "dist",
     "assets/skill",
+    "assets/engine",
     "README.md"
   ],
   "scripts": {
@@ -38,7 +39,6 @@
   },
   "homepage": "https://github.com/Pythoughts-labs/designer-skill#readme",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.103.0",
     "@modelcontextprotocol/sdk": "^1.12.0",
     "express": "^5.0.0",
     "zod": "^3.23.8"

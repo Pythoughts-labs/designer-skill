@@ -1,0 +1,6 @@
+designer-skill-mcp — Detector Engine
+Copyright (c) 2026 Pythoughts Labs
+SPDX-License-Identifier: Apache-2.0
+
+This package includes a UI anti-pattern detector engine used under the Apache
+License 2.0. See LICENSE in the repository root.

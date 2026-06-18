@@ -66,7 +66,7 @@ Match the *shape* of the experience to neighboring features, not just the surfac
   <motion.div animate={{ transform: "translateX(100px)" }} />  // Accelerated — off main thread
   ```
 
-  At Vercel, the dashboard tab animation used Shared Layout Animations and dropped frames during page loads; switching to CSS animations (off main thread) fixed it.
+  A production dashboard tab animation used Shared Layout Animations and dropped frames during page loads; switching to CSS animations (off main thread) fixed it.
 - **CSS animations beat JS under load.** CSS animations run off the main thread and stay smooth while the browser loads a new page; rAF-driven JS animations stall. Use **CSS for predetermined motion**, **JS only for dynamic, interruptible motion**.
 - **WAAPI for programmatic motion that needs CSS performance.** Hardware-accelerated, interruptible, no library:
 

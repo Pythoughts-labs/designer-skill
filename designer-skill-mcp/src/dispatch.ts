@@ -11,6 +11,24 @@ interface Verb {
 
 const VERBS: Verb[] = [
   {
+    verb: "init",
+    cues: ["init", "setup project", "set up project", "bootstrap", "first time", "no product.md", "write product.md", "project setup"],
+    files: ["project-init"],
+    note: "One-time project setup: discovery interview, write PRODUCT.md, offer DESIGN.md, pre-configure live mode, recommend next commands.",
+  },
+  {
+    verb: "craft",
+    cues: ["craft", "full build flow", "shape then build", "end to end with gates", "confirmed brief then build"],
+    files: ["craft-flow", "design-principles", "aesthetic-systems", "engineering-and-performance", "avoid-ai-slop"],
+    note: "Full shape-then-build flow with user gates: shape brief → visual direction → production code → in-browser iteration.",
+  },
+  {
+    verb: "live",
+    cues: ["live mode", "live variant", "browser variants", "pick elements", "hot swap", "iterate in browser", "visual experiment"],
+    files: ["live-mode"],
+    note: "Interactive live variant mode: select elements in the browser, generate HTML+CSS variants hot-swapped via HMR.",
+  },
+  {
     verb: "build",
     cues: ["build", "make a", "create", "scaffold", "implement", "from scratch", "new page", "new component", "landing page", "build me"],
     files: ["design-principles", "aesthetic-systems", "engineering-and-performance", "avoid-ai-slop"],

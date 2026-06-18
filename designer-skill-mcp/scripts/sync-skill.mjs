@@ -23,11 +23,19 @@ mkdirSync(join(dest, "reference"), { recursive: true });
 cpSync(join(src, "SKILL.md"), join(dest, "SKILL.md"));
 
 const refDir = join(src, "reference");
-let count = 0;
+let refCount = 0;
 for (const f of readdirSync(refDir)) {
   if (f.endsWith(".md")) {
     cpSync(join(refDir, f), join(dest, "reference", f));
-    count++;
+    refCount++;
   }
 }
-console.log(`[sync-skill] synced SKILL.md + ${count} reference files → ${dest}`);
+
+const scriptsSrc = join(src, "scripts");
+let scriptCount = 0;
+if (existsSync(scriptsSrc)) {
+  cpSync(scriptsSrc, join(dest, "scripts"), { recursive: true });
+  scriptCount = readdirSync(scriptsSrc).filter((f) => f.endsWith(".mjs") || f.endsWith(".json")).length;
+}
+
+console.log(`[sync-skill] synced SKILL.md + ${refCount} reference files + scripts → ${dest} (${scriptCount} script entries)`);
