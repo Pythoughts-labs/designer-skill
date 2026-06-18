@@ -1,6 +1,12 @@
 <div align="center">
 
-<img src="docs/designer-skill-mcp-logo.webp" alt="designer-skill" width="400" />
+<img src="docs/banner.svg" alt="designer-skill MCP - UI superpowers for your agent" width="100%" />
+
+<br />
+
+<img src="docs/designer-skill-mcp-logo.webp" alt="designer-skill" width="280" />
+
+<br />
 
 **Plug-and-play MCP. UI superpowers for your agent.**
 
@@ -30,6 +36,34 @@ npm i designer-skill-mcp
 
 <br />
 
+<table width="100%">
+<tr>
+<td width="33%" valign="top" bgcolor="#ecfdf5">
+
+### Route
+
+`dispatch_intent` maps vague requests like "make it pop" or "it feels off" to the right design verb and reference files.
+
+</td>
+<td width="34%" valign="top" bgcolor="#eff6ff">
+
+### Know
+
+13 reference files cover type, color, motion, a11y, anti-slop, and redesign loops. Your agent reads the right file before writing UI code.
+
+</td>
+<td width="33%" valign="top" bgcolor="#faf5ff">
+
+### Check
+
+A 44-rule deterministic detector plus `anti_slop_checklist` runs before shipping. Generic UI gets caught before it lands.
+
+</td>
+</tr>
+</table>
+
+<br />
+
 <div align="center">
 
 [![overview](https://img.shields.io/badge/Overview-18181b?style=for-the-badge)](#overview)
@@ -38,13 +72,20 @@ npm i designer-skill-mcp
 
 **designer-skill-mcp** is a small [MCP](https://modelcontextprotocol.io) server you add in one line. Your agent gets design tools, reference docs, and a ship gate so UI work stops looking generic.
 
-**What your agent gains:**
-
-| Superpower | What it does |
-|---|---|
-| **Route** | `dispatch_intent` maps "make it pop" or "it feels off" to the right move |
-| **Know** | 13 reference files: type, color, motion, a11y, anti-slop, redesign loops |
-| **Check** | 44-rule detector + `anti_slop_checklist` before shipping |
+```mermaid
+flowchart LR
+  A[Your prompt] --> B[dispatch_intent]
+  B --> C[get_reference]
+  C --> D[Build / polish UI]
+  D --> E[anti_slop_checklist]
+  E --> F[Ship]
+  style A fill:#f8fafc,stroke:#94a3b8,color:#18181b
+  style B fill:#eff6ff,stroke:#3b82f6,color:#1e3a8a
+  style C fill:#faf5ff,stroke:#7c3aed,color:#4c1d95
+  style D fill:#fff7ed,stroke:#e87a3d,color:#7c2d12
+  style E fill:#ecfdf5,stroke:#10b981,color:#065f46
+  style F fill:#f1f5f9,stroke:#64748b,color:#0f172a
+```
 
 Add the server. Ask in plain language. The agent handles the rest.
 
@@ -115,16 +156,24 @@ Same one-liner everywhere. No API key. No config files to write by hand:
 
 </div>
 
-| Client | Quick install |
-|---|---|
-| **Pythinker** | `pythinker mcp add --transport stdio designer-skill -- npx -y designer-skill-mcp` · [guide](docs/blog/integrating-designer-skill-with-pythinker.md) |
-| **Codex CLI** | `codex mcp add designer-skill -- npx -y designer-skill-mcp` |
-| **Claude Code** | `claude mcp add designer-skill -- npx -y designer-skill-mcp` |
-| **Cursor** | `.cursor/mcp.json` or Settings → MCP |
-| **VS Code** | `.vscode/mcp.json` (`"servers"` + `"type": "stdio"`) |
-| **Kilo Code** | MCP Settings → `mcp_settings.json` |
-| **Open Code** | `opencode.json` (key `"mcp"`) |
-| **Pi** | MCP config or native skill path |
+<table>
+<thead>
+<tr>
+<th align="left" bgcolor="#0ea5e9"><font color="#ffffff">Client</font></th>
+<th align="left" bgcolor="#0ea5e9"><font color="#ffffff">Quick install</font></th>
+</tr>
+</thead>
+<tbody>
+<tr><td bgcolor="#f0f9ff"><b>Pythinker</b></td><td bgcolor="#f8fafc"><code>pythinker mcp add --transport stdio designer-skill -- npx -y designer-skill-mcp</code> · <a href="docs/blog/integrating-designer-skill-with-pythinker.md">guide</a></td></tr>
+<tr><td bgcolor="#ecfdf5"><b>Codex CLI</b></td><td bgcolor="#f8fafc"><code>codex mcp add designer-skill -- npx -y designer-skill-mcp</code></td></tr>
+<tr><td bgcolor="#faf5ff"><b>Claude Code</b></td><td bgcolor="#f8fafc"><code>claude mcp add designer-skill -- npx -y designer-skill-mcp</code></td></tr>
+<tr><td bgcolor="#f1f5f9"><b>Cursor</b></td><td bgcolor="#f8fafc"><code>.cursor/mcp.json</code> or Settings → MCP</td></tr>
+<tr><td bgcolor="#eff6ff"><b>VS Code</b></td><td bgcolor="#f8fafc"><code>.vscode/mcp.json</code> (<code>"servers"</code> + <code>"type": "stdio"</code>)</td></tr>
+<tr><td bgcolor="#fdf4ff"><b>Kilo Code</b></td><td bgcolor="#f8fafc">MCP Settings → <code>mcp_settings.json</code></td></tr>
+<tr><td bgcolor="#fff1f2"><b>Open Code</b></td><td bgcolor="#f8fafc"><code>opencode.json</code> (key <code>"mcp"</code>)</td></tr>
+<tr><td bgcolor="#fffbeb"><b>Pi</b></td><td bgcolor="#f8fafc">MCP config or native skill path</td></tr>
+</tbody>
+</table>
 
 <details>
 <summary><strong>Per-client config snippets</strong></summary>
@@ -222,11 +271,31 @@ Invoke with the Skill tool or `$designer-skill` on design tasks.
 
 <div align="center">
 
-```
-Use designer-skill to redesign this pricing page without breaking functionality.
-```
+<table width="92%">
+<tr>
+<td align="center" bgcolor="#18181b">
 
-`get_design_system` → `dispatch_intent` → `get_reference` → work → `anti_slop_checklist`
+<br />
+
+<font color="#f8fafc" size="4">
+
+Use designer-skill to redesign this pricing page without breaking functionality.
+
+</font>
+
+<br /><br />
+
+<font color="#94a3b8">
+
+<code>get_design_system</code> → <code>dispatch_intent</code> → <code>get_reference</code> → work → <code>anti_slop_checklist</code>
+
+</font>
+
+<br /><br />
+
+</td>
+</tr>
+</table>
 
 </div>
 
@@ -240,21 +309,30 @@ Use designer-skill to redesign this pricing page without breaking functionality.
 
 ### Files
 
-| File | Use when |
-|---|---|
-| `design-principles.md` | Typography, spacing, color, layout, hierarchy (neutral baseline) |
-| `aesthetic-systems.md` | Picking a look: 5 systems with palettes, fonts, shadows |
-| `motion-and-interaction.md` | Animation timing, springs, scroll, reduced-motion |
-| `engineering-and-performance.md` | Tokens, a11y, responsive, Core Web Vitals, real-data hardening |
-| `avoid-ai-slop.md` | Ban-list, category-reflex checks, output-completeness contract |
-| `refactor-and-redesign.md` | Audit → diagnose → redesign without breaking behavior |
-| `command-playbook.md` | Intent → verb dispatch (build, polish, bolder, harden, …) |
-| `interaction-design.md` | Fitts/Hick/Miller, forms, navigation, errors, loading states |
-| `visual-critique.md` | Seven-dimension critique instrument |
-| `design-systems.md` | Token architecture, component specs, theming |
-| `project-init.md` | Discovery interview, PRODUCT.md, DESIGN.md setup |
-| `craft-flow.md` | Shape-then-build pipeline with user gates |
-| `live-mode.md` | Browser variant mode: element select, HMR, poll/steer/accept |
+<table>
+<thead>
+<tr>
+<th align="left" bgcolor="#e11d48"><font color="#ffffff">File</font></th>
+<th align="left" bgcolor="#e11d48"><font color="#ffffff">Use when</font></th>
+<th align="center" bgcolor="#e11d48"><font color="#ffffff">Tier</font></th>
+</tr>
+</thead>
+<tbody>
+<tr><td bgcolor="#fff1f2"><code>design-principles.md</code></td><td bgcolor="#f8fafc">Typography, spacing, color, layout, hierarchy (neutral baseline)</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
+<tr><td bgcolor="#fff7ed"><code>aesthetic-systems.md</code></td><td bgcolor="#f8fafc">Picking a look: 5 systems with palettes, fonts, shadows</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
+<tr><td bgcolor="#faf5ff"><code>motion-and-interaction.md</code></td><td bgcolor="#f8fafc">Animation timing, springs, scroll, reduced-motion</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
+<tr><td bgcolor="#ecfdf5"><code>engineering-and-performance.md</code></td><td bgcolor="#f8fafc">Tokens, a11y, responsive, Core Web Vitals, real-data hardening</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
+<tr><td bgcolor="#f0f9ff"><code>avoid-ai-slop.md</code></td><td bgcolor="#f8fafc">Ban-list, category-reflex checks, output-completeness contract</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
+<tr><td bgcolor="#fdf4ff"><code>refactor-and-redesign.md</code></td><td bgcolor="#f8fafc">Audit → diagnose → redesign without breaking behavior</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
+<tr><td bgcolor="#f1f5f9"><code>command-playbook.md</code></td><td bgcolor="#f8fafc">Intent → verb dispatch (build, polish, bolder, harden, …)</td><td align="center" bgcolor="#eff6ff"><b>core</b></td></tr>
+<tr><td bgcolor="#fffbeb"><code>interaction-design.md</code></td><td bgcolor="#f8fafc">Fitts/Hick/Miller, forms, navigation, errors, loading states</td><td align="center" bgcolor="#fdf2f8"><b>extended</b></td></tr>
+<tr><td bgcolor="#fff1f2"><code>visual-critique.md</code></td><td bgcolor="#f8fafc">Seven-dimension critique instrument</td><td align="center" bgcolor="#fdf2f8"><b>extended</b></td></tr>
+<tr><td bgcolor="#eff6ff"><code>design-systems.md</code></td><td bgcolor="#f8fafc">Token architecture, component specs, theming</td><td align="center" bgcolor="#fdf2f8"><b>extended</b></td></tr>
+<tr><td bgcolor="#ecfdf5"><code>project-init.md</code></td><td bgcolor="#f8fafc">Discovery interview, PRODUCT.md, DESIGN.md setup</td><td align="center" bgcolor="#fdf2f8"><b>extended</b></td></tr>
+<tr><td bgcolor="#faf5ff"><code>craft-flow.md</code></td><td bgcolor="#f8fafc">Shape-then-build pipeline with user gates</td><td align="center" bgcolor="#fdf2f8"><b>extended</b></td></tr>
+<tr><td bgcolor="#f0f9ff"><code>live-mode.md</code></td><td bgcolor="#f8fafc">Browser variant mode: element select, HMR, poll/steer/accept</td><td align="center" bgcolor="#fdf2f8"><b>extended</b></td></tr>
+</tbody>
+</table>
 
 <div align="center">
 
@@ -265,23 +343,52 @@ Use designer-skill to redesign this pricing page without breaking functionality.
 
 ### Intent → verb
 
-| Phrase | Verb(s) | Read |
-|---|---|---|
-| "make it pop" | `bolder` · `colorize` | `aesthetic-systems`, `design-principles` |
-| "it feels off" | `audit` · `diagnose` | `refactor-and-redesign`, `avoid-ai-slop` |
-| "production-ready" | `harden` · `a11y` | `engineering-and-performance` |
-| "add some motion" | `animate` | `motion-and-interaction` |
-| "it looks AI-made" | `de-slop` · `differentiate` | `avoid-ai-slop`, `aesthetic-systems` |
-| "redesign this" | `audit` · `redesign` | `refactor-and-redesign`, `command-playbook` |
+<table>
+<thead>
+<tr>
+<th align="left" bgcolor="#7c3aed"><font color="#ffffff">Phrase</font></th>
+<th align="left" bgcolor="#7c3aed"><font color="#ffffff">Verb(s)</font></th>
+<th align="left" bgcolor="#7c3aed"><font color="#ffffff">Read</font></th>
+</tr>
+</thead>
+<tbody>
+<tr><td bgcolor="#faf5ff">"make it pop"</td><td bgcolor="#f8fafc"><code>bolder</code> · <code>colorize</code></td><td bgcolor="#f8fafc"><code>aesthetic-systems</code>, <code>design-principles</code></td></tr>
+<tr><td bgcolor="#fdf4ff">"it feels off"</td><td bgcolor="#f8fafc"><code>audit</code> · <code>diagnose</code></td><td bgcolor="#f8fafc"><code>refactor-and-redesign</code>, <code>avoid-ai-slop</code></td></tr>
+<tr><td bgcolor="#ecfdf5">"production-ready"</td><td bgcolor="#f8fafc"><code>harden</code> · <code>a11y</code></td><td bgcolor="#f8fafc"><code>engineering-and-performance</code></td></tr>
+<tr><td bgcolor="#eff6ff">"add some motion"</td><td bgcolor="#f8fafc"><code>animate</code></td><td bgcolor="#f8fafc"><code>motion-and-interaction</code></td></tr>
+<tr><td bgcolor="#fff7ed">"it looks AI-made"</td><td bgcolor="#f8fafc"><code>de-slop</code> · <code>differentiate</code></td><td bgcolor="#f8fafc"><code>avoid-ai-slop</code>, <code>aesthetic-systems</code></td></tr>
+<tr><td bgcolor="#fff1f2">"redesign this"</td><td bgcolor="#f8fafc"><code>audit</code> · <code>redesign</code></td><td bgcolor="#f8fafc"><code>refactor-and-redesign</code>, <code>command-playbook</code></td></tr>
+</tbody>
+</table>
 
 ### Preflight
 
-1. Scope the surface: **brand** register (distinctiveness) vs **product** register (earned familiarity).
-2. Commit to one aesthetic system; never mix two signatures on one surface.
-3. Run the category-reflex check in `avoid-ai-slop.md`.
-4. Build on `design-principles.md` + `engineering-and-performance.md`; add motion last.
-5. For existing UI, audit → diagnose → redesign. Do not rebuild from scratch.
-6. Run the ship gate (`anti_slop_checklist`) before declaring done.
+<table>
+<tr>
+<td width="8%" align="center" bgcolor="#10b981"><font color="#ffffff"><b>1</b></font></td>
+<td bgcolor="#ecfdf5">Scope the surface: <b>brand</b> register (distinctiveness) vs <b>product</b> register (earned familiarity).</td>
+</tr>
+<tr>
+<td align="center" bgcolor="#3b82f6"><font color="#ffffff"><b>2</b></font></td>
+<td bgcolor="#eff6ff">Commit to one aesthetic system; never mix two signatures on one surface.</td>
+</tr>
+<tr>
+<td align="center" bgcolor="#7c3aed"><font color="#ffffff"><b>3</b></font></td>
+<td bgcolor="#faf5ff">Run the category-reflex check in <code>avoid-ai-slop.md</code>.</td>
+</tr>
+<tr>
+<td align="center" bgcolor="#e87a3d"><font color="#ffffff"><b>4</b></font></td>
+<td bgcolor="#fff7ed">Build on <code>design-principles.md</code> + <code>engineering-and-performance.md</code>; add motion last.</td>
+</tr>
+<tr>
+<td align="center" bgcolor="#e11d48"><font color="#ffffff"><b>5</b></font></td>
+<td bgcolor="#fff1f2">For existing UI, audit → diagnose → redesign. Do not rebuild from scratch.</td>
+</tr>
+<tr>
+<td align="center" bgcolor="#f59e0b"><font color="#ffffff"><b>6</b></font></td>
+<td bgcolor="#fffbeb">Run the ship gate (<code>anti_slop_checklist</code>) before declaring done.</td>
+</tr>
+</table>
 
 <br />
 
@@ -291,17 +398,25 @@ Use designer-skill to redesign this pricing page without breaking functionality.
 
 </div>
 
-| Tool | Purpose |
-|---|---|
-| `get_design_system` | SKILL.md router (call first) |
-| `load_project_context` | Read PRODUCT.md / DESIGN.md from the project |
-| `get_reference` | One of thirteen reference files by name |
-| `list_commands` | All design verbs with descriptions |
-| `get_command` | Full guidance + references for a specific verb |
-| `dispatch_intent` | Map a request → verb(s) + files to read |
-| `detect_antipatterns` | Deterministic scan (44 rules), no LLM, no API key |
-| `get_palette_seed` | OKLCH brand-seed for greenfield palette work |
-| `anti_slop_checklist` | Ship gate: run before finishing any UI work |
+<table>
+<thead>
+<tr>
+<th align="left" bgcolor="#0ea5e9"><font color="#ffffff">Tool</font></th>
+<th align="left" bgcolor="#0ea5e9"><font color="#ffffff">Purpose</font></th>
+</tr>
+</thead>
+<tbody>
+<tr><td bgcolor="#f0f9ff"><code>get_design_system</code></td><td bgcolor="#f8fafc">SKILL.md router (call first)</td></tr>
+<tr><td bgcolor="#ecfdf5"><code>load_project_context</code></td><td bgcolor="#f8fafc">Read PRODUCT.md / DESIGN.md from the project</td></tr>
+<tr><td bgcolor="#faf5ff"><code>get_reference</code></td><td bgcolor="#f8fafc">One of thirteen reference files by name</td></tr>
+<tr><td bgcolor="#fff7ed"><code>list_commands</code></td><td bgcolor="#f8fafc">All design verbs with descriptions</td></tr>
+<tr><td bgcolor="#eff6ff"><code>get_command</code></td><td bgcolor="#f8fafc">Full guidance + references for a specific verb</td></tr>
+<tr><td bgcolor="#fdf4ff"><code>dispatch_intent</code></td><td bgcolor="#f8fafc">Map a request → verb(s) + files to read</td></tr>
+<tr><td bgcolor="#fff1f2"><code>detect_antipatterns</code></td><td bgcolor="#f8fafc">Deterministic scan (44 rules), no LLM, no API key</td></tr>
+<tr><td bgcolor="#fffbeb"><code>get_palette_seed</code></td><td bgcolor="#f8fafc">OKLCH brand-seed for greenfield palette work</td></tr>
+<tr><td bgcolor="#f1f5f9"><code>anti_slop_checklist</code></td><td bgcolor="#f8fafc">Ship gate: run before finishing any UI work</td></tr>
+</tbody>
+</table>
 
 <div align="center">
 
