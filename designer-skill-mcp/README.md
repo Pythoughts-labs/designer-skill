@@ -79,6 +79,20 @@ Cursor: reinstall or update the plugin from marketplace; MCP args live in repo `
 
 Canonical skill content: `skills/designer-skill/` (synced to `assets/skill/` on build).
 
+## Release
+
+From repo root (see `skills/release/SKILL.md`):
+
+```bash
+./scripts/release.sh "What changed in this release."
+```
+
+**Default bump:** +0.1.0 minor (`0.10.0` → `0.11.0`). Pass an explicit semver only for hotfixes or breaking releases:
+
+```bash
+./scripts/release.sh 0.11.1 "Hotfix."
+```
+
 ## License
 
 MIT

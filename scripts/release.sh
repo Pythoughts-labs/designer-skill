@@ -1,17 +1,47 @@
 #!/usr/bin/env bash
 # Release designer-skill-mcp: bump versions, test, commit, tag, push, npm publish, GitHub release.
+#
+# Default version bump: +0.1.0 minor (0.10.0 → 0.11.0). Pass an explicit semver to override.
+#
+# Usage:
+#   ./scripts/release.sh "Release notes"
+#   ./scripts/release.sh 0.11.1 "Hotfix notes"
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PKG_DIR="$ROOT/designer-skill-mcp"
-VERSION="${1:?Usage: scripts/release.sh <semver> [release notes...]}"
-shift || true
-NOTES="${*:-Release designer-skill-mcp v${VERSION}.}"
 
-if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-  echo "error: version must be semver (e.g. 0.9.0)" >&2
-  exit 1
+read_current_version() {
+  node -p "require('${PKG_DIR}/package.json').version"
+}
+
+next_minor_version() {
+  node -e "
+    const [major, minor] = process.argv[1].split('.').map(Number);
+    if ([major, minor].some((n) => Number.isNaN(n))) process.exit(1);
+    console.log(\`\${major}.\${minor + 1}.0\`);
+  " "$(read_current_version)"
+}
+
+is_semver() {
+  [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+}
+
+if [[ $# -eq 0 ]]; then
+  VERSION="$(next_minor_version)"
+  NOTES="Release designer-skill-mcp v${VERSION}."
+elif is_semver "${1:-}"; then
+  VERSION="$1"
+  shift || true
+  NOTES="${*:-Release designer-skill-mcp v${VERSION}.}"
+else
+  VERSION="$(next_minor_version)"
+  NOTES="$*"
 fi
+
+CURRENT="$(read_current_version)"
+echo "==> Current version: ${CURRENT}"
+echo "==> Target version:  ${VERSION} (default bump: +0.1.0 minor)"
 
 TAG="v${VERSION}"
 
@@ -33,6 +63,20 @@ for (const [file, transform] of paths) {
 }
 NODE
 
+echo "==> Update doc version pins"
+node <<NODE
+const fs = require("fs");
+const version = "${VERSION}";
+const pin = \`@\${version}\`;
+const files = [
+  ["${ROOT}/README.md", (s) => s.replace(/pin \`@[0-9]+\.[0-9]+\.[0-9]+\`/g, \`pin \${pin}\`)],
+  ["${ROOT}/commands/designer-setup.md", (s) => s.replace(/with \`@[0-9]+\.[0-9]+\.[0-9]+\`/g, \`with \${pin}\`)],
+];
+for (const [file, transform] of files) {
+  if (fs.existsSync(file)) fs.writeFileSync(file, transform(fs.readFileSync(file, "utf8")));
+}
+NODE
+
 echo "==> Build and test"
 npm run build
 npm test
@@ -45,7 +89,9 @@ git add \
   designer-skill-mcp/server.json \
   .claude-plugin/plugin.json \
   .codex-plugin/plugin.json \
-  .cursor-plugin/plugin.json
+  .cursor-plugin/plugin.json \
+  README.md \
+  commands/designer-setup.md
 
 if ! git diff --cached --quiet; then
   git commit -m "$(cat <<EOF
