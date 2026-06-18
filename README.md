@@ -1,12 +1,23 @@
 <div align="center">
 
-<img src="docs/designer-skill-mcp-logo.webp" alt="designer-skill" width="420" />
+<img src="docs/designer-skill-mcp-logo.webp" alt="designer-skill" width="400" />
 
 **Production-grade design skill for coding agents, delivered as an MCP server.**
 
-[![npm version](https://img.shields.io/npm/v/designer-skill-mcp?style=flat-square&color=0ea5e9)](https://www.npmjs.com/package/designer-skill-mcp)
-[![agents](https://img.shields.io/badge/agents-8-7c3aed?style=flat-square)](#mcp-setup)
-[![npm downloads](https://img.shields.io/npm/dt/designer-skill-mcp?style=flat-square&color=c9a84c&labelColor=111111)](https://www.npmjs.com/package/designer-skill-mcp)
+<br />
+
+[![npm](https://img.shields.io/npm/v/designer-skill-mcp?style=for-the-badge&logo=npm&logoColor=white&color=0ea5e9)](https://www.npmjs.com/package/designer-skill-mcp)
+[![downloads](https://img.shields.io/npm/dt/designer-skill-mcp?style=for-the-badge&logo=npm&logoColor=white&color=c9a84c&label=DOWNLOADS)](https://www.npmjs.com/package/designer-skill-mcp)
+[![license](https://img.shields.io/badge/license-MIT-10b981?style=for-the-badge)](LICENSE)
+
+<br />
+
+[![agents](https://img.shields.io/badge/agents-8-7c3aed?style=for-the-badge)](#setup)
+[![references](https://img.shields.io/badge/references-13-e11d48?style=for-the-badge)](#reference)
+[![tools](https://img.shields.io/badge/MCP_tools-10-0ea5e9?style=for-the-badge)](#tools)
+[![detector](https://img.shields.io/badge/detector-44_rules-f59e0b?style=for-the-badge)](#tools)
+
+<br />
 
 [Overview](#overview) · [Setup](#setup) · [Reference](#reference) · [Tools](#tools) · [Development](#development)
 
@@ -16,22 +27,41 @@ npm i designer-skill-mcp
 
 </div>
 
-## Overview
+<br />
+
+<div align="center">
+
+[![overview](https://img.shields.io/badge/Overview-18181b?style=for-the-badge)](#overview)
+
+</div>
 
 **designer-skill** is a composite design reference for coding agents: a lightweight router (`skills/designer-skill/SKILL.md`) that dispatches to thirteen specialist files covering visual fundamentals, aesthetic systems, motion, engineering, anti-AI-slop discipline, refactor loops, interaction design, visual critique, design systems, project init, craft flow, live mode, and a verb-driven command playbook.
 
 **designer-skill-mcp** is the [Model Context Protocol](https://modelcontextprotocol.io) server that exposes the skill to any MCP-compatible client. Your agent reads the reference files via tools and resources, then does the design work.
 
-| Package | Role |
-|---|---|
-| `skills/designer-skill/` | Skill router + reference files (source of truth) |
-| `designer-skill-mcp` | MCP server: tools, resources, `design` prompt, deterministic detector |
+<div align="center">
 
----
+[![skill](https://img.shields.io/badge/skills/designer--skill-router_+_13_refs-7c3aed?style=flat-square)](skills/designer-skill/)
+[![mcp](https://img.shields.io/badge/designer--skill--mcp-tools_+_detector-0ea5e9?style=flat-square)](designer-skill-mcp/)
 
-## Setup
+</div>
 
-### Recommended: Claude Code or Codex plugin
+<br />
+
+<div align="center">
+
+[![setup](https://img.shields.io/badge/Setup-0ea5e9?style=for-the-badge)](#setup)
+
+</div>
+
+### Plugin (recommended)
+
+<div align="center">
+
+[![claude](https://img.shields.io/badge/Claude_Code-plugin-7c3aed?style=flat-square)](#setup)
+[![codex](https://img.shields.io/badge/Codex-plugin-10b981?style=flat-square)](#setup)
+
+</div>
 
 One install gets both the skill and the MCP server:
 
@@ -48,7 +78,7 @@ codex plugin marketplace add Pythoughts-labs/designer-skill
 
 Then install **designer-skill** from the **pythoughts-labs** marketplace in `/plugins`. The skill appears as `designer-skill:designer-skill`.
 
-### MCP: any client
+### MCP server
 
 Every client runs the same server:
 
@@ -63,16 +93,29 @@ Every client runs the same server:
 }
 ```
 
-| Client | One-liner or config path |
+<div align="center">
+
+[![pythinker](https://img.shields.io/badge/Pythinker-0ea5e9?style=flat-square)](docs/blog/integrating-designer-skill-with-pythinker.md)
+[![codex](https://img.shields.io/badge/Codex_CLI-10b981?style=flat-square)](https://github.com/openai/codex)
+[![claude](https://img.shields.io/badge/Claude_Code-c15a3c?style=flat-square)](https://claude.ai/code)
+[![cursor](https://img.shields.io/badge/Cursor-18181b?style=flat-square)](https://cursor.com)
+[![vscode](https://img.shields.io/badge/VS_Code-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white)](https://code.visualstudio.com)
+[![kilo](https://img.shields.io/badge/Kilo_Code-7c3aed?style=flat-square)](https://kilocode.ai)
+[![opencode](https://img.shields.io/badge/Open_Code-e11d48?style=flat-square)](https://opencode.ai)
+[![pi](https://img.shields.io/badge/Pi-f59e0b?style=flat-square)](https://github.com/earendil-works/pi-coding-agent)
+
+</div>
+
+| Client | Quick install |
 |---|---|
-| **Pythinker** | `pythinker mcp add --transport stdio designer-skill -- npx -y designer-skill-mcp` → [full guide](docs/blog/integrating-designer-skill-with-pythinker.md) |
+| **Pythinker** | `pythinker mcp add --transport stdio designer-skill -- npx -y designer-skill-mcp` · [guide](docs/blog/integrating-designer-skill-with-pythinker.md) |
 | **Codex CLI** | `codex mcp add designer-skill -- npx -y designer-skill-mcp` |
 | **Claude Code** | `claude mcp add designer-skill -- npx -y designer-skill-mcp` |
-| **Cursor** | `.cursor/mcp.json` (project) or Settings → MCP (global) |
-| **VS Code** | `.vscode/mcp.json` (uses `"servers"` + `"type": "stdio"`) |
-| **Kilo Code** | MCP Settings panel → `mcp_settings.json` |
-| **Open Code** | `opencode.json` (key is `"mcp"`, not `"mcpServers"`) |
-| **Pi** | MCP config or native skill path (see below) |
+| **Cursor** | `.cursor/mcp.json` or Settings → MCP |
+| **VS Code** | `.vscode/mcp.json` (`"servers"` + `"type": "stdio"`) |
+| **Kilo Code** | MCP Settings → `mcp_settings.json` |
+| **Open Code** | `opencode.json` (key `"mcp"`) |
+| **Pi** | MCP config or native skill path |
 
 <details>
 <summary><strong>Per-client config snippets</strong></summary>
@@ -151,9 +194,13 @@ args = ["-y", "designer-skill-mcp"]
 
 </details>
 
-### Skill-only (no MCP)
+### Skill-only
 
-Copy the skill directory for agents that load skills natively:
+<div align="center">
+
+[![skill_copy](https://img.shields.io/badge/skill--only-no_MCP-71717a?style=flat-square)](#setup)
+
+</div>
 
 ```bash
 cp -r skills/designer-skill/ ~/.claude/skills/designer-skill/   # Claude Code
@@ -164,17 +211,23 @@ Invoke with the Skill tool or `$designer-skill` on design tasks.
 
 ### Invoke
 
-No special syntax. Ask in natural language:
+<div align="center">
 
 ```
 Use designer-skill to redesign this pricing page without breaking functionality.
 ```
 
-Typical agent flow: `get_design_system` → `dispatch_intent` → `get_reference` → work → `anti_slop_checklist`.
+`get_design_system` → `dispatch_intent` → `get_reference` → work → `anti_slop_checklist`
 
----
+</div>
 
-## Reference
+<br />
+
+<div align="center">
+
+[![reference](https://img.shields.io/badge/Reference-e11d48?style=for-the-badge)](#reference)
+
+</div>
 
 ### Files
 
@@ -194,6 +247,13 @@ Typical agent flow: `get_design_system` → `dispatch_intent` → `get_reference
 | `craft-flow.md` | Shape-then-build pipeline with user gates |
 | `live-mode.md` | Browser variant mode: element select, HMR, poll/steer/accept |
 
+<div align="center">
+
+[![core](https://img.shields.io/badge/core-7-0ea5e9?style=flat-square)](#reference)
+[![extended](https://img.shields.io/badge/extended-6-e11d48?style=flat-square)](#reference)
+
+</div>
+
 ### Intent → verb
 
 | Phrase | Verb(s) | Read |
@@ -205,7 +265,7 @@ Typical agent flow: `get_design_system` → `dispatch_intent` → `get_reference
 | "it looks AI-made" | `de-slop` · `differentiate` | `avoid-ai-slop`, `aesthetic-systems` |
 | "redesign this" | `audit` · `redesign` | `refactor-and-redesign`, `command-playbook` |
 
-### Preflight (before UI code)
+### Preflight
 
 1. Scope the surface: **brand** register (distinctiveness) vs **product** register (earned familiarity).
 2. Commit to one aesthetic system; never mix two signatures on one surface.
@@ -214,9 +274,13 @@ Typical agent flow: `get_design_system` → `dispatch_intent` → `get_reference
 5. For existing UI, audit → diagnose → redesign. Do not rebuild from scratch.
 6. Run the ship gate (`anti_slop_checklist`) before declaring done.
 
----
+<br />
 
-## Tools
+<div align="center">
+
+[![tools](https://img.shields.io/badge/MCP_Tools-0ea5e9?style=for-the-badge)](#tools)
+
+</div>
 
 | Tool | Purpose |
 |---|---|
@@ -230,13 +294,24 @@ Typical agent flow: `get_design_system` → `dispatch_intent` → `get_reference
 | `get_palette_seed` | OKLCH brand-seed for greenfield palette work |
 | `anti_slop_checklist` | Ship gate: run before finishing any UI work |
 
+<div align="center">
+
+[![resources](https://img.shields.io/badge/resources-designer://skill-7c3aed?style=flat-square)](#tools)
+[![prompt](https://img.shields.io/badge/prompt-design-10b981?style=flat-square)](#tools)
+
+</div>
+
 **Resources:** `designer://skill` · `designer://reference/{name}`
 
 **Prompt:** `design` (args: `task` required, `aesthetic` optional)
 
----
+<br />
 
-## Development
+<div align="center">
+
+[![development](https://img.shields.io/badge/Development-f59e0b?style=for-the-badge)](#development)
+
+</div>
 
 ```bash
 cd designer-skill-mcp
@@ -256,6 +331,12 @@ Endpoint: `http://127.0.0.1:3017/mcp` (Streamable HTTP). Includes Origin guard a
 
 **Local checkout:** replace `npx` with `"command": "node", "args": ["/abs/path/to/designer-skill-mcp/dist/index.js"]` in any config above.
 
----
+<br />
 
-MIT License · [designer-skill-mcp](designer-skill-mcp/) · [designer-skill](skills/designer-skill/)
+<div align="center">
+
+[![MIT](https://img.shields.io/badge/license-MIT-10b981?style=flat-square)](LICENSE)
+[![package](https://img.shields.io/badge/designer--skill--mcp-0ea5e9?style=flat-square)](designer-skill-mcp/)
+[![skill](https://img.shields.io/badge/designer--skill-7c3aed?style=flat-square)](skills/designer-skill/)
+
+</div>
