@@ -1,7 +1,7 @@
 /**
  * Anti-Pattern Browser Detector — designer-skill
  * Copyright (c) 2026 Pythoughts Labs
- * SPDX-License-Identifier: Apache-2.0
+ * SPDX-License-Identifier: MIT
  *
  * Bundled browser detector for designer-skill-mcp.
  *

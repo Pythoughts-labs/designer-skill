@@ -3,7 +3,7 @@
 /**
  * Anti-Pattern Detector — designer-skill
  * Copyright (c) 2026 Pythoughts Labs
- * SPDX-License-Identifier: Apache-2.0
+ * SPDX-License-Identifier: MIT
  *
  * Public API facade. Runtime engines live under assets/engine/engines/.
  */
