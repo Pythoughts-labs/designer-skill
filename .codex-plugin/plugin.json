@@ -1,8 +1,11 @@
 {
   "name": "designer-skill",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "Plug-and-play MCP that gives your agent UI superpowers. One install: design skill + MCP server, zero config.",
   "skills": "./skills/",
   "mcpServers": "mcp.json",
-  "commands": ["commands/designer-setup.md", "commands/designer-status.md"]
+  "commands": [
+    "commands/designer-setup.md",
+    "commands/designer-status.md"
+  ]
 }
