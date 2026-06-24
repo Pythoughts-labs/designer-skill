@@ -16,6 +16,9 @@ import { loadProjectContext, formatProjectContext } from "./context.js";
 import { detectAntipatterns, formatDetectionResults } from "./detect.js";
 import { getPaletteSeed } from "./palette.js";
 import { pkg } from "./pkg.js";
+import { getPreflightBrief } from "./brief.js";
+import { commitDesignDirection, formatDesignDirectionResult } from "./direction.js";
+import { reviewAndGate, formatGateResult } from "./gate.js";
 
 export const SERVER_NAME = "designer-skill-mcp";
 export const SERVER_VERSION = pkg.version;
@@ -51,7 +54,7 @@ export function createServer(): McpServer {
     }),
     {
       title: "designer-skill reference",
-      description: "One of the thirteen designer-skill reference files.",
+      description: "One of the fourteen designer-skill reference files.",
       mimeType: "text/markdown",
     },
     async (uri, variables) => {
@@ -67,11 +70,65 @@ export function createServer(): McpServer {
 
   // ---- Tools ---------------------------------------------------------------
   server.registerTool(
+    "get_preflight_brief",
+    {
+      title: "Preflight brief (call first on every UI task)",
+      description:
+        "Returns a compact ~500-token binding workflow: register, aesthetic commitment, inverse test, top slop bans, layout/type rules, ship gate. Call FIRST before any UI code, then commit_design_direction, then dispatch_intent.",
+    },
+    async () => ({ content: [{ type: "text", text: getPreflightBrief() }] }),
+  );
+
+  server.registerTool(
+    "commit_design_direction",
+    {
+      title: "Commit design direction before code",
+      description:
+        "Required checkpoint before writing UI code. Submit register, aesthetic system, physical scene, layout families, typography direction, anti-slop risks, and inverse-test result. Returns PASS (proceed) or FAIL (fix and resubmit).",
+      inputSchema: {
+        register: z.enum(["brand", "product"]).describe("brand = distinctiveness bar; product = earned familiarity bar."),
+        aesthetic: z
+          .string()
+          .min(1)
+          .describe("One of: minimalist, brutalist, soft, high-end-stitch, brand-identity, product."),
+        physicalScene: z
+          .string()
+          .min(1)
+          .describe("One sentence: who, where, light, mood — must force light/dark and tone."),
+        layoutFamilies: z
+          .array(z.string().min(1))
+          .min(1)
+          .describe("Layout patterns for this surface (≥2 for brand, ≥1 for product)."),
+        typographyDirection: z
+          .string()
+          .min(1)
+          .describe("Font pairing + scale approach, e.g. grotesk display + humanist body, 1.333 ratio."),
+        antiSlopRisks: z
+          .array(z.string().min(1))
+          .min(2)
+          .describe("≥2 specific AI-slop tells you are actively avoiding on this surface."),
+        inverseTestPass: z.boolean().describe("true only when the inverse test passes — category-modal descriptions must be reworked."),
+        inverseTestDescription: z
+          .string()
+          .min(1)
+          .describe("Why this direction is NOT category-modal (specific user + visual lane, not industry template copy)."),
+        namedReferences: z
+          .array(z.string().min(1))
+          .optional()
+          .describe("Optional: 2–3 real sites/products with one extracted move each."),
+      },
+    },
+    async (input) => ({
+      content: [{ type: "text", text: formatDesignDirectionResult(commitDesignDirection(input)) }],
+    }),
+  );
+
+  server.registerTool(
     "get_design_system",
     {
       title: "Get the designer-skill router",
       description:
-        "Call this FIRST on skill load. Returns the designer-skill SKILL.md router (session preflight, MCP bootstrap, precedence rule, routing map, ship gate). After loading, call dispatch_intent with the user's request, then get_reference for the recommended files.",
+        "Returns the full SKILL.md router. For UI tasks, prefer get_preflight_brief first (compact). Use this for deep routing map and reference index.",
     },
     async () => ({ content: [{ type: "text", text: getSkillRouter() }] }),
   );
@@ -186,6 +243,29 @@ export function createServer(): McpServer {
     },
   );
 
+  server.registerTool(
+    "review_and_gate",
+    {
+      title: "Review and ship gate (call before declaring UI work done)",
+      description:
+        "Composite gate: runs detect_antipatterns, computes slop score (pass ≥85, 0 blocking slop), returns fix list + manual checklist. Do not claim completion on FAIL.",
+      inputSchema: {
+        target: z.string().min(1).describe("File or directory to scan (relative to cwd or absolute)."),
+        cwd: z.string().optional().describe("Project root. Defaults to process.cwd()."),
+        includeChecklistExcerpt: z
+          .boolean()
+          .optional()
+          .describe("Include a short avoid-ai-slop excerpt in the response."),
+      },
+    },
+    async ({ target, cwd, includeChecklistExcerpt }) => {
+      const result = await reviewAndGate(target, { cwd: cwd ?? process.cwd() });
+      return {
+        content: [{ type: "text", text: formatGateResult(result, includeChecklistExcerpt === true) }],
+      };
+    },
+  );
+
   // ---- Prompt --------------------------------------------------------------
   server.registerPrompt(
     "design",
@@ -202,7 +282,12 @@ export function createServer(): McpServer {
       const reads = new Set<ReferenceName>(dispatchIntent(task).recommendedReads);
       reads.add("design-principles");
       reads.add("avoid-ai-slop");
-      const context = [getSkillRouter(), ...[...reads].map((r) => getReferenceDoc(r))].join("\n\n---\n\n");
+      reads.add("differentiation-playbook");
+      const context = [
+        getPreflightBrief(),
+        getSkillRouter(),
+        ...[...reads].map((r) => getReferenceDoc(r)),
+      ].join("\n\n---\n\n");
       const ask = aesthetic ? `${task}\n\nAesthetic direction: ${aesthetic}` : task;
       return {
         messages: [
@@ -211,8 +296,8 @@ export function createServer(): McpServer {
             content: {
               type: "text",
               text:
-                "Use the designer-skill below to design, refactor, and enhance UI. Commit to one aesthetic system, " +
-                "preserve functionality on refactors, and run the anti-slop checklist before finishing.\n\n" +
+                "Use the designer-skill workflow: get_preflight_brief → commit_design_direction → implement → review_and_gate. " +
+                "Commit to one aesthetic system, preserve functionality on refactors, and do not finish on a failed gate.\n\n" +
                 `${context}\n\n---\n\nTask: ${ask}`,
             },
           },

@@ -97,21 +97,77 @@ describe("designer-skill MCP server", () => {
     client = await connectClient();
   });
 
-  it("advertises the nine tools", async () => {
+  it("advertises the workflow tools", async () => {
     const names = (await client.listTools()).tools.map((t) => t.name).sort();
     expect(names).toEqual(
       [
         "anti_slop_checklist",
+        "commit_design_direction",
         "detect_antipatterns",
         "dispatch_intent",
         "get_command",
         "get_design_system",
         "get_palette_seed",
+        "get_preflight_brief",
         "get_reference",
         "list_commands",
         "load_project_context",
+        "review_and_gate",
       ].sort(),
     );
+  });
+
+  it("get_preflight_brief returns the compact workflow", async () => {
+    const text = textOf(await client.callTool({ name: "get_preflight_brief" }));
+    expect(text).toContain("get_preflight_brief");
+    expect(text).toContain("commit_design_direction");
+    expect(text).toContain("review_and_gate");
+    expect(text).toContain("Inverse test");
+  });
+
+  it("commit_design_direction validates direction", async () => {
+    const text = textOf(
+      await client.callTool({
+        name: "commit_design_direction",
+        arguments: {
+          register: "brand",
+          aesthetic: "minimalist",
+          physicalScene: "Shop owner on a bright tablet at the counter during morning rush",
+          layoutFamilies: ["asymmetric bento", "horizontal scroll rail"],
+          typographyDirection: "Editorial serif display + grotesk body, 1.5 ratio",
+          antiSlopRisks: ["no Inter", "no eyebrow chips"],
+          inverseTestPass: true,
+          inverseTestDescription:
+            "Counter-service ordering for a single-location bakery — hand-drawn price chalkboard energy, not another food delivery app hero",
+        },
+      }),
+    );
+    expect(text).toContain("PASS");
+  });
+
+  it("commit_design_direction rejects category-modal copy", async () => {
+    const text = textOf(
+      await client.callTool({
+        name: "commit_design_direction",
+        arguments: {
+          register: "brand",
+          aesthetic: "soft",
+          physicalScene: "Team lead presenting quarterly results in a bright conference room",
+          layoutFamilies: ["asymmetric bento", "split asymmetric"],
+          typographyDirection: "Grotesk display + humanist body, 1.333 ratio",
+          antiSlopRisks: ["no cream bg", "no three equal cards"],
+          inverseTestPass: true,
+          inverseTestDescription: "AI-powered platform that streamlines workflows for modern teams seamlessly",
+        },
+      }),
+    );
+    expect(text).toContain("FAIL");
+  });
+
+  it("get_reference returns differentiation playbook", async () => {
+    const text = textOf(await client.callTool({ name: "get_reference", arguments: { name: "differentiation-playbook" } }));
+    expect(text).toContain("inverse test");
+    expect(text).toContain("One weird thing");
   });
 
   it("get_design_system returns the router with the precedence rule", async () => {
@@ -134,7 +190,7 @@ describe("designer-skill MCP server", () => {
   it("dispatch_intent returns routed guidance text", async () => {
     const text = textOf(await client.callTool({ name: "dispatch_intent", arguments: { request: "make it pop" } }));
     expect(text).toContain("amplify");
-    expect(text).toContain("avoid-ai-slop.md");
+    expect(text).toContain("review_and_gate");
   });
 
   it("anti_slop_checklist returns the slop reference", async () => {
@@ -142,7 +198,7 @@ describe("designer-skill MCP server", () => {
     expect(text).toContain("Avoiding AI Slop");
   });
 
-  it("exposes the skill router resource and all thirteen reference resources", async () => {
+  it("exposes the skill router resource and all fourteen reference resources", async () => {
     const uris = (await client.listResources()).resources.map((r) => r.uri);
     expect(uris).toContain("designer://skill");
     for (const name of REFERENCE_NAMES) {

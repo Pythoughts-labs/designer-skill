@@ -11,6 +11,7 @@ export const REFERENCE_NAMES = [
   "motion-and-interaction",
   "engineering-and-performance",
   "avoid-ai-slop",
+  "differentiation-playbook",
   "refactor-and-redesign",
   "command-playbook",
   "interaction-design",
@@ -34,6 +35,8 @@ export const REFERENCE_DESCRIPTIONS: Record<ReferenceName, string> = {
     "Component architecture, design tokens, hardware acceleration, responsive/fluid, accessibility, Core Web Vitals, framework-honest output.",
   "avoid-ai-slop":
     "The AI-tell ban-list, category-reflex checks, and the output-completeness contract. The always-run ship gate.",
+  "differentiation-playbook":
+    "Positive creativity guide: inverse test, layout menu, one weird thing, named references, physical scene. How to be distinctive.",
   "refactor-and-redesign":
     "Improving existing UI without breaking it: audit, diagnose generic patterns, the redesign loop, image/reference-to-code.",
   "command-playbook":

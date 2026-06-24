@@ -19,7 +19,7 @@ const VERBS: Verb[] = [
   {
     verb: "build",
     cues: ["build", "craft", "make a", "create", "scaffold", "implement", "from scratch", "new page", "new component", "landing page", "build me", "end to end", "full build flow"],
-    files: ["craft-flow", "design-principles", "aesthetic-systems", "engineering-and-performance", "avoid-ai-slop"],
+    files: ["craft-flow", "design-principles", "aesthetic-systems", "differentiation-playbook", "engineering-and-performance", "avoid-ai-slop"],
     note: "Build a feature end-to-end: plan, visual gates, production code, in-browser iteration.",
   },
   {
@@ -31,7 +31,7 @@ const VERBS: Verb[] = [
   {
     verb: "plan",
     cues: ["plan", "shape", "spec", "think through", "before code", "brief", "approach", "wireframe"],
-    files: ["design-principles", "aesthetic-systems"],
+    files: ["design-principles", "aesthetic-systems", "differentiation-playbook"],
     note: "Plan UX/UI before code: color strategy, physical scene, named references — no implementation.",
   },
   {
@@ -55,7 +55,7 @@ const VERBS: Verb[] = [
   {
     verb: "amplify",
     cues: ["amplify", "bolder", "too safe", "bland", "make it pop", "boring", "more striking", "stand out", "needs energy"],
-    files: ["aesthetic-systems", "avoid-ai-slop"],
+    files: ["aesthetic-systems", "differentiation-playbook", "avoid-ai-slop"],
     note: "Increase visual impact: stronger hierarchy, committed color, break the grid.",
   },
   {
@@ -127,7 +127,7 @@ const VERBS: Verb[] = [
   {
     verb: "brand",
     cues: ["brand", "identity", "distinctive", "not generic", "logo", "brand voice", "make it unique"],
-    files: ["aesthetic-systems", "avoid-ai-slop"],
+    files: ["aesthetic-systems", "differentiation-playbook", "avoid-ai-slop"],
     note: "Distinctive identity: aesthetic + reference, font procedure, palette strategy.",
   },
   {
@@ -163,7 +163,7 @@ const VERBS: Verb[] = [
   {
     verb: "options",
     cues: ["options", "variants", "variations", "show me options", "show me 3", "3 versions", "three versions", "alternatives", "a few directions"],
-    files: ["refactor-and-redesign", "avoid-ai-slop"],
+    files: ["refactor-and-redesign", "differentiation-playbook", "avoid-ai-slop"],
     note: "2–3 variants within identity — vary on different axes, not different brands.",
   },
   {
@@ -227,6 +227,7 @@ export function dispatchIntent(request: string): DispatchResult {
   for (const m of scored) for (const f of m.files) reads.add(f);
   reads.add("avoid-ai-slop");
   if (scored.length === 0) {
+    reads.add("differentiation-playbook");
     reads.add("command-playbook");
     reads.add("design-principles");
   }
@@ -244,7 +245,7 @@ export function dispatchIntent(request: string): DispatchResult {
     }
   }
   lines.push(
-    `\nThen run the anti-slop checklist in avoid-ai-slop.md before declaring done (always-run ship gate).`,
+    `\nThen call review_and_gate before declaring done (score ≥85, zero blocking slop).`,
   );
   lines.push(`\nRecommended reads: ${recommendedReads.join(", ")}.`);
 

@@ -1,0 +1,28 @@
+---
+description: Enforce designer-skill MCP workflow before any UI/design work
+globs: "**/*.{tsx,jsx,vue,svelte,astro,html,css,scss}"
+alwaysApply: false
+---
+
+# Designer Skill MCP Rule
+
+Before editing or generating any UI, layout, landing page, component, dashboard, or visual design:
+
+1. Call `get_preflight_brief`.
+2. Call `commit_design_direction` and get **PASS** before writing code:
+   - register: `brand` or `product`
+   - aesthetic system (one per surface)
+   - physical scene (one sentence)
+   - layout families
+   - typography direction
+   - anti-slop risks (≥2)
+   - inverse-test pass + description
+3. Call `load_project_context` when PRODUCT.md / DESIGN.md may exist.
+4. Call `dispatch_intent` and load **only** the recommended references via `get_reference`.
+5. Implement the design.
+6. Call `review_and_gate` on changed files before the final response.
+7. Do not claim completion if `review_and_gate` returns **FAIL** or blocking slop findings remain.
+
+**Foundation:** Brief by default → commit direction before code → deep refs on demand → deterministic gate before done.
+
+Copy to `.cursor/rules/` in your project, or symlink from this file.
