@@ -113,6 +113,10 @@ EOF
 )"
 
 echo "==> Push branch and tag"
+# Direct push to main: relies on repo admins being exempt from main's required
+# status checks (classic protection enforce_admins=off + Repository-admin on the
+# main-hardening ruleset bypass list). Run releases from an admin-authed session
+# (npm whoami / gh auth as elkaix). Non-admin pushes to main stay gated by checks.
 git push origin HEAD
 git push origin "$TAG"
 
