@@ -84,7 +84,7 @@ export function createServer(): McpServer {
     {
       title: "Preflight brief (call first on every UI task)",
       description:
-        "Returns a compact ~500-token binding workflow: register, aesthetic commitment, inverse test, top slop bans, layout/type rules, ship gate. Call FIRST before any UI code, then commit_design_direction, then dispatch_intent.",
+        "Returns the compact binding workflow (register, aesthetic commitment, inverse test, slop bans, layout/type rules, ship gate): call FIRST before any UI code, then commit_design_direction, then dispatch_intent.",
     },
     async () => ({ content: [{ type: "text", text: getPreflightBrief() }] }),
   );
@@ -158,7 +158,7 @@ export function createServer(): McpServer {
     {
       title: "Map a UI request to design moves + files to read",
       description:
-        "Given a natural-language UI request (e.g. 'make it pop', 'the spacing feels off', 'make it production-ready'), returns the matching design verb(s) and which designer-skill reference files to read. Use it to route a vague request to concrete guidance before acting.",
+        "Maps a natural-language UI request (e.g. 'make it pop', 'the spacing feels off', 'make it production-ready') to the design verb(s) and reference files to read before implementing.",
       inputSchema: { request: z.string().min(1).describe("What the user wants done to the UI.") },
     },
     async ({ request }) => ({ content: [{ type: "text", text: dispatchIntent(request).text }] }),
