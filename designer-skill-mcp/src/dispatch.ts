@@ -37,8 +37,8 @@ const VERBS: Verb[] = [
   {
     verb: "check",
     cues: ["check", "audit", "review the", "review my", "check the", "a11y", "accessibility", "performance review", "responsive check", "lighthouse"],
-    files: ["engineering-and-performance", "avoid-ai-slop", "refactor-and-redesign"],
-    note: "Technical audit (a11y, perf, responsive, anti-patterns). Report findings; fix nothing yet.",
+    files: ["engineering-and-performance", "avoid-ai-slop", "refactor-and-redesign", "css-techniques"],
+    note: "Technical audit (a11y, perf, responsive, CSS anti-patterns). Report findings; fix nothing yet.",
   },
   {
     verb: "review",
@@ -49,8 +49,8 @@ const VERBS: Verb[] = [
   {
     verb: "finish",
     cues: ["finish", "polish", "final pass", "tighten", "before shipping", "ship ready", "refine", "clean up the ui"],
-    files: ["design-principles", "engineering-and-performance"],
-    note: "Final polish: spacing scale, interaction states, optical alignment.",
+    files: ["design-principles", "engineering-and-performance", "css-techniques"],
+    note: "Final polish: spacing scale, interaction states, optical alignment, idiomatic CSS.",
   },
   {
     verb: "amplify",
@@ -85,8 +85,8 @@ const VERBS: Verb[] = [
   {
     verb: "layout",
     cues: ["layout", "spacing", "feels off", "alignment", "hierarchy", "grid", "whitespace", "cramped", "looks off"],
-    files: ["design-principles"],
-    note: "Fix spacing, rhythm, hierarchy: 4pt scale, flex/grid, squint test.",
+    files: ["design-principles", "css-techniques"],
+    note: "Fix spacing, rhythm, hierarchy: 4pt scale, flex/grid, subgrid, container queries, squint test.",
   },
   {
     verb: "type",
@@ -103,13 +103,13 @@ const VERBS: Verb[] = [
   {
     verb: "ship",
     cues: ["ship", "harden", "production-ready", "production ready", "edge case", "real data", "empty state", "error state", "i18n", "loading state", "rtl"],
-    files: ["engineering-and-performance"],
-    note: "Production-ready: long/empty/RTL text, API errors, no fixed text widths.",
+    files: ["engineering-and-performance", "css-techniques"],
+    note: "Production-ready: long/empty/RTL text, API errors, no fixed text widths, logical properties.",
   },
   {
     verb: "speed",
     cues: ["speed", "optimize", "optimise", "slow", "janky", "jank", "lag", "fps", "bundle size", "performance issue", "core web vitals"],
-    files: ["engineering-and-performance"],
+    files: ["engineering-and-performance", "css-techniques"],
     note: "Fix UI performance: measure first, fix the real bottleneck.",
   },
   {
@@ -133,14 +133,14 @@ const VERBS: Verb[] = [
   {
     verb: "responsive",
     cues: ["responsive", "adapt", "mobile", "tablet", "different device", "breakpoint", "small screen", "touch"],
-    files: ["engineering-and-performance", "refactor-and-redesign"],
-    note: "Rethink for target device: reflow, touch targets, safe areas.",
+    files: ["engineering-and-performance", "refactor-and-redesign", "css-techniques"],
+    note: "Rethink for target device: reflow, container queries, touch targets, safe areas.",
   },
   {
     verb: "refresh",
     cues: ["refresh", "redesign", "improve existing", "fix this ui", "without breaking", "revamp", "modernize", "modernise", "existing site", "existing app", "upgrade the design"],
-    files: ["refactor-and-redesign", "avoid-ai-slop"],
-    note: "Improve existing UI without breaking it: audit, diagnose, redesign loop.",
+    files: ["refactor-and-redesign", "avoid-ai-slop", "css-techniques"],
+    note: "Improve existing UI without breaking it: audit, diagnose, redesign loop, modern CSS.",
   },
   {
     verb: "copy",
@@ -195,6 +195,12 @@ const VERBS: Verb[] = [
     cues: ["design system", "token system", "naming convention", "theming", "design tokens", "dark mode system", "component library", "token architecture"],
     files: ["design-systems", "engineering-and-performance"],
     note: "Token architecture, component specs, theming, naming conventions.",
+  },
+  {
+    verb: "css",
+    cues: ["css", "stylesheet", "tailwind", "css fix", "fix the css", "css bug", "selector", "specificity", "centering", "center this", "aspect-ratio", "container query", ":has", "logical properties", "flexbox", "css grid", "clamp", "box-sizing", "css reset"],
+    files: ["css-techniques", "design-principles"],
+    note: "Apply idiomatic modern CSS: resets, centering, selectors, specificity (@layer/:is), logical properties, container queries, clamp(), :has().",
   },
 ];
 

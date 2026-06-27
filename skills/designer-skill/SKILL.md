@@ -9,7 +9,7 @@ A plug-and-play MCP that gives your agent UI superpowers: design, refactor, and 
 
 **Foundation:** Brief by default → commit direction before code → deep refs on demand → deterministic gate before done.
 
-This file is the router. Substance lives in fourteen reference files under `reference/`; load them on demand via MCP — do not work from memory.
+This file is the router. Substance lives in fifteen reference files under `reference/`; load them on demand via MCP — do not work from memory.
 
 ## MCP workflow (every UI task)
 
@@ -18,9 +18,9 @@ When the **designer-skill** MCP server is connected:
 1. **`get_preflight_brief`** — compact binding rules (~500 tokens). Call first.
 2. **`commit_design_direction`** — declare register, aesthetic, physical scene, layouts, type direction, anti-slop risks, inverse test. Must **PASS** before code.
 3. **`load_project_context`** — PRODUCT.md / DESIGN.md when present. If `NO_PRODUCT_MD` on greenfield, run `get_command({ verb: "setup" })`.
-4. **`dispatch_intent`** — map the user's request to verb(s) + which references to load (2–4 files, not all fourteen).
+4. **`dispatch_intent`** — map the user's request to verb(s) + which references to load (2–4 files, not all fifteen).
 5. **`get_reference`** — load only the files `dispatch_intent` recommends.
-6. Implement.
+6. Implement. When writing or fixing CSS, pull `get_reference({ name: "css-techniques" })` for idiomatic patterns (centering, specificity, logical properties, container queries, `:has()`, `clamp()`).
 7. **`review_and_gate`** — scan changed files; score ≥85, zero blocking slop. Do not claim done on **FAIL**.
 
 Optional: `get_palette_seed` on greenfield (no committed brand colors); `detect_antipatterns` for ad-hoc scans; web-search MCP for contemporary UI references on visually-led net-new work (extract moves, don't copy layouts).
@@ -58,6 +58,7 @@ If MCP is unavailable, read local `reference/` files using the routing map below
 | `reference/project-init.md` | Discovery, PRODUCT.md, DESIGN.md setup |
 | `reference/craft-flow.md` | Shape-then-build pipeline with user gates |
 | `reference/live-mode.md` | Browser variant mode: HMR hot-swap |
+| `reference/css-techniques.md` | **How to write the CSS** — resets, centering, selectors/specificity, logical properties, container queries, `:has()`, `clamp()`; the cookbook for applying CSS fixes |
 
 ## Precedence rule
 
@@ -71,6 +72,7 @@ If MCP is unavailable, read local `reference/` files using the routing map below
 - Bans + completeness contract → `avoid-ai-slop.md`
 - Easing, durations → `motion-and-interaction.md`
 - GPU, tokens, a11y engineering → `engineering-and-performance.md`
+- Idiomatic CSS implementation, applying CSS fixes → `css-techniques.md`
 
 ## Ship gate
 

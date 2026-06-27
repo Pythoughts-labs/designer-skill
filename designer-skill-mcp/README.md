@@ -29,7 +29,7 @@ mcp-publisher publish
 |---|---|
 | `get_design_system` | SKILL.md router (call first) |
 | `load_project_context` | Read PRODUCT.md / DESIGN.md from the project |
-| `get_reference` | One of thirteen reference files by name |
+| `get_reference` | One of fifteen reference files by name |
 | `list_commands` | All design verbs with descriptions |
 | `get_command` | Full guidance + references for a specific verb |
 | `dispatch_intent` | Map a request ("make it pop", "it feels off") to design verb(s) + files |

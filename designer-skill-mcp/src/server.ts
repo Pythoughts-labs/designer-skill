@@ -64,7 +64,7 @@ export function createServer(): McpServer {
     }),
     {
       title: "designer-skill reference",
-      description: "One of the fourteen designer-skill reference files.",
+      description: "One of the fifteen designer-skill reference files.",
       mimeType: "text/markdown",
     },
     async (uri, variables) => {

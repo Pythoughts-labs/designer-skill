@@ -20,6 +20,7 @@ export const REFERENCE_NAMES = [
   "project-init",
   "craft-flow",
   "live-mode",
+  "css-techniques",
 ] as const;
 
 export type ReferenceName = (typeof REFERENCE_NAMES)[number];
@@ -53,6 +54,8 @@ export const REFERENCE_DESCRIPTIONS: Record<ReferenceName, string> = {
     "Full shape-then-build pipeline with user gates, framework detection, visual iteration loop, and production-grade output.",
   "live-mode":
     "Interactive browser variant mode: element selection, hot-swapped HTML+CSS variants via HMR, poll/steer/accept contract.",
+  "css-techniques":
+    "Modern CSS implementation cookbook: resets, box-sizing, centering, aspect-ratio, :is()/:not(), logical properties, container queries, :has(), @layer, clamp(), Baseline-bucketed features. The how-to for applying CSS fixes.",
 };
 
 function resolveSkillDir(): string {
