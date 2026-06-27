@@ -90,6 +90,10 @@ Add the server. Ask in plain language. The agent handles the rest.
 [![skill](https://img.shields.io/badge/design_skill-13_refs-7c3aed?style=flat-square)](skills/designer-skill/)
 [![mcp](https://img.shields.io/badge/MCP-10_tools-0ea5e9?style=flat-square)](designer-skill-mcp/)
 
+**Built with it:** [pythinker.com](https://pythinker.com) — a live production site designed end-to-end with this skill.
+
+<a href="https://pythinker.com"><img src="docs/showcase/pythinker-desinger-skill-mcp.webp" alt="pythinker.com — built with designer-skill" width="760" /></a>
+
 </div>
 
 <br />
