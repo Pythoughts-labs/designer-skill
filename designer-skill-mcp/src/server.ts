@@ -23,8 +23,18 @@ import { reviewAndGate, formatGateResult } from "./gate.js";
 export const SERVER_NAME = "designer-skill-mcp";
 export const SERVER_VERSION = pkg.version;
 
+export const SERVER_INSTRUCTIONS = [
+  "designer-skill gives this agent UI design superpowers. For ANY web/app UI work",
+  "(build, redesign, polish, audit, components, design systems):",
+  "1. Call get_preflight_brief FIRST: it returns the binding workflow.",
+  "2. Call commit_design_direction and get PASS before writing UI code.",
+  "3. Use dispatch_intent to route the request to verbs + reference files; load only those via get_reference.",
+  "4. Call review_and_gate before claiming the work is done: do not claim done on FAIL.",
+  "Read reference files on demand; do not design from memory. Not for backend, CLI, or non-UI code.",
+].join("\n");
+
 export function createServer(): McpServer {
-  const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION });
+  const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION }, { instructions: SERVER_INSTRUCTIONS });
 
   // ---- Resources -----------------------------------------------------------
   server.registerResource(

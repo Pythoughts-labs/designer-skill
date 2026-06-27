@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
-import { createServer } from "../src/server.js";
+import { createServer, SERVER_INSTRUCTIONS } from "../src/server.js";
 import { dispatchIntent } from "../src/dispatch.js";
 import { REFERENCE_NAMES } from "../src/skill.js";
 
@@ -247,5 +247,15 @@ describe("designer-skill MCP server", () => {
     const text = typeof msg.content === "object" && "text" in msg.content ? (msg.content.text as string) : "";
     expect(text).toContain("designer-skill");
     expect(text).toContain("Task: build a pricing page");
+  });
+});
+
+describe("server instructions", () => {
+  it("is a thin pointer that routes to the brief-first workflow", () => {
+    expect(SERVER_INSTRUCTIONS).toContain("get_preflight_brief");
+    expect(SERVER_INSTRUCTIONS).toContain("commit_design_direction");
+    expect(SERVER_INSTRUCTIONS).toContain("review_and_gate");
+    // Thin pointer, not a copy of the ~3.6k-char brief.
+    expect(SERVER_INSTRUCTIONS.length).toBeLessThan(700);
   });
 });
