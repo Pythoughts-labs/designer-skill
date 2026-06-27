@@ -92,7 +92,7 @@ Add the server. Ask in plain language. The agent handles the rest.
 
 **Built with it:** [pythinker.com](https://pythinker.com) — a live production site designed end-to-end with this skill.
 
-<a href="https://pythinker.com"><img src="docs/showcase/pythinker-desinger-skill-mcp.webp" alt="pythinker.com — built with designer-skill" width="760" /></a>
+<a href="https://pythinker.com"><img src="docs/showcase/pythinker-designer-skill-mcp.webp" alt="pythinker.com — built with designer-skill" width="760" /></a>
 
 </div>
 
