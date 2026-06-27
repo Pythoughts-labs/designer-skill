@@ -61,7 +61,7 @@ If MCP is unavailable, read local `reference/` files using the routing map below
 
 ## Precedence rule
 
-`design-principles.md` is the aesthetic-neutral baseline. When you commit to a system in `aesthetic-systems.md`, **system rules override baseline** within that surface. **Existing brand identity beats both** on edits — never second-guess committed fonts, lanes, or palettes.
+`design-principles.md` is the neutral baseline. Committing to a system in `aesthetic-systems.md` **overrides baseline** for that surface. **Existing brand identity beats both** on edits; never second-guess committed fonts, lanes, or palettes.
 
 ## Cross-file ownership
 
