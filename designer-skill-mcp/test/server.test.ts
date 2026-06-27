@@ -89,6 +89,10 @@ describe("dispatchIntent", () => {
     expect(r.matched).toHaveLength(0);
     expect(r.recommendedReads).toContain("command-playbook");
   });
+  it("routes CSS fixes to the css-techniques reference", () => {
+    expect(dispatchIntent("fix the css").recommendedReads).toContain("css-techniques");
+    expect(dispatchIntent("center this with flexbox").recommendedReads).toContain("css-techniques");
+  });
 });
 
 describe("designer-skill MCP server", () => {
@@ -198,7 +202,7 @@ describe("designer-skill MCP server", () => {
     expect(text).toContain("Avoiding AI Slop");
   });
 
-  it("exposes the skill router resource and all fourteen reference resources", async () => {
+  it("exposes the skill router resource and all fifteen reference resources", async () => {
     const uris = (await client.listResources()).resources.map((r) => r.uri);
     expect(uris).toContain("designer://skill");
     for (const name of REFERENCE_NAMES) {
