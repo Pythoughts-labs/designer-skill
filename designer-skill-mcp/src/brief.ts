@@ -29,7 +29,7 @@ Never mix two systems' signatures on one surface. System rules in \`aesthetic-sy
 
 ## 4. Inverse test (before palette or layout)
 
-Describe the build the way a **competitor** would. If that sentence fits the category's modal landing page, **restart**.
+Describe the build the way a **competitor** would. If that sentence fits the category's usual landing page, **restart**.
 
 Also run second-order check: category + "not the obvious look" still predicts your choice → restart.
 
